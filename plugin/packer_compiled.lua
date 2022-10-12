@@ -422,7 +422,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["project.nvim"] = {
-    config = { "\27LJ\2\2 \2\0\0\3\0\v\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\1B\0\2\0016\0\0\0'\1\b\0B\0\2\0029\0\t\0'\1\n\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\17exclude_dirs\1\2\0\0#~/go/pkg/mod/git.code.oa.com/*\rpatterns\1\b\0\0\t.git\v_darcs\b.hg\t.bzr\t.svn\rMakefile\17package.json\1\0\3\16manual_mode\2\17silent_chdir\1\16show_hidden\2\nsetup\17project_nvim\frequire\0" },
+    config = { "\27LJ\2\2Þ\2\0\0\3\0\v\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\1B\0\2\0016\0\0\0'\1\b\0B\0\2\0029\0\t\0'\1\n\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\17exclude_dirs\1\4\0\0#~/go/pkg/mod/git.code.oa.com/*1~/.local/share/nvim/site/pack/packer/start/*\21~/.vim/plugged/*\rpatterns\1\b\0\0\t.git\v_darcs\b.hg\t.bzr\t.svn\rMakefile\17package.json\1\0\3\16manual_mode\2\17silent_chdir\1\16show_hidden\2\nsetup\17project_nvim\frequire\0" },
     loaded = true,
     path = "/home/zhuyajie/.local/share/nvim/site/pack/packer/start/project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
@@ -729,7 +729,7 @@ try_loadstring("\27LJ\2\2Ž\2\0\0\5\0\14\0\0296\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1
 time([[Config for text-case.nvim]], false)
 -- Config for: project.nvim
 time([[Config for project.nvim]], true)
-try_loadstring("\27LJ\2\2 \2\0\0\3\0\v\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\1B\0\2\0016\0\0\0'\1\b\0B\0\2\0029\0\t\0'\1\n\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\17exclude_dirs\1\2\0\0#~/go/pkg/mod/git.code.oa.com/*\rpatterns\1\b\0\0\t.git\v_darcs\b.hg\t.bzr\t.svn\rMakefile\17package.json\1\0\3\16manual_mode\2\17silent_chdir\1\16show_hidden\2\nsetup\17project_nvim\frequire\0", "config", "project.nvim")
+try_loadstring("\27LJ\2\2Þ\2\0\0\3\0\v\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\1B\0\2\0016\0\0\0'\1\b\0B\0\2\0029\0\t\0'\1\n\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\17exclude_dirs\1\4\0\0#~/go/pkg/mod/git.code.oa.com/*1~/.local/share/nvim/site/pack/packer/start/*\21~/.vim/plugged/*\rpatterns\1\b\0\0\t.git\v_darcs\b.hg\t.bzr\t.svn\rMakefile\17package.json\1\0\3\16manual_mode\2\17silent_chdir\1\16show_hidden\2\nsetup\17project_nvim\frequire\0", "config", "project.nvim")
 time([[Config for project.nvim]], false)
 -- Config for: nvim-ts-autotag
 time([[Config for nvim-ts-autotag]], true)
