@@ -1,4 +1,4 @@
 tags
 search
-./nvim
-./plugin/packer_compiled.lua
+nvim
+plugin/
