@@ -1,0 +1,1290 @@
+*nvim-note*
+
+# keymap
+
+| keymap                          | 功能                                                     |
+|---------------------------------|----------------------------------------------------------|
+| `<s-f1>`                        | 文件树                                                   |
+| `<f2>` ,`<s-f2>`                | 下一处上一处诊断                                         |
+| `<s-f3>`                        | terminal                                                 |
+| `<s-f4>`                        | 下一个terminal tab                                       |
+| `<s-f5>`                        | 上一个terminal tab                                       |
+| `<s-f6>`                        | refactor rename                                          |
+| `<c-f7>`                        | toggle_breakpoint                                        |
+| `<s-f7>`                        | clear_breakpoint                                         |
+| `<c-f8>`                        | load session                                             |
+| `<c-f9>`                        | history file                                             |
+| `<c-f10>`                       | search in cdlist                                         |
+| `<c-f11>`                       | search in session dir                                    |
+| `<c-f12>`                       | buffers list                                             |
+| `<c-space>`                     | buffers list of cwd                                      |
+| `<a-enter>`,`<d-enter>`         | code action                                              |
+| `<a-h>`,`<d-h>`                 | hover help                                               |
+| `<leader>le`                    | 在float 窗口显示详细诊断信息                             |
+| `<leader>lq`                    | 诊断问题发送到 loclist                                   |
+| `<leader>lf`                    | lsp 格式化                                               |
+| `<leader>gd`                    | goto definition                                          |
+| `<leader>gD`                    | goto declaration                                         |
+| `<leader>gt`                    | goto type_definition                                     |
+| `<leader>gi`                    | 跳转到类型实现的接口                                     |
+| `<c-tab>`, `<a-tab>`, `<s-tab>` | buffer cycle                                             |
+| `<leader>hn`                    | hunk next                                                |
+| `<leader>hp`                    | hunk prev                                                |
+| `<leader>hv`                    | hunk preview                                             |
+| `<leader>S`                     | normal模式 打开搜索窗口, cwd全局搜索                     |
+| `<leader>sw`                    | normal模式 搜索光标所在的词,cwd全局搜索                  |
+| `<leader>sp`                    | normal模式 (search in path)打开搜索窗口, 仅搜索当前文件. |
+| `<leader>s`                     | visual模式 搜索光标选择的词,cwd全局搜索                  |
+| `ga.`                           | open text case telescope                                 |
+| `<leader>df`                    | DiffviewOpen                                             |
+| `<leader>dh`                    | DiffviewFileHistory                                      |
+| `<leader>dc`                    | :tabc                                                    |
+| `<leader>fw`                    | :newtab %                                                |
+
+
+# 部署
+
+0. 安裝字体 `https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip`
+1. 将nvim 复制到 `~/config/nvim`
+2. 安装packer插件管理器 `git clone --depth 1 https://github.com/wbthomason/packer.nvim   ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
+3. 启动nvim, 执行`:PackerInstall`,`:PackerCompile`
+4. Lanuch Neovide, install treesitter dependence
+5. Install Lua Runtime , Install `https://github.com/sumneko/lua-language-server/releases`
+6. 安装 `cargo install tree-sitter-cli`, 需要先安装rust
+7. 編輯 `~/.config/nvim/lua/configs/treesitter.lua`
+8. 編輯 `~/.config/nvim/lua/configs/lspconfig.lua`, 刪掉不需要的語言配置
+9. 安裝需要的 lsp server
+10. 安装 `https://github.com/BurntSushi/ripgrep#installation`
+11. `:checkhealth`
+
+## mac快捷键
+
+mac的option对应其他系统的alt键，但是默认键盘布局，option+字母或者数字是用来输入特殊字符的，无法修改。
+
+解决方法: 修改系统设置，键盘-输入法。删掉"英文"，添加 "Unicode 16进制输入法"; 修改中文输入法的编好设置，在“按键”-“键盘布局”里选择“Unicode 16进制输入法”, 这样就可以自己定义 alt快捷键了
+
+## 常用 lsp server
+
+```
+:Mason
+```
+
+Mason 会将lsp server安装在 `~/.local/share/nvim/mason/bin/` 并在启动时注入 PATH 环境变量.
+
+如果系统已经安装有相应的lsp server, 就不必充分安装了.
+
+rust:
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# linux
+curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/bin/rust-analyzer
+chmod +x ~/in/rust-analyzer
+# mac
+brew install rust-analyzer
+```
+
+java
+
+```
+https://github.com/georgewfraser/java-language-server
+```
+
+FAQ
+=====
+
+* 插件不用,必须用 `:PackerClean` 卸载干净
+
+* 自定义 vim标题栏内容: `set title`, 默认会显示文件名和目录, 可以通过`set titlestring="自己的标题"` 进行修改,示例:
+```
+:auto BufEnter * let &titlestring = hostname() .. "/" .. expand("%:p")
+:set title titlestring=%<%F%=%l/%L-%P titlelen=70
+```
+* 可以使用项目仓库名,session名作为title
+
+VIM 
+========================
+
+1. `:h keycodes` 查看键盘按键代码
+1. `:h builtin` 查看vim内置 fn
+2.  光标跳转: `<c-o>`上一位置, `<c-i>`下一位置
+
+
+`set linespace` 行距设置, 解决部分gui行距不合适的问题
+
+## terminal
+
+进入 terminal 模式后，可以使用 `<c-\><c-n>`退出terminal模式回到normal模式.
+
+terminal 模式不能访问寄存器，需要粘贴内容的时候，可以回到 normal模式，
+执行粘贴操作将内容粘贴到命令行输入区域，然后再重新进入terminal模式.
+
+
+## 换行符处理
+
+1. 将粘贴的文本中的windows换行符`\r\n`处理为unix换行符`\n`, 只需要执行搜索删除掉`\r`即可: `:s/\n//g`
+
+2. vim在执行write命令时，会根据buffer的 `fileformat` 自动处理换行符.
+
+3. 修改整个文件的换行符模式，只需要设置buffer的 `fileformat` 选项即可
+
+4. vim在打开文件时可以根据`fileformats` 选项选择最合适的换行符, 默认值为 'unix,dos', 无需特别设置.
+
+5. 向一个文件中一次粘贴很大的文本时，如果换行符与文件的换行符不一致，会产生卡顿卡死的问题(触发了某些插件的执行), 所以粘贴前可以先转换好换行符再粘贴.
+或者new一个空白文件，粘贴进去处理好，再往文件里粘贴.
+
+## 输入特殊字符
+
+输入模式下，使用`<c-v>`激活特殊输入
+* 这时按回车，就完成了`^M` 换行符(根据fileformat字段使用`\r\n`或`\n`)的输入, 主要用于在单行输入模式(例如cmdline模式)里，录入换行文本。
+* 在cmdline模式，按下tab就完成了`^I`换行符的输入.
+* 按需任意组合键或功能键，就完成了组合键功能键的输入.
+
+## 内置函数
+
+| function              | 返回                   | 功能                                                                     |
+| ----                  | ----                   | ----                                                                     |
+| has(feature)          | 存在返回1，不存在返回0 | 判断是否存在某个特性, 例如: "win64","mac","linux","nvim","python3","wsl" |
+| exists({expr})        | number                 | 用于判断option,variable,function,colorscheme,command 是否存在            |
+| has_key({dict},{key}) | 存在返回1，不存在返回0 | 判断 dict里是否存在key                                                   |
+| line({expr})          | number                 | 返回行号. 可以根据光标位置，最后一行, mark, 等方式返回行号               |
+| expand({string})      | string                 | 扩展文件相关的字符串                                                     |
+| filereadable({file})  | bool                   | 文件存在且可读，返回true; 否则返回false                                  |
+
+## registers 寄存器
+
+vim 提供了一些寄存器，可以通过yank操作讲选择的内容放入寄存器或从寄存器取出:
+
+
+1. The unnamed register `""`
+* 自动存放了上一次删除命令(d,c,s,x)内容的存储
+2. 10 numbered registers `"0` to `"9`
+* 自动按次序存放了历史删除命令(d,c,s,x)内容的存储
+* 数值越大，历史越久.
+* 也可以手动存放覆盖掉里面的内容,但没有必要.
+3. The small delete register `"-`
+* 自动存放了小于一行文本的被删除内容.
+4. 26 named registers `"a` to `"z` or `"A` to `"Z`
+* 用于手动存放自己的内容，小写是replace,大写是append
+5. 只读寄存器 `":`, `".`, `"%`
+* `".` 存储最后一次insert的内容(insert mode执行ctrl-a就是插入的此寄存器内容)
+* `"%` 存储了当前文件名
+* `":` 存储了最后一次执行的命令
+6. Alternate buffer register `"#`
+* 存放了当前文件的alternate file的文件名
+7. The expression register `"=`
+* 并不是一个真正的寄存器 "="
+8. The selection registers `"*` and `"+`
+* 供GUI环境使用，用于打通系统剪贴板，如果gui环境这两个寄存器不可用，则会使用`""`寄存器.
+9. The black hole register `"_`
+* 如果删除时，不希望影响到任何其他寄存器，可以用这个寄存器
+10. Last search pattern register `"/`
+* 存放了最后一次搜索的内容.
+
+
+你可以通过command`let @` 向寄存器里写内容,例如向 `"a` 寄存器里写入 "hello":
+
+```
+:let @a='hello'
+```
+
+如果不指定寄存器，则向近一次
+
+使用 `:dis[play]` 可以列出所有寄存器及内容
+
+可以利用寄存器将保持命令执行的输出,例如:
+
+```
+:let @a=execute('!git status')
+```
+
+## map Mode 
+
+
+| Mode Command | Normal | Insert | Cmdline | Visual | Select | Oprator-pending | Terminal | Lang-Arg |
+| -------      | ------ | -----  | -----   | -----  | -----  | -----           | ------   | ------   |
+| [nore]map    | yes    | -      | -       | yes    | yes    | yes             | -        | -        |
+| n[nore]map   | yes    | -      | -       | -      | -      | -               | -        | -        |
+| [nore]map!   | -      | yes    | yes     | -      | -      | -               | -        | -        |
+| i[nore]map   | -      | yes    | -       | -      | -      | -               | -        | -        |
+| c[nore]map   | -      | -      | yes     | -      | -      | -               | -        | -        |
+| v[nore]map   | -      | -      | -       | yes    | yes    | -               | -        | -        |
+| x[nore]map   | -      | -      | -       | yes    | -      | -               | -        | -        |
+| s[nore]map   | -      | -      | -       | -      | yes    | -               | -        | -        |
+| o[nore]map   | -      | -      | -       | -      | -      | yes             | -        | -        |
+| t[nore]map   | -      | -      | -       | -      | -      | -               | yes      | -        |
+| l[nore]map   | -      | yes    | yes     | -      | -      | -               | -        | yes      |
+
+## cmdline
+
+### 复制粘贴
+
+先按下 Ctrl-r ，然后选择从哪个寄存器上粘贴
+
+* `"` 从yank寄存器
+* `+` 从+寄存器
+* `*` 从*寄存器
+
+### 可expand的特殊参数
+
+可以直接作为cmdline里命令的参数使用, 自动被expand. 也可以在脚本中使用 expand()函数手动扩展
+
+1. `%` 当前文件相对于当前 working directory 为`~/test/`, 文件路径为`~/test/project/readme.md`, 则`%`的值为: `project/readme.md`
+- 试试 `:!echo %`
+2. `<cword>` 光标所在处的word
+- 试试 `:!echo <cword>`
+3. `<cWORD>` 光标所在处的WORD
+- 试试 `:!echo <cWORD>`
+
+#### 文件名修饰符
+
+特殊参数`%`后面可以使用修饰符:
+
+* :p	必须是第一个修饰符,转为绝对路径.  例如:`:!echo %:p`	
+* :~	如果是home目录下的文件,转为 `~/`格式 的路径 
+* :.	相对于当前工作目录的相对路径.
+* :h	去掉文件名(最后一个/及后面的字符),只保留路径,如果文件末尾是`/`,则移除的是`/`
+- 试试 `:cd %:h`
+* :t	去除路径,只保留文件名  Must precede any :r or :e.
+* :r	去除最后一个后缀 (the last extension removed).	如果文件是.开头没有其他后缀,不会移除
+* :e	保留文件的后缀(不含.号).如果文件没有后缀,或者只有一个.开头,结果是空.
+* :s?pat?sub?  使用正则替换修改文件路径,只替换第一次的匹配
+* :gs?pat?sub? 使用正则替换修改文件路径,替换每一次的匹配
+
+
+## 常用 motion 键
+
+| H          | 移动光标到屏幕顶部行首                                      |
+| M          | 移动光标到屏幕中部行首                                      |
+| L          | 移动光标到屏幕底部行首                                      |
+| w          | 移动光标到下一单词的开头                                    |
+| W          | 移动光标到下一连续字符的开头                                |
+| b          | 移动光标到单词开头,如果已经在单词开头，移动到上一单词的开头 |
+| B          | 移动光标到一组连续字符(或上一连续字符)开头                  |
+| e          | 移动光标到单词末尾,如果已经在单词末尾，移动到下一单词的末尾 |
+| E          | 移动光标到一组连续字符(或上一连续字符)末尾                  |
+| ge         | 移动光标到上一个单词的结尾                                  |
+| gg         | 移动光标到文件首                                            |
+| G          | 移动光标到文件末尾                                          |
+| -          | 移动光标到上一行行首(非空白字符)                            |
+| +或Enter   | 移动光标到下一行行首(非空白字符)                            |
+| {n}<space> | 光标向后移动n个字符                                         |
+| {n}<Enter> | 光标向下移动n行到行首(非空白字符)                           |
+| {n}G       | 移动到第n行行首(非空白字符)                                 |
+| ]m         | 移动到下一个代码块的开头                                    |
+| [m         | 移动到上一个代码块的开头                                    |
+| ]M         | 移动到下一个代码块的末尾                                    |
+| [M         | 移动到上一个代码块的末尾                                    |
+
+
+## vim 内置 text objecg
+
+| 操作              | 作用                        |
+| --------          | --------------------------- |
+| aw                | 单词,含单词后的空格         |
+| as                | 一句,含句号后的空格         |
+| ap                | 段落,含段落尾部的空行       |
+| iw                | 单词,不含单词后的空格       |
+| is                | 一句,不含句号后的空格       |
+| ip                | 段落,不含段落尾部的空行     |
+| a'                | 单引号之间的内容,含单引号   |
+| a"                | 双引号之间的内容,含双引号   |
+| i'                | 单引号之间的内容,不含单引号 |
+| i"                | 双引号之间的内容,不含双引号 |
+| a),a(,a},a{,a],a[ | 各种括号之间的文本对象      |
+| i),i(,i},i{,i],i[ | 各种括号之间的文本对象      |
+| aB,ab,ib,iB,      | B,b指圆括号                 |
+
+## window 导航
+
+
+| @            | @                                                 |
+| ------------ | -------------------------------------             |
+| [Ctrl] + [f] | forward下翻一页相当于 [Page Down]按键             |
+| [Ctrl] + [b] | backword上翻一页[Page Up] 按键                    |
+| [Ctrl] + [d] | down屏幕『向下』移动半页                          |
+| [Ctrl] + [u] | up屏幕『向上』移动半页                            |
+| Ctrl + E     | 窗口向上滚动                                      |
+| Ctrl + Y     | 窗口向下滚动                                      |
+| zz           | 滚动窗口使光标所在行处于屏幕正中                  |
+| zt           | 滚动窗口使光标所在行处于屏幕最上                  |
+| zb           | 滚动窗口使光标所在行处于屏幕最下                  |
+| ctrl+w       | 窗口切换(需配合定位命令)                          |
+
+
+| ctrl-w s      | 水平分隔窗口打开一份文件副本                  |
+| ctrl-w v      | 垂直分隔窗口打开一份文件副本                  |
+| ctrl-w n      | 水平分隔窗口打开一个空buffer                  |
+| ctrl-w o      | 在屏幕中只保留当前窗口 , 所有的其他窗口都关闭 |
+| :new [file]   | 水平分隔窗口打开一个空buffer                  |
+| :vnew [file]  | 垂直分隔窗口打开一个空buffer                  |
+| ctrl-w c      | 多窗口时，关闭当前窗口                        |
+| ctrl-w q      | 退出vim                                       |
+| ctrl-w ctrl-w | 在窗口之间切换，从上向下，从左向右            |
+
+### 垂直窗口中打开命令产生的窗口
+
+help 窗口默认是水平分割出的，使用下面的命令，可以在垂直分割出的窗口中打开:
+
+```
+:vert h
+```
+
+### window-moving
+
+```
+:help window-moving 
+```
+
+
+窗口 rotate, rotate 的窗口必须是完全相邻的窗口边界,优先上下rotate:
+
+|<c-w>+r   | 交换窗口, 所有窗口之间轮换, 上面的向下移动(或者左边的向右边移动) | 
+|<c-w>+R   | 交换窗口, 所有窗口之间轮换, 下面的向上移动(或者右边的向左边移动) | 
+|<c-w>+x   | 交换窗口, 仅与下方相邻(或右侧相邻)的窗口之间交换 | 
+
+
+
+窗口 moving:
+
+|<c-w>+K   | 将当前窗口,移动到 **所有** 其他窗口的顶部| 
+|<c-w>+J   | 将当前窗口,移动到 **所有** 其他窗口的下面| 
+|<c-w>+H   | 将当前窗口,移动到 **所有** 其他窗口的左侧| 
+|<c-w>+L   | 将当前窗口,移动到 **所有** 其他窗口的右侧| 
+
+### window-resizing
+
+|<c-w> =  | 上下均分,左右均分 | 
+
+
+### 代码折叠
+
+
+删除折叠: 被删除后的折叠，无法再折叠起来。
+
+展开折叠: 被展开的折叠，可以再次折叠起来。
+
+| 操作               | 功能                                           |
+|--------------------|------------------------------------------------|
+| zi                 | 开启/关闭代码折叠, 但不会改变文本的折叠的状态. |
+| zf{motion commond} | 创建折叠,例如: zf5n 向下折叠5行文本            |
+| {Visual}zf         | 折叠Visual模式选择的文本                       |
+| zd                 | 删除光标处折叠,但不会删除内嵌的折叠            |
+| zD                 | 删除光标处的所有折叠                           |
+| zE                 | 删除窗口里的所有折叠                           |
+| zo{n}              | 展开光标处的折叠                               |
+| zO                 | 展开光标处的折叠,包括内嵌的折叠                |
+| zc{n}              | 收起光标处的折叠                               |
+| zC                 | 收起光标处的折叠,包括内嵌的折叠                |
+| za{n}              | 展开/收起光标处折叠                            |
+| zA                 | 展开/收起光标处的所有折叠                      |
+
+
+### 在折叠中移动光标
+
+折叠被创建后，无论收起还是展开，以下操作都是有效的
+
+| 操作 | 功能                                                                     |
+|------|--------------------------------------------------------------------------|
+| [z   | 移动打折叠区块的第一行, 如果已经在第一行，则移动到上一层折叠的第一行     |
+| ]z   | 移动打折叠区块的最后行, 如果已经在最后一行，则移动到上一层折叠的最后一行 |
+| zj   | 向下移动到下一个折叠的头部，一个收起的折叠被视为一个折叠                 |
+| zk   | 向上移动到下一个折叠的头部，一个收起的折叠被视为一个折叠                 |
+
+### zr,zM,zr,zR
+
+vim的代码折叠, 是按层级折叠的. 所有代码块都有一个代表自己层级的值. 
+
+例如, 代码共有5层, 第一次zm会折叠所有第五层的代码块, 再一次zm折叠所有第四层的代码块.
+
+| 操作 | 功能             |
+|------|------------------|
+| zm   | 继续收拢更多折叠 |
+| zM   | 收拢所有折叠     |
+| zr   | 展开更多折叠     |
+| zR   | 展开所有折叠     |
+
+## quickfix
+
+
+| cmd             | 功能             |
+|-----------------|------------------|
+| :h quickfix     | 显示quickfix帮助 |
+| :copen [height] | 显示quickfix窗口 |
+
+
+## remote 编辑
+
+nvim 可以通过参数以 client或server的模式启动
+
+| cmd               | 功能                                           |
+|-------------------|------------------------------------------------|
+| `--server {addr}` | 连接到nvim server                              |
+| `--listen {addr}` | 启动一个nvim server                            |
+| `--headless`      | 配合listen使用，单纯启动server，不启动用户界面 |
+
+
+## neovim-qt
+
+要支持远程client nvim-qt与client os之间的系统剪贴板，需要在client-qt上执行 `:call GuiClipboard()`, 然后就可以在client-qt 上使用 "+p, "+y 访问系统剪贴板了.
+
+
+NvimTree 高频快捷键
+========================
+
+- `g?`  [go help]  显示/关闭Nvim keymap 帮助
+
+## Tree 操作与导航
+
+- `q` [quit]关闭文件树
+- `W` [Wrap] 全部折叠
+- `E` [Expand] 展开光标目录的全部子目录
+- `H`  [Hidden toggle] 切换 . 文件显示
+- `I` 切换显示/隐藏 .gitignore 隐藏的文件
+- `P` 光标移动到上级目录
+- `R` [Refresh] 刷新Tree
+- `<c-]` 切换cwd到该目录
+- `-` Tree Root 切到上一级目录
+- `s` [system]  打开系统默认文件管理器
+- `f` [filter] 过滤tree中的文件,只显示与filter匹配的文件. 
+- 配合 `E` 可以快速搜索Tree下的文件. 
+- `F` 清除filter
+
+## 文件信息
+
+- `y`    复制文件名到剪贴板
+- `Y`    复制相对路径到剪贴板
+- `gy`   复制绝对路径到剪贴板
+-  `<C-k>` 查看文件信息(路径/大小/修改时间)
+
+## 文件管理
+
+- `r` [rename] 重命名
+- `a` [add] 添加文件或目录
+- `c` [copy] 复制
+- `x` [cut] 剪切文件
+- `p` [paste] 粘贴
+- `d` [remove] 删除
+- `D` [Trash] 放到回收站
+- `.` 进入cmdline模式 , 并将文件路径自动填充在光标后面, 以输入命令,并使用文件路径作为参数执行.
+
+## 编辑文件
+
+- `o`,`<cr>` 有多个窗口,选择在哪个窗口编辑文件. 单个窗口, 在新tab打开
+- `O` 有多个窗口, 直接在当前窗口编辑文件. 单个窗口, 在新tab打开
+- `<c-x>` split. 分隔出新水平窗口打开文件
+- `<c-v>` vsplit. 分隔出新垂直窗口打开文件
+- `<c-t>` tabnew. 在新tab打开
+- `<tab` 预览文件
+
+## 命令与映射
+
+* `:NvimTreeToggle` : 展开隐藏NvimTree, 会保持Tree状态不变.
+
+* `:NvimTreeFindFileToggle` 定位光标到当前bufname对应的tree文件位置(如果文件位于当前tree的话).
+
+* `:NvimTreeResize width` , `:NvimTreeResize +width`, `:NvimTreeResize -width` 调整tree的宽度
+
+* `gt` normal模式, go to tree. 
+
+
+bufferline
+========================
+
+## tab选择与关闭
+
+1. `:BufferLineCycleNext` and `:BufferLineCyclePrev`
+* nomarl 绑定: `<c-tab>`,`<a-tab>`, `<s-tab>`
+2. 使用 `:Telescope buffers`, 列出所有tab
+* `<c-space>` 列出cwd的buffers
+* `<s-f12>` 列出所有buffers
+3. 删除当前buffer 鼠标右键或 `:bd`,`:bdelete`, buffer 被delete后，就不会出现在buffer list里了。
+
+## 排序
+
+预设3种排序方式:
+
+* `:BufferLineSortByExtension` 按文件类型排序
+* `:BufferLineSortByDirectory` 按文件所属目录排序
+* `:BufferLineSortByTabs`
+
+### tab window
+
+* bufferline 的 buffer 位于一个窗口布局下
+* bufferline 可以使用tabnew 创建新窗口布局, 实现同一组buffers以不同的窗口布局查看
+* 窗口序号在bufferline右侧以数字表示. 使用 `gt` 在窗之间切换
+
+
+nvim-spectre 搜索替换
+========================
+
+* normal模式 `<leader>S` 打开搜索窗口, cwd全局搜索
+* visual模式,`<leader>s` 搜索光标选择的词,cwd全局搜索
+* normal模式,`<leader>sw` 搜索光标所在的词,cwd全局搜索
+* normal模式,`<leader>sp` (search in path)打开搜索窗口, 仅搜索当前文件.
+* normal模式,`<leader>q` send_to_quickfix
+
+Trouble 列表
+===========
+
+更好用, 不仅可以列出代码诊断问题, 还可以列出定义和引用.
+
+* `:Trouble` 列出所有buffers里的问题代码. 即 `:Trouble workspace_diagnostics`
+* `:Trouble lsp_references`: 列出 references 但不会在当前窗口打开,而是临时预览模式. 而 `:Telescope lsp_references` 会打开一个 Telescope 浮窗.
+* `:Trouble lsp_definitions`: 列出definitions 但不会在当前窗口打开,而是临时预览模式. 而 `:Telescope lsp_definitions` 会打开新buffer
+* `:Trouble lsp_type_definitions`: tupe definitions of the word under the cursor from the builtin LSP client
+* `:Trouble document_diagnostics`: document diagnostics from the builtin LSP client
+* `:Trouble quickfix`: quickfix items
+* `:Trouble loclist`: items from the window's location list
+
+最重要的功能: 配置一下(`<c-t>`映射), 可以把任何Telescope的结果,发送到Troulbe窗口.(见文档)
+
+LSP
+======
+
+文档: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/
+
+vim api：`vim.lsp`, `vim.diagnostic`
+
+Telescope
+========
+
+| Mappings     | Action                                         |
+| ----         | ----                                           |
+| <C-/>        | 最有用的快捷键.Show mappings for picker actions (insert mode) |
+| <C-n>/<Down> | Next item                                      |
+| <C-p>/<Up>   | Previous item                                  |
+| <CR>         | 当前窗口打开                                   |
+| <C-x>        | spli打开                                       |
+| <C-v>        | vsplit 打开                                    |
+| <C-t>        | 新 tab 打开                                    |
+| <C-u>        | 预览窗口向上翻页                               |
+| <C-d>        | 预览窗口向下翻页                               |
+| <C-c>        | Close telescope                                |
+| <Tab>        | Toggle selection and move to next selection    |
+| <S-Tab>      | Toggle selection and move to prev selection    |
+| <C-q>        | 发送所有匹配的选择到 (qflist)                  |
+| j/k          | Next/previous (in normal mode)                 |
+| H/M/L        | Select High/Middle/Low (in normal mode)        |
+| gg/G         | Select the first/last item (in normal mode)    |
+| ?            | Show mappings for picker actions (normal mode) |
+| <Esc>        | Close telescope (in normal mode)               |
+
+有些 Telescope 命令支持需选项, 这种 Telescope 调用示例:
+
+```
+require("telescope.builtin").find_files({hidden=true, layout_config={prompt_position="top"}})
+```
+
+对应的cmd命令方式:
+
+```
+:Telescope find_files hidden=true layout_config={"prompt_position":"top"}
+```
+
+Picker
+--------
+
+根据需要,你可以把任何picker绑定到键.
+
+示例:
+
+```
+:nnoremap <Leader>pp :lua require'telescope.builtin'.planets{}
+```
+
+下面是一些高频pickers
+
+### File pickers
+
+会忽略.gitignoe里的文件
+
+* `builtin.find_files`	在当前工作目录下查找文件.( 默认会忽略.gitignoea/.ignore里的文件,以及.开头的其他文件)
+* 支持的选项
+* cwd string 搜索的目录,默认为当前工作目录
+* follow bool 是否follow符号链接, 默认false
+* hidden bool 是否搜索隐藏文件,默认为false,不搜索隐藏目录和文件.
+* no_ignore bool 是否搜索.ignore,.gigignore里的文件,默认为false, 不搜索这两个文件中匹配的内容.
+* no_ignore_parent bool 是否搜索父目录.ignore,.gigignore里的文件,默认为false
+* search_dirs table 搜索的目录列表,可以是相对cwd的目录,也可以是绝对目录.
+* `builtin.live_grep`	在当前工作目录下的文件内容里实时模糊搜索
+* 支持的选项
+* `builtin.oldfiles` 查找历史编辑文件
+* 支持的选项
+* `builtin.grep_string`	在当前工作目录下的文件内容里搜索光标处的单词.
+
+### lsp pickers
+
+* `builtin.diagnostics`	列出所有有buffers的诊断列表, 或者通过指定bufnr列出特定buffer的诊断. 
+* `builtin.lsp_references`	列出光标处的所有引用. 
+* `builtin.lsp_definitions`	跳转到光标元素的定义(如果只有一个), 如果可能有多个选择,则列出所有的可能定义.
+* `builtin.lsp_incoming_calls`	列出光标处函数的所有调用者.
+* `builtin.lsp_outgoing_calls`	列出光标处函数里调用的所有函数.
+* `builtin.lsp_implementations`	Goto the implementation of the word under the cursor if there's only one, otherwise show all options in Telescope
+* `builtin.lsp_type_definitions`	Goto the definition of the type of the word under the cursor, if there's only one, otherwise show all options in Telescope
+* `builtin.lsp_dynamic_workspace_symbols`	Dynamically Lists LSP for all workspace symbols
+* `builtin.lsp_document_symbols`	Lists LSP document symbols in the current buffer
+* `builtin.lsp_workspace_symbols`	Lists LSP document symbols in the current workspace
+
+### vim pickers
+
+插件开发和vim配置可以参考以下pickers
+
+* `builtin.commmands` 查找所有可用的vim commands, 以及他们执行的代码, 回车执行.
+* `builtin.autocommmands` 查找所有生效的auto commands, 以及他们声明的代码
+* `builtin.vim_options` 列出所有生效的vim options, 以及他们的生效范围,值.
+* `builtin.registers` 列出所有vim寄存器里的内容, 回车插入光标位置.
+* `builtin.keymaps` 查找keymap
+* `builtin.filetypes` 查找filetypes
+* `builtin.highlights` 列出所有代码高亮设置.
+
+
+project.nvim
+=========
+
+`:Telescope projects` 列出打开过的工程列表.
+
+在列表中, 可以使用以下快捷键, 可以对project目录下执行:
+
+| Insert mode | Action                  |
+| ----        | ----                    |
+| <c-r>       | 最近编辑过的project文件 |
+| <c-w>       | 切换cwd到project根目录  |
+| <c-d>       | 删除project             |
+| <c-f>       | 文件搜索                |
+| <c-s>       | live_grep(内容搜索)     |
+
+
+Session
+========
+
+提供了两个autocmd命令: 
+
+| Event           | Description                                                                      |
+|-----------------|----------------------------------------------------------------------------------|
+| SessionSavePre | Executed before a session is saved                                                |
+| SessionLoadPre | Executed before a session is loaded. 可以在session加载前做一些清理工作. |
+| SessionSavePost | Executed after a session is saved                                                |
+| SessionLoadPost | Executed after a session is loaded. 可以在session加载后做一些工作空间的准备工作. |
+
+示例:
+
+```
+local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {}) -- A global group for all your config autocommands
+
+vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
+group = config_group,
+callback = function()
+require('nvim-tree').toggle(false, true)
+end,
+})
+```
+
+Easymothion
+===========
+
+默认是`<leader><leader>`触发, 可重新映射:
+
+示例:
+```
+nmap s  <Plug>(easymotion-s2)
+"用easymotion的sn 替代vim默认的搜索功能: 使用 / 触发 sn 搜索,  输入搜索词, 如果当前屏幕没有找到, 可以使用Tab, S-Tab 翻页, 回车, 选择跳转目标. 使用 n,N 在多个目标之间移动
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+```
+
+
+vim.api
+========
+
+```
+:h api
+```
+
+## nvim_create_autocmd
+
+```
+vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
+callback = function()
+	vim.o.title = true
+	local f = vim.fn.getcwd()
+	if f ~= nil then
+		local root_files = {
+			f .. '/.git',
+			f .. '/.svn',
+			f .. '/.hg',
+			f .. '/.idea',
+			f .. '/go.mod',
+			f .. '/package.json',
+		}
+
+		local dirs = vim.fn.split(f, "/")
+		if dirs ~= nil then
+			local project_name = '[ ' .. dirs[#dirs] .. ' ]'
+			for _, v in pairs(root_files) do
+				if vim.fn.getftype(v) == 'dir' then
+					vim.o.titlestring = project_name
+				end
+				if vim.fn.getftype(v) == 'file' then
+					vim.o.titlestring = project_name
+				end
+			end
+		end
+	end
+end,
+})
+```
+
+## nvim_set_keymap
+
+```
+vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+
+```
+
+## nvim_create_user_command
+
+```
+:call nvim_create_user_command('SayHello', 'echo "Hello world!"', {})
+:SayHello
+```
+
+DAP
+=====
+
+## 插件
+
+### mfussenegger/nvim-dap
+
+基础插件,需要为语言配置单独
+
+### nvim-telescope/telescope-dap.nvim
+
+commands:
+
+```
+:Telescope dap commands
+:Telescope dap configurations
+:Telescope dap list_breakpoints
+:Telescope dap variables
+:Telescope dap frames
+```
+
+apis:
+
+```
+require'telescope'.extensions.dap.commands{}
+require'telescope'.extensions.dap.configurations{}
+require'telescope'.extensions.dap.list_breakpoints{}
+require'telescope'.extensions.dap.variables{}
+require'telescope'.extensions.dap.frames{}
+```
+
+
+## 使用
+
+`h dap.txt`
+
+* launch debug adapter
+* `lua require'dap'.continue()`
+* toggle breakpoints
+* `toggle_breakpoint({condition}, {hit_condition}, {log_message})`
+* 普通断点: `require('dap').toggle_breakpoint()` 
+* 条件断点: `require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: ')`
+* Logpoint断点: `require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))`
+* list all breakpoints
+* `require('dap').list_breakpoints()`
+* clear all breakpoints
+* `require('dap').clear_breakpoints()`
+* step over, step into, step out
+* `require'dap'.step_over()`
+* `require'dap'.step_into()`
+* `require'dap'.step_out()`
+* step back, reverse continue
+* `require'dap'.step_back()`
+* `require'dap'.reverse_continue()`
+* pause
+* `require'dap'.pause()`
+* Goto
+* `require'dap'.run_to_cursor()`
+* stop
+* `require'dap'.terminate()`
+* repl
+* `require'dap'.repl.open()`
+
+
+### logpoint
+
+```
+set_breakpoint({condition}, {hit_condition}, {log_message})
+toggle_breakpoint({condition}, {hit_condition}, {log_message})
+```
+
+这两个api在设置断点时，如果没有任何参数，就是无条件断点。
+
+* 如果设置了 condition，则为条件断点
+* 如果设置了 hit_condition，是一个数字字符串，即最多在断点处暂停几次。
+* 如果设置了 log_message，则为log断点,只打日志，不阻塞执行. log_message 支持变量
+
+### 远程调试
+
+1. 在远程服务器上安装dlv :`go install github.com/go-delve/delve/cmd/dlv@latest`
+2. 拿到服务器上要调试的go服务进程id
+3. 在远程服务器上启动dlv : `dlv attach 进程id --headless --listen=:2345 --api-version=2 --accept-multiclient`
+* 或者执行 `dlv exec ./main  --headless -l=:2345 --api-version=2  --accept-multiclient`, 由dlv来启动进程并自动attach.
+	dlv只在有client连接以后才会真正启动进程.
+4. 执行 `:GoDebug`  选择远程调试的adapter
+
+### rcarriga/nvim-dap-ui
+
+# go.nvim
+
+## GoTest
+
+GoTest 在success的时候，只输出成功。不会自动打开quickfix窗口显示log. 在fail的时候自动打开quickfix窗口显示log.
+
+## Debug
+
+| command        | Description                                        |
+|----------------|----------------------------------------------------|
+| GoDebug -h     | 显示 Debug 帮助                                    |
+| GoDebug -b     | 添加/取消断点                                      |
+| BreakCondition | 添加/取消条件断点                                  |
+| GoDebug        | 开启调试会话, 备注:1                               |
+| GoDebug -t     | 为test代码开启调试会话, 备注:2                     |
+| GoDebug -p     | 为Package test代码开启调试会话                     |
+| GoDebug -n     | 为最近的 go test file 开启调试会话                 |
+| GoDebug -R     | 重新开始调试会话                                   |
+| GoDbgKeys      | 在浮动窗口显示debug键绑定                          |
+| GoDebug -s     | 结束调试会话并恢复撤销 debug keymap                |
+| GoDbgStop      | Same as GoDebug -s                                 |
+| GoDebug -a     | 启动 dlv, 并选择一个本地进程, attach到进程上debug |
+| GoDbgContinue  | Continue debug session                             |
+| BreakCondition | 添加条件断点                                       |
+
+备注:
+
+1. 如该不使用任何参数, 则弹出select窗口选择 launch.json 里的配置和dap插件的 `dap.configurations.go` 配置中的一项启动调试. 
+* 如launch.json不存在, 则根据当前文件，启动main()或package的调试.
+2. with -t option, if current file is not test file, will switch to test file and run test for current function
+
+### 远程调试
+
+先安装 vscode-go
+
+```
+cd ~
+git clone https://github.com/golang/vscode-go
+cd vscode-go
+npm install
+npm run compile
+```
+
+修改 nvim-dap 配置:
+
+```
+dap.adapters.remoteDlv = {
+	type = "executable";
+	command = "node";
+	args = { os.getenv("HOME") .. "/vscode-go/dist/debugAdapter.js" };
+}
+
+dap.configurations.go = {
+	-- 远程
+	{
+		type = "remoteDlv";
+		request = "attach";
+		mode = "remote";
+		name = "Remote Attached Debugger";
+		port = 2345; // dlv server 端口
+		host = '127.0.0.1'; // dlv server host
+		cwd = vim.fn.getcwd();
+	},
+}
+```
+
+注意:
+
+1. 如该没有任何 dlv client连接，则 dlv server会暂停进程的运行.
+2. dlv在某代码处stop时，是对进程的stop, 此时整个进程被暂停.
+3. dlv服务 以  --accept-multiclient 启动时，debug session退出不会导致dlv server退出. 
+4. dlv服务 不以  --accept-multiclient 启动时，debug session 退出会导致dlv server退出. 
+
+### keymap
+
+调试会话启动后会注册启用以下键绑定(注意，会覆盖vim默认的键绑定), 需要使用`:GoDbgStop`或`:GoDebug -s` 恢复键绑定:
+
+```
+b -> toggle_breakpoint
+r -> run （launch debug adapter）
+S -> stop
+c -> continue
+C -> run_to_cursor
+n -> step_over
+s -> step_into
+o -> step_out
+P -> pause
+u -> up
+D -> down
+K -> float_element
+```
+
+## GoGet GoMod
+
+请使用 `:GoGet`, `:GoModInit`, `:GoModTidy`, `:GoModVendor` 管理依赖，他们会重启gopls, 否则需要自己使用 `:LspResart` 重启Lsp服务.
+
+## Build and test
+
+## Project
+
+支持使用 launch.json, .gonvim 创建项目配置
+
+https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+
+
+
+## 效率工具
+
+| command                  | Description                                        |
+|--------------------------|----------------------------------------------------|
+| :GoJson2Struct           | 从剪贴板的json生成go struct.                       |
+| :GoAlt/GoAltS/GoAltV     | 源码和测试文件之间切换                             |
+| :{range}GoAddTag [flags] | 例如: `:GoAddTag json -add-options json=omitempty` |
+| :GoImpl                  | 为选择的struct添加实现某个接口的方法               |
+| :GoCmt                   | 添加包、接口、结构、方法注释                       |
+| :GoRename                |                                                    |
+| :GoAddTest               |                                                    |
+| :GoIfErr                 |                                                    |
+| :GoChannel               |                                                    |
+| :GoGenerate              |                                                    |
+| :GoCallStack             |                                                    |
+| :GoFillSwitch            | 自动创建类型switch的所有case条件                   |
+| :GoMockGen               | 生成mock                                           |
+| :GoPkgOutline            | 显示当前包的outline                                |
+
+
+
+luasnip
+======
+
+使用`<tab>/<s-tab>` 在snippets变量之间跳转. 快捷键配置在自动完成插件配置里。
+
+go
+-----
+
+用 ~可以呼出snip列表
+
+go重复率比较高的代码片段都是错误处理和测试代码
+
+go.nvim 提供了以下snip
+
+### 常用片段:
+
+* `main`
+* `fn`
+* `mk`
+* `spn`  fmt.Sprintf("")
+* `tysw` type swtich
+* `fsel` channel for select case
+* `for` for loop
+
+### 错误处理有关的代码片段:
+
+* `ife`  : if err!=nil { }
+* `ifc` : call a function and check err
+* `ifce` : if err:=func();err!= nil 
+* `dfr` : defer recover  处理
+* `erw` : errors.Wrap(err,"failed to")
+* `erwf`: errors.Wrap(err,"failed %v",arg)
+
+
+### 测试有关的snipets
+
+* `test` test函数definition
+* `tcs`  test case code
+* `gocmp`
+* `noerr`
+* `bench` benchmark
+
+# nvim-cmp
+
+`:h cmp-develop`
+
+相关api: `cmp.SourceCompletionApiParams`, `lsp.CompletionResponse`, `lsp.CompletionItem`
+
+
+
+# Git 操作
+
+Gitsign和Telescope 可以满足基本的 文件diff, 分支管理
+
+## Gitsigns
+
+主要功能:
+
+1. 添加git状态标记: 支持gutter颜色，gutter符号，编辑区底色高亮
+2. 将变更全部发送到 loclist 或 quickfix(如果安装了trouble.nvim则发送到trouble), 方便在提交前check代码
+3. 集成到null-ls, 支持在代码变更区域触发 code action
+4. 方便的 blame : 可使用虚拟text显示光标所在行的 committer, commit msg, time
+* `:Gitsigns toggle_current_line_blame`
+4. hunks
+* preview_hunk: 单独在floating window预览hunk diff.
+* 提供了 Hunk text object
+* next_hunk/prev_hunk: 导航
+* stage_hunk : stage光标处的hunk/或选择的范围
+* undo_stage_hunk : undo最后一次stage_hunk的内容.
+* stage_buffer: stage 所有hunks 
+* reset_hunk: 撤销Hunk的变更
+* reset_buffer: reset 所有修改，内容恢复到修改前的状态
+* reset_buffer_index: 所有已经stage的Hunks都变更到unsage状态，内容并没有改变
+5. Diff against index or any commit
+6. Open diffview with any revision/commit
+* 在any base和index之间diff 当前buffer
+* `:Gitsigns diffthis({base})` 默认是与上一个commit diff
+* `:Gitsigns change_base({base},{global})`
+* `:Gitsigns reset_base({global})`
+* diff with the index: `:Gitsigns diffthis`
+* diff with the last commit: `:Gitsigns diffthis ~1`
+
+## Telescope git_ command
+
+### git_bcommits
+
+列出当前buffer的commit历史
+
+* `<cr>` checkout 
+* `<c-v>` 打开垂直diff窗口, 对HEAD与所选择的commit进行diff.
+
+### git_commits
+
+默认列出当前仓库的commit历史
+
+可以通过参数，列出指定path的commit历史: 配合NvimTree 实现 
+
+选择commit 回车可以 checkout
+
+### git_branches
+
+分支管理
+
+* `<cr>` checkout
+* `<c-t>` track
+* `<c-a>` add 
+* `<c-y>` merge
+* `<c-r>` rebase
+* `<c-d>` delete
+
+### git_stash
+
+列出 stash列表，回车可以apply到工作区
+
+## diffview
+
+中文乱码处理:
+
+```
+git config --global core.quotepath false
+git config --global i18n.commitEncoding utf-8
+git config --global i18n.logOutputEncoding utf-8
+```
+
+| 一般快捷键  | 功能                                 |
+|-------------|--------------------------------------|
+| `<leader>b` | toggle file pannel或者history pannel |
+| `gf`        | goto file: 打开文件                  |
+| `L`         | 查看 选择的commit 的完整信息         |
+
+
+| file_panel 快捷键 | 功能                   |
+|-------------------|------------------------|
+| `-`               | toggle stage file      |
+| `S`               | Stage all files        |
+| `U`               | UnStage all files      |
+| `X`               | Reset all files        |
+| `R`               | Update all files state |
+
+| history_panel 快捷键 | 功能                   |
+|----------------------|------------------------|
+| `y`                  | copy hash              |
+
+主要提供了以下命令, 查看当前分支的commit diff:
+
+### DiffviewOpen
+
+1. 查看commit之间的diff(可以使用HEAD,commit hash,tagname,branch name)
+	* 命令自带自动完成功能
+2. 查看工作区与index之间的diff, 在file_panel里可以进行 
+    * stage(`S`)/unstage(`U`)操作,
+	* 使用 `-` 可以对单个文件进行 stage/unstage
+3. 如果在 merge 或者 rebase 操作时使用，则选择冲突文件时, 会使用3-way diff 方便你
+处理冲突. 左侧是Ours(冲突之前的本地分支),右侧是Theirs(被合并进来的分支),中间是待解决冲突的本地index文件
+	* 使用 `]x`,`[x` 在冲突之间跳转.
+	* `<leader>co`: Choose the OURS version of the conflict.
+	* `<leader>ct`: Choose the THEIRS version of the conflict.
+	* `<leader>cb`: Choose the BASE version of the conflict.
+	* `<leader>ca`: Choose all versions of the conflict (effectively just deletes the markers, leaving all the content).
+	* `dx`: Choose none of the versions of the conflict (delete the conflict region).
+
+```
+:DiffviewOpen [git rev] [options] [ -- {paths...}]
+```
+
+示例:
+
+```
+:DiffviewOpen
+:DiffviewOpen HEAD~2
+:DiffviewOpen HEAD~4..HEAD~2
+:DiffviewOpen d4a7b0d
+:DiffviewOpen d4a7b0d..519b30e
+:DiffviewOpen origin/main...HEAD
+```
+
+### DiffviewFileHistory
+
+1. 查看文件目录的hisotry commit
+2. 查看文件选择的范围的history commit
+3. 查看单个文件的历史时，可以通过 `--follow` 关联起重命名之前的history
+4. `-n{n}`可以指定 history 的commit最大数量.
+5. `--author={pattern}` 可以指定commit的提交者
+6. `--grep={pattern}` 可以通过commit message 过滤提交
+7. 键映射支持Lua function, 比较灵活，可以实现: 两个commit之间的DiffviewOpen, 从commit创建分支,创建tag
+
+```
+:[range]DiffviewFileHistory [paths] [options]
+```
+
+示例:
+
+```
+:DiffviewFileHistory
+:DiffviewFileHistory %
+:DiffviewFileHistory path/to/some/file.txt
+:DiffviewFileHistory path/to/some/directory
+:DiffviewFileHistory include/this and/this :!but/not/this
+:DiffviewFileHistory --range=origin..HEAD
+:DiffviewFileHistory --range=feat/example-branch
+:'<,'>DiffviewFileHistory
+```
+
+### 其他命令
+
+```
+:DiffviewClose: Close the current diffview. You can also use :tabclose.
+:DiffviewToggleFiles: Toggle the files panel.
+:DiffviewFocusFiles: Bring focus to the files panel.
+:DiffviewRefresh: Update stats and entries in the file list of the current Diffview.
+```
+
+## akinsho/git-conflict.nvim
+
+冲突处理插件
+
+| 命令                    | 说明                           | 默认绑定 |
+| ----                    | ----                           | ----     |
+| GitConflictListQf       | 在 quickfix 列出所有冲突       | -        |
+| GitConflictChooseOurs   | Select the current changes.    | co       |
+| GitConflictChooseTheirs | Select the incoming changes    | ct       |
+| GitConflictChooseBoth   | Select both changes.           | cb       |
+| GitConflictChooseNone   | Select none of the changes.    | c0       |
+| GitConflictNextConflict | Move to the next conflict.     | ]x       |
+| GitConflictPrevConflict | Move to the previous conflict. | [x       |
+
+# text object
+
+| text object | 说明                                                                   | plugin                         |
+| ----        | ----                                                                   | ----                           |
+| ai/ii,aI/iI | 根据当前行的缩进量，从相邻的行开始选择，直到遇到缩进更少的或者空行为止 | kana/vim-textobj-indent        |
+| a,/i,       | 函数参数                                                               | sgur/vim-textobj-parameter     |
+| au/iu       | url                                                                    | mattn/vim-textobj-url          |
+| al/il       | 一行文本,不含末尾的空白字符                                            | kana/vim-textobj-line          |
+| ac/ic       | 注释                                                                   | glts/vim-textobj-comment       |
+| ao/io       | 相同缩进距离的多行行首的空白列缩进                                     | glts/vim-textobj-indblock      |
+| as/is       | 句子,即中间没有空白行的连续的多行文本                                  | reedes/vim-textobj-sentence    |
+
+## nvim-treesitter-textobjects
+
+支持以下text objects, 默认会根据语言自动注册.
+
+```
+(aB)@block		      go dart rust python c cpp csharp java js lua php ts
+(aS)@class		      go dart rust python c cpp csharp java js     php ts
+(aC)@conditional      go dart rust python c cpp csharp java js lua php ts 
+(aF)@function         go dart rust python c cpp csharp java js lua php ts
+(aL)@loop             go dart rust python c cpp csharp java js lua php ts 
+(am)@comment.outer    go dart rust python c cpp csharp java    lua php     
+(ast)@statement.outer go dart rust python c cpp csharp                     
+(aca)@call		          go dart rust python c cpp csharp java js lua     ts
+@parameter            go dart rust python c cpp csharp java js lua php ts 
+```
+
+# tommcdo/vim-exchange
+
+- 在第一个objext上 执行 cx{text object}, 然后在到另一个objext上执行cx{text objcet} 即可进行交换. 如果第二个motion和第一个motion相同,可以使用 .
+
+# text-case 单次大小写风格切换
+
+快捷键: `ga.`
+
+# Dial
+
+ctrl-a,ctrl-x增强
+
+配置了go的时间format,  `int,inti32,in64`,  `uint,uinti32,uin64`, `[]byte(/string(`
+`and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
+`success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled,
+`+/-`, `,/, /，/,`, `./ 。/ ．`"/ “ / ”`
+
+
+# focus.nvim
+
+多窗口时，自动调整当前window的大小
+
+* `:FocusDisable`	Disable the plugin per session. Splits will be normalised back to defaults and then spaced evenly.
+* `:FocusEnable`	Enable the plugin per session. Splits will be resized back to your configs or defaults if not set.
+* `:FocusToggle`	Toggle focus on and off again.
+
+# link-visitor
+
+* `VisitLinkInBuffer  Open links in the buffer
+* `VisitLinkUnderCursor`  Open link under the cursor
+* `VisitLinkNearCursor`  Open link near the cursor
+
+# 多列编辑
+
+## cursor模式多重选择操作
+
+* 光标移动到一个单词上，按下ctrl-n 会选中这个单词，然后n会增加选中下一处出现的该单词, 按下 N 会增加选中上一处出现的该单词.
+* 选择多个目标后，可以使用 shift+方向键，同时在多个目标上移动光标，调整所有目标的选择范围.
+* 也可以先在visual模式选择初始文本，然后用ctrl-n加选下一处相同文本.
+
+## ctrl+up ctrl+down 进行extend模式选择
+
+与mac系统快捷键冲突
+
+## tab切换选择模式
+
+多重选择完成后，可以按tab切换到extend模式
+
+## 选择完成后的操作
+
+* 多重选择完成后，可以按下x, 删除选择；
+* 按下 i, I, a, A ，在每一处选择的文本上进入对应的insert模式，开始多重编辑.
+
+| Key | Action                                              |
+|-----|-----------------------------------------------------|
+| n   | find next (same as C-n)                             |
+| N   | find previous                                       |
+| ]   | goto next                                           |
+| [   | goto previous                                       |
+| q   | skip and go to next                                 |
+| Q   | remove region                                       |
+| C-f | fast forward (go to first region in next page)      |
+| C-b | fast backward (go to first region in previous page) |
+
+# sqls
+
+vim:ft=markdown:norl:
