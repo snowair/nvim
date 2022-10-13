@@ -502,7 +502,14 @@ return require('packer').startup({ function(use)
 				-- Don't calculate root dir on specific directories
 				-- Ex: { "~/.cargo/*", ... }
 				exclude_dirs = {
+					'~/go/pkg/mod/gitlab.com/*',
+					'~/go/pkg/mod/go.uber.org/*',
+					'~/go/pkg/mod/gopkg.in/*',
+					'~/go/pkg/mod/golang.org/*',
+					'~/go/pkg/mod/google.golang.org/*',
 					'~/go/pkg/mod/git.code.oa.com/*',
+					'~/go/pkg/mod/git.woa.com/*',
+					'~/go/pkg/mod/github.com/*',
 					'~/.local/share/nvim/site/pack/packer/start/*',
 					'~/.vim/plugged/*',
 				},
@@ -547,6 +554,7 @@ return require('packer').startup({ function(use)
 							},
 							search_dirs = {
 								"~/git",
+								"~/git/mlol",
 								"/mnt/wd/Git",
 							},
 						},
