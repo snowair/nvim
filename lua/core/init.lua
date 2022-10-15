@@ -4,7 +4,7 @@ vim.cmd('syntax on')
 vim.cmd('filetype on')
 vim.cmd('filetype plugin on')
 vim.cmd('filetype plugin indent on')
-vim.opt.linespace      = 6
+vim.opt.linespace      = 4
 vim.opt.number         = true -- 启用行号
 vim.opt.relativenumber = true -- 启用相对行号, 关闭使用 set nornu  ; 启用使用 set rnu
 vim.opt.cursorline     = true -- 光标行高亮
