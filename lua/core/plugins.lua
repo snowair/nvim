@@ -166,7 +166,7 @@ return require('packer').startup({ function(use)
 	-- gitsigns
 	use {
 		'lewis6991/gitsigns.nvim',
-		tag = 'release',
+		--tag = 'release',
 		config = function()
 			require('gitsigns').setup {
 				signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
@@ -486,6 +486,23 @@ return require('packer').startup({ function(use)
 		end
 	}
 
+	-- 支持 ripgrep args的 live_grep
+	use {
+		--https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+		-- glob/g参数示例：
+		-- 'keywords' -g '*.toml'   在.toml文件中搜
+		-- 'keywords' -g '!*.toml'   在非.toml文件中搜
+		--'int main' -g '*.{c,h}'  在.c,.h文件中搜
+		-- '\w(?-u:\w)\w'  使用正则进行搜索
+		-- 更多参数:
+		-- -i/--ignore-case 忽略大小写
+		-- -S/--smart-case 智能大小写
+		-- -F/--fixed-strings 字符串模式，非正则模式
+		-- -w/--word-regexp 相当于正则 \b(?:pattern)\b
+		"nvim-telescope/telescope-live-grep-args.nvim",
+		requires = { "nvim-telescope/telescope.nvim" },
+	}
+
 	-- project.nvim
 	use {
 		-- 增加新命令打开历史工程列表 :Telescope project, 列出项目列表, 选择项目,列出此项目的文件列表供选择打开.
@@ -523,48 +540,22 @@ return require('packer').startup({ function(use)
 				file_browser = nil,
 
 			}
-			require('telescope').load_extension('projects')
 		end
 	}
 
 	-- 自动把vim.ui.input绑定到telescope, 让vi默认的选择组件更现代化
 	use {
 		'nvim-telescope/telescope-ui-select.nvim',
-		config = function()
-			require("telescope").setup {
-				extensions = {
-					["ui-select"] = {
-						require("telescope.themes").get_dropdown {}
-					}
-				}
-			}
-			require("telescope").load_extension("ui-select")
-		end
+		require = 'nvim-telescope/telescope.nvim',
 	}
 
 	use {
 		'cljoly/telescope-repo.nvim',
-		config = function()
-			require("telescope").setup {
-				extensions = {
-					repo = {
-						list = {
-							fd_opts = {
-								"--no-ignore-vcs",
-							},
-							search_dirs = {
-								"~/git",
-								"~/git/mlol",
-								"/mnt/wd/Git",
-							},
-						},
-					},
-				},
-			}
-
-			require("telescope").load_extension "repo"
-		end
+		require = 'nvim-telescope/telescope.nvim',
 	}
+
+	-- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
+	use 'nvim-telescope/telescope-symbols.nvim'
 
 	-- telescope
 	use {
@@ -582,34 +573,34 @@ return require('packer').startup({ function(use)
 						n = { ["<c-t>"] = trouble.open_with_trouble },
 					},
 				},
+				extensions = {
+					["ui-select"] = {
+						require("telescope.themes").get_dropdown {}
+					},
+					repo = {
+						list = {
+							fd_opts = {
+								"--no-ignore-vcs",
+							},
+							search_dirs = {
+								"~/git",
+								"~/git/mlol",
+								"/mnt/wd/Git",
+							},
+						},
+					},
+				}
 			}
 			vim.cmd('autocmd User TelescopePreviewerLoaded setlocal wrap') -- 预览窗口自动换行
 			vim.cmd('autocmd User TelescopePreviewerLoaded setlocal number') -- 预览窗口显示 行号
-		end
-	}
 
-	-- 支持 ripgrep args的 live_grep
-	use {
-		--https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
-		-- glob/g参数示例：
-		-- 'keywords' -g '*.toml'   在.toml文件中搜
-		-- 'keywords' -g '!*.toml'   在非.toml文件中搜
-		--'int main' -g '*.{c,h}'  在.c,.h文件中搜
-		-- '\w(?-u:\w)\w'  使用正则进行搜索
-		-- 更多参数:
-		-- -i/--ignore-case 忽略大小写
-		-- -S/--smart-case 智能大小写
-		-- -F/--fixed-strings 字符串模式，非正则模式
-		-- -w/--word-regexp 相当于正则 \b(?:pattern)\b
-		"nvim-telescope/telescope-live-grep-args.nvim",
-		requires = { "nvim-telescope/telescope.nvim" },
-		config = function()
+			require("telescope").load_extension "repo"
+			require("telescope").load_extension("ui-select")
+			require('telescope').load_extension('projects')
 			require("telescope").load_extension("live_grep_args")
 		end
 	}
 
-	-- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
-	use 'nvim-telescope/telescope-symbols.nvim'
 
 
 	-- AutoSave
@@ -1016,19 +1007,13 @@ return require('packer').startup({ function(use)
 					},
 				},
 			})
-			local focus = require('focus')
 			vim.keymap.set('n', '<leader>df', function()
 				diffview.open()
-				if focus ~= nil then
-					focus.focus_disable()
-				end
 			end)
 			vim.keymap.set('n', '<leader>dh', function()
 				diffview.file_history()
-				if focus ~= nil then
-					focus.focus_disable()
-				end
 			end)
+			local focus = require ('focus')
 			vim.keymap.set('n', '<leader>dc', function()
 				if focus ~= nil then
 					focus.focus_enable()
@@ -1039,10 +1024,6 @@ return require('packer').startup({ function(use)
 	}
 
 	use 'equalsraf/neovim-gui-shim'
-
-	use { 'akinsho/git-conflict.nvim', tag = "*", config = function()
-		require('git-conflict').setup()
-	end }
 
 	use { 'kevinhwang91/nvim-hlslens',
 		config = function()
@@ -1070,6 +1051,29 @@ return require('packer').startup({ function(use)
 	use "tversteeg/registers.nvim"
 	use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
-	use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+	use { 'TimUntersberger/neogit',
+		requires = 'nvim-lua/plenary.nvim',
+		config = function()
+			local neogit = require("neogit")
+			neogit.setup {
+				signs = {
+					-- { CLOSED, OPENED }
+					section = { "", "", },
+					item = { "", "ﴴ" },
+					hunk = { "", "" },
+				},
+				integrations = {
+					diffview = true
+				},
+				mappings = {
+					-- modify status buffer mappings
+					status = {
+						["<enter>"] = "Toggle",
+						["<c-enter>"] = "GoToFile",
+					}
+				}
+			}
+		end
+	}
 
 end, config = { max_jobs = 5 } })

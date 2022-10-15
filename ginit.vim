@@ -14,10 +14,9 @@ if exists(':GuiScrollBar')
 endif
 
 if exists(':GuiFont')
-    GuiFont! UbuntuMono Nerd Font:h20
-
+    GuiFont! UbuntuMono Nerd Font:h18
 else
-	set guifont=UbuntuMono\ Nerd\ Font:h20
+	set guifont=UbuntuMono\ Nerd\ Font:h18
 endif
 
 if exists('*GuiClipboard')
