@@ -7,8 +7,10 @@
 | `<s-f1>`                        | 文件树                                                   |
 | `<f2>` ,`<s-f2>`                | 下一处上一处诊断                                         |
 | `<s-f3>`                        | terminal                                                 |
-| `<s-f4>`                        | 下一个terminal tab                                       |
-| `<s-f5>`                        | 上一个terminal tab                                       |
+| `<a-f3>`                        | next terminal                                            |
+| `<s-f4>`                        | Neogit                                                   |
+| `<s-f5>`                        | lsp_dynamic_workspace_symbols                            |
+| `<c-f5>`                        | lsp_document_symbols                                     |
 | `<s-f6>`                        | refactor rename                                          |
 | `<c-f7>`                        | toggle_breakpoint                                        |
 | `<s-f7>`                        | clear_breakpoint                                         |
@@ -24,9 +26,14 @@
 | `<leader>lq`                    | 诊断问题发送到 loclist                                   |
 | `<leader>lf`                    | lsp 格式化                                               |
 | `<leader>gd`                    | goto definition                                          |
+| `<leader>gr`                    | goto references                                          |
 | `<leader>gD`                    | goto declaration                                         |
 | `<leader>gt`                    | goto type_definition                                     |
 | `<leader>gi`                    | 跳转到类型实现的接口                                     |
+| `<leader>gu`                    | 打开链接                                     |
+| `<leader>wa`                    | lsp add_workspace_folder                                     |
+| `<leader>wr`                    | lsp remove_workspace_folder                                     |
+| `<leader>wl`                    | lsp list_workspace_folder                                     |
 | `<c-tab>`, `<a-tab>`, `<s-tab>` | buffer cycle                                             |
 | `<leader>hn`                    | hunk next                                                |
 | `<leader>hp`                    | hunk prev                                                |
