@@ -1013,7 +1013,11 @@ return require('packer').startup({ function(use)
 			vim.keymap.set('n', '<leader>dh', function()
 				diffview.file_history()
 			end)
+			local focus = require ('focus')
 			vim.keymap.set('n', '<leader>dc', function()
+				if focus ~= nil then
+					focus.focus_enable()
+				end
 				vim.cmd('tabc')
 			end)
 		end
