@@ -547,34 +547,11 @@ return require('packer').startup({ function(use)
 	use {
 		'nvim-telescope/telescope-ui-select.nvim',
 		require = 'nvim-telescope/telescope.nvim',
-		config = function()
-			require("telescope").setup {
-			}
-		end
 	}
 
 	use {
 		'cljoly/telescope-repo.nvim',
 		require = 'nvim-telescope/telescope.nvim',
-		config = function()
-			require("telescope").setup {
-				extensions = {
-					repo = {
-						list = {
-							fd_opts = {
-								"--no-ignore-vcs",
-							},
-							search_dirs = {
-								"~/git",
-								"~/git/mlol",
-								"/mnt/wd/Git",
-							},
-						},
-					},
-				},
-			}
-
-		end
 	}
 
 	-- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
@@ -599,7 +576,19 @@ return require('packer').startup({ function(use)
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown {}
-					}
+					},
+					repo = {
+						list = {
+							fd_opts = {
+								"--no-ignore-vcs",
+							},
+							search_dirs = {
+								"~/git",
+								"~/git/mlol",
+								"/mnt/wd/Git",
+							},
+						},
+					},
 				}
 			}
 			vim.cmd('autocmd User TelescopePreviewerLoaded setlocal wrap') -- 预览窗口自动换行
@@ -1018,23 +1007,13 @@ return require('packer').startup({ function(use)
 					},
 				},
 			})
-			local focus = require('focus')
 			vim.keymap.set('n', '<leader>df', function()
 				diffview.open()
-				if focus ~= nil then
-					focus.focus_disable()
-				end
 			end)
 			vim.keymap.set('n', '<leader>dh', function()
 				diffview.file_history()
-				if focus ~= nil then
-					focus.focus_disable()
-				end
 			end)
 			vim.keymap.set('n', '<leader>dc', function()
-				if focus ~= nil then
-					focus.focus_enable()
-				end
 				vim.cmd('tabc')
 			end)
 		end
@@ -1068,6 +1047,29 @@ return require('packer').startup({ function(use)
 	use "tversteeg/registers.nvim"
 	use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
-	use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+	use { 'TimUntersberger/neogit',
+		requires = 'nvim-lua/plenary.nvim',
+		config = function()
+			local neogit = require("neogit")
+			neogit.setup {
+				signs = {
+					-- { CLOSED, OPENED }
+					section = { "", "", },
+					item = { "", "ﴴ" },
+					hunk = { "", "" },
+				},
+				integrations = {
+					diffview = true
+				},
+				mappings = {
+					-- modify status buffer mappings
+					status = {
+						["<enter>"] = "Toggle",
+						["<c-enter>"] = "GoToFile",
+					}
+				}
+			}
+		end
+	}
 
 end, config = { max_jobs = 5 } })
