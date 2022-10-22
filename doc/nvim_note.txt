@@ -496,6 +496,21 @@ NvimTree 高频快捷键
 * `gt` normal模式, go to tree. 
 
 
+close-buffers.nvim
+=====
+
+| 命令                         | 作用                                                         |
+|------------------------------|--------------------------------------------------------------|
+| Bdelete hidden               | 关闭所有当前window不可见的buffers                            |
+| Bdelete other                | 关闭初当前focus的buffer 外的所有buffers                      |
+| Bdelete all                  | 关闭所有buffers                                              |
+| Bdelete hidden glob=*.md     | hidden,other,all 支持按glob匹配关闭                          |
+| Bdelete hidden regex=.*[.]md | hidden,other,all 支持按正则匹配关闭                          |
+| Bdelete glob=*.md            | 支持按glob/regex匹配关闭                                     |
+| Bdelete nameless             | 关闭所有无名的buffers                                        |
+| Bdelete this                 | 关闭当前buffer并且不改变窗口布局(留下的空间会被空buffer替代) |
+| Bdelete {bufnr}              | 按 :ls 的buffer编号关闭                                      |
+
 bufferline
 ========================
 

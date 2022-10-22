@@ -762,7 +762,7 @@ return require('packer').startup({ function(use)
 	use 'tpope/vim-repeat' -- ctrl+a ctrl+x 操作增强
 	use 'terryma/vim-expand-region' -- 通过+ - 号选择内容插件
 	use 'scrooloose/nerdcommenter' -- 快速注释插件
-	use 'Asheq/close-buffers.vim' -- :Bdelete menu
+	use 'kazhala/close-buffers.nvim' -- :Bdelete menu
 
 	---- text object增强
 	use 'kana/vim-textobj-user'
