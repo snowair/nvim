@@ -1025,20 +1025,20 @@ return require('packer').startup({ function(use)
 
 	use 'equalsraf/neovim-gui-shim'
 
-	use { 'kevinhwang91/nvim-hlslens',
-		config = function()
-			require("hlslens").setup()
-			local kopts = { noremap = true, silent = true }
-			vim.api.nvim_set_keymap('n', 'n',
-				[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts)
-			vim.api.nvim_set_keymap('n', 'N',
-				[[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-				kopts)
-			vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-			vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-		end
-	}
+	--use { 'kevinhwang91/nvim-hlslens',
+		--config = function()
+			--require("hlslens").setup()
+			--local kopts = { noremap = true, silent = true }
+			--vim.api.nvim_set_keymap('n', 'n',
+				-- [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+				--kopts)
+			--vim.api.nvim_set_keymap('n', 'N',
+				-- [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+				--kopts)
+			--vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+			--vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+		--end
+	--}
 
 	-- 多窗口时，自动调整当前window的大小，
 	use {
