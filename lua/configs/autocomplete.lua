@@ -206,9 +206,9 @@ function M.config()
 				{ name = 'golang_json' },
 			},
 			{
+				{ name = 'nvim_lsp' }, -- lsp 提供的自动完成
 				{ name = 'cmp_tabnine' },
 				{ name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
-				{ name = 'nvim_lsp' }, -- lsp 提供的自动完成
 			})
 	})
 	cmp.setup.filetype('sql', {
