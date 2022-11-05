@@ -501,15 +501,15 @@ close-buffers.nvim
 
 | 命令                         | 作用                                                         |
 |------------------------------|--------------------------------------------------------------|
-| Bdelete hidden               | 关闭所有当前window不可见的buffers                            |
-| Bdelete other                | 关闭初当前focus的buffer 外的所有buffers                      |
-| Bdelete all                  | 关闭所有buffers                                              |
-| Bdelete hidden glob=*.md     | hidden,other,all 支持按glob匹配关闭                          |
-| Bdelete hidden regex=.*[.]md | hidden,other,all 支持按正则匹配关闭                          |
-| Bdelete glob=*.md            | 支持按glob/regex匹配关闭                                     |
-| Bdelete nameless             | 关闭所有无名的buffers                                        |
-| Bdelete this                 | 关闭当前buffer并且不改变窗口布局(留下的空间会被空buffer替代) |
-| Bdelete {bufnr}              | 按 :ls 的buffer编号关闭                                      |
+| BDelete hidden               | 关闭所有当前window不可见的buffers                            |
+| BDelete other                | 关闭初当前focus的buffer 外的所有buffers                      |
+| BDelete all                  | 关闭所有buffers                                              |
+| BDelete hidden glob=*.md     | hidden,other,all 支持按glob匹配关闭                          |
+| BDelete hidden regex=.*[.]md | hidden,other,all 支持按正则匹配关闭                          |
+| BDelete glob=*.md            | 支持按glob/regex匹配关闭                                     |
+| BDelete nameless             | 关闭所有无名的buffers                                        |
+| BDelete this                 | 关闭当前buffer并且不改变窗口布局(留下的空间会被空buffer替代) |
+| BDelete {bufnr}              | 按 :ls 的buffer编号关闭                                      |
 
 bufferline
 ========================
@@ -519,9 +519,9 @@ bufferline
 1. `:BufferLineCycleNext` and `:BufferLineCyclePrev`
 * nomarl 绑定: `<c-tab>`,`<a-tab>`, `<s-tab>`
 2. 使用 `:Telescope buffers`, 列出所有tab
-* `<c-space>` 列出cwd的buffers
-* `<s-f12>` 列出所有buffers
-3. 删除当前buffer 鼠标右键或 `:bd`,`:bdelete`, buffer 被delete后，就不会出现在buffer list里了。
+	* `<c-space>` 列出cwd的buffers
+	* `<s-f12>` 列出所有buffers
+3. `:BufferLinePickClose` 选择一个buffer并关闭
 
 ## 排序
 
@@ -572,26 +572,26 @@ vim api：`vim.lsp`, `vim.diagnostic`
 Telescope
 ========
 
-| Mappings     | Action                                         |
-| ----         | ----                                           |
+| Mappings     | Action                                                        |
+| ----         | ----                                                          |
 | <C-/>        | 最有用的快捷键.Show mappings for picker actions (insert mode) |
-| <C-n>/<Down> | Next item                                      |
-| <C-p>/<Up>   | Previous item                                  |
-| <CR>         | 当前窗口打开                                   |
-| <C-x>        | spli打开                                       |
-| <C-v>        | vsplit 打开                                    |
-| <C-t>        | 新 tab 打开                                    |
-| <C-u>        | 预览窗口向上翻页                               |
-| <C-d>        | 预览窗口向下翻页                               |
-| <C-c>        | Close telescope                                |
-| <Tab>        | Toggle selection and move to next selection    |
-| <S-Tab>      | Toggle selection and move to prev selection    |
-| <C-q>        | 发送所有匹配的选择到 (qflist)                  |
-| j/k          | Next/previous (in normal mode)                 |
-| H/M/L        | Select High/Middle/Low (in normal mode)        |
-| gg/G         | Select the first/last item (in normal mode)    |
-| ?            | Show mappings for picker actions (normal mode) |
-| <Esc>        | Close telescope (in normal mode)               |
+| <C-n>/<Down> | Next item                                                     |
+| <C-p>/<Up>   | Previous item                                                 |
+| <CR>         | 当前窗口打开                                                  |
+| <C-x>        | spli打开                                                      |
+| <C-v>        | vsplit 打开                                                   |
+| <C-t>        | 新 tab 打开                                                   |
+| <C-u>        | 预览窗口向上翻页                                              |
+| <C-d>        | 预览窗口向下翻页                                              |
+| <C-c>        | Close telescope                                               |
+| <Tab>        | Toggle selection and move to next selection                   |
+| <S-Tab>      | Toggle selection and move to prev selection                   |
+| <C-q>        | 发送所有匹配的选择到 (qflist)                                 |
+| j/k          | Next/previous (in normal mode)                                |
+| H/M/L        | Select High/Middle/Low (in normal mode)                       |
+| gg/G         | Select the first/last item (in normal mode)                   |
+| ?            | Show mappings for picker actions (normal mode)                |
+| <Esc>        | Close telescope (in normal mode)                              |
 
 有些 Telescope 命令支持需选项, 这种 Telescope 调用示例:
 
@@ -866,7 +866,8 @@ toggle_breakpoint({condition}, {hit_condition}, {log_message})
 
 ## GoTest
 
-GoTest 在success的时候，只输出成功。不会自动打开quickfix窗口显示log. 在fail的时候自动打开quickfix窗口显示log.
+1. GoTest 在success的时候，只输出成功。不会自动打开quickfix窗口显示log. 在fail的时候自动打开quickfix窗口显示log.
+2. go test 会缓存结果, 禁用缓存可以使用 `go test -count=1` 或清除缓存 `go clean -testcache`
 
 ## Debug
 
