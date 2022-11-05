@@ -1201,20 +1201,6 @@ git config --global i18n.logOutputEncoding utf-8
 :DiffviewRefresh: Update stats and entries in the file list of the current Diffview.
 ```
 
-## akinsho/git-conflict.nvim
-
-冲突处理插件
-
-| 命令                    | 说明                           | 默认绑定 |
-| ----                    | ----                           | ----     |
-| GitConflictListQf       | 在 quickfix 列出所有冲突       | -        |
-| GitConflictChooseOurs   | Select the current changes.    | co       |
-| GitConflictChooseTheirs | Select the incoming changes    | ct       |
-| GitConflictChooseBoth   | Select both changes.           | cb       |
-| GitConflictChooseNone   | Select none of the changes.    | c0       |
-| GitConflictNextConflict | Move to the next conflict.     | ]x       |
-| GitConflictPrevConflict | Move to the previous conflict. | [x       |
-
 # text object
 
 | text object | 说明                                                                   | plugin                         |
