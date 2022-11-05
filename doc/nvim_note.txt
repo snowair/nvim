@@ -601,6 +601,7 @@ require("telescope.builtin").find_files({hidden=true, layout_config={prompt_posi
 
 对应的cmd命令方式:
 
+
 ```
 :Telescope find_files hidden=true layout_config={"prompt_position":"top"}
 ```
@@ -1126,7 +1127,7 @@ git config --global i18n.logOutputEncoding utf-8
 | `-`               | toggle stage file      |
 | `S`               | Stage all files        |
 | `U`               | UnStage all files      |
-| `X`               | Reset all files        |
+| `X`               | Reset select file        |
 | `R`               | Update all files state |
 
 | history_panel 快捷键 | 功能                   |
