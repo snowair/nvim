@@ -1058,7 +1058,7 @@ Gitsign和Telescope 可以满足基本的 文件diff, 分支管理
 * 提供了 Hunk text object
 * next_hunk/prev_hunk: 导航
 * stage_hunk : stage光标处的hunk/或选择的范围
-* undo_stage_hunk : undo最后一次stage_hunk的内容.
+* undo_stage_hunk : undo上一次stage_hunk的内容.
 * stage_buffer: stage 所有hunks 
 * reset_hunk: 撤销Hunk的变更
 * reset_buffer: reset 所有修改，内容恢复到修改前的状态
@@ -1072,7 +1072,7 @@ Gitsign和Telescope 可以满足基本的 文件diff, 分支管理
 * diff with the index: `:Gitsigns diffthis`
 * diff with the last commit: `:Gitsigns diffthis ~1`
 
-## Telescope git_ command
+## Telescope git_command
 
 ### git_bcommits
 
@@ -1226,7 +1226,7 @@ git config --global i18n.logOutputEncoding utf-8
 (aL)@loop             go dart rust python c cpp csharp java js lua php ts 
 (am)@comment.outer    go dart rust python c cpp csharp java    lua php     
 (ast)@statement.outer go dart rust python c cpp csharp                     
-(aca)@call		          go dart rust python c cpp csharp java js lua     ts
+(aca)@call	          go dart rust python c cpp csharp java js lua     ts
 @parameter            go dart rust python c cpp csharp java js lua php ts 
 ```
 
