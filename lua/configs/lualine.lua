@@ -23,7 +23,6 @@ M.config = function()
 				{ 'mode', separator = { left = '' }, right_padding = 2 },
 			},
 			lualine_b = {
-				'diagnostics',
 				'branch',
 				--{ hello, },
 				{
@@ -41,6 +40,7 @@ M.config = function()
 						unnamed = '[No Name]', -- Text to show for unnamed buffers.
 					}
 				},
+				'diagnostics',
 			},
 			lualine_c = {},
 			lualine_x = { 'fileformat', },
