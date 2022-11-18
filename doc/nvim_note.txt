@@ -719,9 +719,36 @@ map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 ```
 
+vim 对象
+========
+
+vim.inspect
+----------
+
+转换对象为可阅读的形式
+
+vim.o
+------
+
+访问 vim options
+
+vim.g
+------
+
+vim 全局变量
+
+vim.env
+--------
+
+访问环境变量
+
+vim.fn
+------
+
+访问 vim 函数
 
 vim.api
-========
+-------
 
 ```
 :h api

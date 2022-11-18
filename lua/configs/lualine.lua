@@ -5,12 +5,26 @@ M.config = function()
 		update = 0,
 		state = '',
 	}
+
 	local notify = require("notify")
 	local function hello()
 		-- 用到 plenary.nvim
 		return ' ' .. stateCache.state .. ' '
 		--return ret "aaa"
 	end
+
+	local NvimTree = {
+		filetypes = { 'NvimTree' },
+		sections = {
+			lualine_a = {
+				{ 'branch',
+					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
+					separator = { right = '' },
+					left_padding = 2,
+				},
+			},
+		},
+	}
 
 	--  lualine theme设置
 	require('lualine').setup {
@@ -23,7 +37,10 @@ M.config = function()
 				{ 'mode', separator = { left = '' }, right_padding = 2 },
 			},
 			lualine_b = {
-				'branch',
+				{ 'branch',
+					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
+				},
+				'diff',
 				--{ hello, },
 				{
 					'filename',
@@ -63,7 +80,7 @@ M.config = function()
 			lualine_z = {},
 		},
 		tabline = {},
-		extensions = { 'quickfix', 'chadtree', 'nvim-tree', 'symbols-outline', 'toggleterm', 'nvim-dap-ui', 'mundo' }
+		extensions = { 'quickfix', 'chadtree', 'symbols-outline', 'toggleterm', 'nvim-dap-ui', 'mundo', NvimTree }
 	}
 end
 
