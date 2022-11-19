@@ -10,7 +10,7 @@ return require('packer').startup({ function(use)
 		'Outline', 'alpha', 'telescope', 'floatterm', 'Trouble', '[No Name], [New File]',
 		'NvimTree', 'TelescopePrompt', 'guihua', 'nofile',
 		'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes', 'dapui_console', 'dapui_watches', 'dap-repl', 'dan_repl',
-		'toggleterm'
+		'toggleterm', 'DiffviewFiles','DiffviewFileHistory'
 	}
 
 	local ignore_bt = { "help", "nofile", "prompt", "popup", "nowrite" }
