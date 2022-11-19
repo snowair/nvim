@@ -1016,6 +1016,7 @@ return require('packer').startup({ function(use)
 				},
 			})
 			vim.keymap.set('n', '<leader>df', function()
+				vim.cmd("silent! noa wall")
 				diffview.open()
 			end)
 			vim.keymap.set('n', '<leader>dh', function()
