@@ -6,18 +6,20 @@ M.config = function()
 		state = '',
 	}
 
-	local notify = require("notify")
-	local function hello()
-		-- 用到 plenary.nvim
-		return ' ' .. stateCache.state .. ' '
-		--return ret "aaa"
+	local function nvimtree_branch()
+		local b = require 'lualine.components.branch.git_branch'.get_branch()
+		if b=="" then
+			return ""
+		end
+		return " "..b
 	end
 
 	local NvimTree = {
 		filetypes = { 'NvimTree' },
 		sections = {
 			lualine_a = {
-				{ 'branch',
+				{
+					'branch',
 					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
 					separator = { right = '' },
 					left_padding = 2,
@@ -25,7 +27,14 @@ M.config = function()
 			},
 		},
 		inactive_sections = {
-			lualine_a = {}
+			lualine_a = {
+				{
+					nvimtree_branch,
+					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
+					separator = { right = '' },
+					left_padding = 2,
+				}
+			}
 		}
 	}
 
@@ -44,7 +53,6 @@ M.config = function()
 					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
 				},
 				'diff',
-				--{ hello, },
 				{
 					'filename',
 					file_status = true, -- Displays file status (readonly status, modified status)
