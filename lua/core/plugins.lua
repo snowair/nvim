@@ -172,7 +172,7 @@ return require('packer').startup({ function(use)
 				signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
 				numhl      = false, -- 行号高亮 Toggle with `:Gitsigns toggle_numhl`
 				linehl     = false, -- 底色高亮 Toggle with `:Gitsigns toggle_linehl`
-				word_diff  = true, -- change word高亮 Toggle with `:Gitsigns toggle_word_diff`
+				word_diff  = false, -- change word高亮 Toggle with `:Gitsigns toggle_word_diff`
 			}
 			-- 用到什么加什么
 			vim.keymap.set('n', '<leader>hn', ':Gitsigns next_hunk<cr>')
