@@ -24,6 +24,15 @@ M.config = function()
 				},
 			},
 		},
+		inactive_sections = {
+			lualine_a = {
+				{ 'branch',
+					color = { bg = "#e39527", fg = "#000000", gui = 'bold' },
+					separator = { right = '' },
+					left_padding = 2,
+				},
+			},
+		},
 	}
 
 	--  lualine theme设置
