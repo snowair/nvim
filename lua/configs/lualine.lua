@@ -1,17 +1,91 @@
 local M = {}
-M.config = function()
-	local stateCache = {
-		hasRemote = false,
-		update = 0,
-		state = '',
-	}
 
+local Job = require 'plenary.job'
+local notify = require 'notify'
+local stateCache = {
+	hasRemote = false,
+	update = 0,
+	state = '  ',
+}
+
+local function checkLocalCommit(info)
+	Job:new({
+		command = 'git',
+		args = { 'rev-parse', '--short', 'HEAD' },
+		cwd = vim.loop.cwd(),
+		env = {},
+		on_exit = function(j, _)
+			if j.code == 0 then
+				if #j._stdout_results == 1 then
+					local current_commit = j._stdout_results[1]
+					if string.find(info,current_commit)>=1 then
+						stateCache.state = '  '
+					else
+						stateCache.state = "   "
+					end
+				end
+			end
+		end,
+	}):start()
+end
+
+local function getForwardNum()
+	Job:new({
+		command = 'git',
+		args = { 'rev-list', 'HEAD','--not', '--remotes', '|', 'wc', '-l', 'awk', "'{print $1}'" },
+		cwd = vim.loop.cwd(),
+		env = {},
+		on_exit = function(j, _)
+			if j.code == 0 then
+				notify(vim.inspect(j._stderr_results))
+			end
+		end,
+	}):start()
+
+end
+
+local timer = vim.loop.new_timer()
+local runing = false
+timer:start(0, 5000, vim.schedule_wrap(function()
+	stateCache.update = stateCache.update + 1
+	if runing then
+		return
+	end
+	runing = true
+	Job:new({
+		command = 'git',
+		args = { 'fetch', '--dry-run' },
+		cwd = vim.loop.cwd(),
+		env = {},
+		on_exit = function(j, _)
+			if j.code == 0 then
+				--notify(vim.inspect(j._stderr_results))
+				if #j._stderr_results == 0 then
+					-- 没有远程更新
+					getForwardNum()
+				else
+					-- 有远程更新
+					checkLocalCommit(j._stderr_results[2])
+				end
+
+			end
+			runing = false
+		end,
+	}):start()
+end))
+
+
+local function update_branch_status()
+	return stateCache.state
+end
+
+M.config = function()
 	local function nvimtree_branch()
 		local b = require 'lualine.components.branch.git_branch'.get_branch()
-		if b=="" then
+		if b == "" then
 			return ""
 		end
-		return " "..b
+		return " " .. b
 	end
 
 	local NvimTree = {
@@ -70,7 +144,9 @@ M.config = function()
 				},
 				'diagnostics',
 			},
-			lualine_c = {},
+			lualine_c = {
+				update_branch_status,
+			},
 			lualine_x = { 'fileformat', },
 			lualine_y = { 'filetype', 'encoding', 'filesize', 'location' },
 			lualine_z = {
