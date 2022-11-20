@@ -18,7 +18,8 @@ local function checkLocalCommit(info)
 			if j.code == 0 then
 				if #j._stdout_results == 1 then
 					local current_commit = j._stdout_results[1]
-					if string.find(info,current_commit)>=1 then
+					local pos = string.find(info,current_commit)
+					if pos~=nil and pos >=1 then
 						stateCache.state = '  '
 					else
 						stateCache.state = "   "
