@@ -38,7 +38,7 @@ vim.opt.nrformats     = 'alpha,octal,hex'
 
 
 vim.g.neovide_confirm_quit = 1 -- 退出前确认处理未保存的文件
-vim.g.sessionoptions = 'buffers,curdir,folds,tabpages'
+vim.g.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages' -- https://github.com/Shatur/neovim-session-manager/issues/47
 
 require("core.plugins")
 require("core.keymaps")
