@@ -10,7 +10,7 @@ return require('packer').startup({ function(use)
 		'Outline', 'alpha', 'telescope', 'floatterm', 'Trouble', '[No Name], [New File]',
 		'NvimTree', 'TelescopePrompt', 'guihua', 'nofile',
 		'dapui_stacks', 'dapui_breakpoints', 'dapui_scopes', 'dapui_console', 'dapui_watches', 'dap-repl', 'dan_repl',
-		'toggleterm', 'DiffviewFiles','DiffviewFileHistory'
+		'toggleterm', 'DiffviewFiles', 'DiffviewFileHistory'
 	}
 
 	local ignore_bt = { "help", "nofile", "prompt", "popup", "nowrite" }
@@ -556,6 +556,17 @@ return require('packer').startup({ function(use)
 
 	-- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
 	use 'nvim-telescope/telescope-symbols.nvim'
+	use({
+		"princejoogie/dir-telescope.nvim",
+		-- telescope.nvim is a required dependency
+		requires = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("dir-telescope").setup({
+				hidden = true,
+				respect_gitignore = true,
+			})
+		end,
+	})
 
 	-- telescope
 	use {
@@ -598,6 +609,7 @@ return require('packer').startup({ function(use)
 			require("telescope").load_extension("ui-select")
 			require('telescope').load_extension('projects')
 			require("telescope").load_extension("live_grep_args")
+			require("telescope").load_extension("dir")
 		end
 	}
 
