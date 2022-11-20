@@ -3,9 +3,8 @@ local M = {}
 local Job = require 'plenary.job'
 local notify = require 'notify'
 local stateCache = {
-	hasRemote = false,
-	update = 0,
-	state = '  ',
+	color = "white",
+	state = '   ',
 }
 
 local function checkLocalCommit(info)
@@ -18,11 +17,13 @@ local function checkLocalCommit(info)
 			if j.code == 0 then
 				if #j._stdout_results == 1 then
 					local current_commit = j._stdout_results[1]
-					local pos = string.find(info,current_commit)
-					if pos~=nil and pos >=1 then
+					local pos = string.find(info, current_commit)
+					if pos ~= nil and pos >= 1 then
 						stateCache.state = '  '
+						stateCache.color = "red"
 					else
 						stateCache.state = "   "
+						stateCache.color = "red"
 					end
 				end
 			end
@@ -33,12 +34,19 @@ end
 local function getForwardNum()
 	Job:new({
 		command = 'git',
-		args = { 'rev-list', 'HEAD','--not', '--remotes', '|', 'wc', '-l', 'awk', "'{print $1}'" },
+		args = { 'rev-list', 'HEAD', '--not', '--remotes' },
 		cwd = vim.loop.cwd(),
 		env = {},
 		on_exit = function(j, _)
 			if j.code == 0 then
-				notify(vim.inspect(j._stderr_results))
+				local forward = #j._stdout_results
+				if forward > 0 then
+					stateCache.state = "  (" .. tonumber(forward) .. ")"
+					stateCache.color = "orange"
+				else
+					stateCache.state = "   "
+					stateCache.color = "green"
+				end
 			end
 		end,
 	}):start()
@@ -47,8 +55,7 @@ end
 
 local timer = vim.loop.new_timer()
 local runing = false
-timer:start(0, 5000, vim.schedule_wrap(function()
-	stateCache.update = stateCache.update + 1
+M.gitStatusTaskFn = function()
 	if runing then
 		return
 	end
@@ -60,7 +67,6 @@ timer:start(0, 5000, vim.schedule_wrap(function()
 		env = {},
 		on_exit = function(j, _)
 			if j.code == 0 then
-				--notify(vim.inspect(j._stderr_results))
 				if #j._stderr_results == 0 then
 					-- 没有远程更新
 					getForwardNum()
@@ -68,13 +74,15 @@ timer:start(0, 5000, vim.schedule_wrap(function()
 					-- 有远程更新
 					checkLocalCommit(j._stderr_results[2])
 				end
-
+			else
+				stateCache.state = ""
 			end
 			runing = false
 		end,
 	}):start()
-end))
+end
 
+timer:start(0, 3000, vim.schedule_wrap(M.gitStatusTaskFn))
 
 local function update_branch_status()
 	return stateCache.state
@@ -146,7 +154,12 @@ M.config = function()
 				'diagnostics',
 			},
 			lualine_c = {
-				update_branch_status,
+				{
+					update_branch_status,
+					color = function()
+						return { fg = stateCache.color, gui = 'bold' }
+					end,
+				},
 			},
 			lualine_x = { 'fileformat', },
 			lualine_y = { 'filetype', 'encoding', 'filesize', 'location' },
