@@ -7,12 +7,12 @@ local stateCache = {
 	state = '   ',
 }
 
-local function checkLocalCommit(info)
+local function checkLocalCommit(info,cwd)
 	Job:new({
 		command = 'git',
 		args = { 'rev-parse', '--short', 'HEAD' },
-		cwd = vim.loop.cwd(),
-		env = {},
+		cwd = cwd,
+		env = {PATH=vim.env.PATH},
 		on_exit = function(j, _)
 			if j.code == 0 then
 				if #j._stdout_results == 1 then
@@ -31,12 +31,12 @@ local function checkLocalCommit(info)
 	}):start()
 end
 
-local function getForwardNum()
+local function getForwardNum(cwd)
 	Job:new({
 		command = 'git',
 		args = { 'rev-list', 'HEAD', '--not', '--remotes' },
-		cwd = vim.loop.cwd(),
-		env = {},
+		cwd = cwd,
+		env = {PATH=vim.env.PATH},
 		on_exit = function(j, _)
 			if j.code == 0 then
 				local forward = #j._stdout_results
@@ -60,19 +60,26 @@ M.gitStatusTaskFn = function()
 		return
 	end
 	runing = true
+	local cwd =vim.loop.cwd()
 	Job:new({
 		command = 'git',
 		args = { 'fetch', '--dry-run' },
-		cwd = vim.loop.cwd(),
-		env = {},
+		cwd = cwd,
+		env = {PATH=vim.env.PATH},
 		on_exit = function(j, _)
 			if j.code == 0 then
 				if #j._stderr_results == 0 then
 					-- 没有远程更新
-					getForwardNum()
+					local function tmp()
+						getForwardNum(cwd)
+					end
+					vim.schedule_wrap(tmp)()
 				else
 					-- 有远程更新
-					checkLocalCommit(j._stderr_results[2])
+					local function tmp()
+						checkLocalCommit(j._stderr_results[2],cwd)
+					end
+					vim.schedule_wrap(tmp)()
 				end
 			else
 				stateCache.state = ""
