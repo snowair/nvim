@@ -5,18 +5,25 @@ local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local action_utils = require "telescope.actions.utils"
 local notify = require('notify')
+local conf = require("telescope.config").values
 
 local function get_bufs()
-	-- {bufnr,name,shortname,path}
+	-- {bufnr,name,shortname,path,onlyname}
 	local items = {}
 	for _, bufnr in pairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_valid(bufnr) then
+		if vim.api.nvim_buf_is_valid(bufnr) and vim.fn.buflisted(bufnr)==1 then
 			local name = vim.fn.expand(vim.api.nvim_buf_get_name(bufnr))
-			if vim.fn.filereadable(name) then
+			if vim.fn.filereadable(name)==1 then
 				local shortname = vim.fs.basename(name)
+				local onlyname = shortname
+				local arr = vim.fn.split(shortname, '\\.')
+				if #arr >= 2 then
+					table.remove(arr, #arr)
+					onlyname = vim.fn.join(arr, '.')
+				end
 				local path = vim.fs.dirname(name)
 				if #shortname > 0 then
-					table.insert(items, { bufnr, name, shortname, path })
+					table.insert(items, { bufnr, name, shortname, path, onlyname })
 				end
 			end
 		end
@@ -61,7 +68,6 @@ local function delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
 		if current_picker._multi:is_selected(entry) then
-			notify(vim.inspect(entry))
 			if vim.api.nvim_get_current_buf() ~= entry.value[1] then
 				vim.api.nvim_buf_delete(entry.value[1], { force = 1 })
 			end
@@ -74,7 +80,6 @@ local function reverse_delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
 		if not current_picker._multi:is_selected(entry) then
-			notify(vim.inspect(entry))
 			if vim.api.nvim_get_current_buf() ~= entry.value[1] then
 				vim.api.nvim_buf_delete(entry.value[1], { force = 1 })
 			end
@@ -94,11 +99,13 @@ local function show_buffers_list(opts)
 					value = entry,
 					filename = entry[2], -- 用于回车选择
 					bufnr = entry[1], -- 用于回车选择
-					ordinal = entry[3], -- 用于过滤
-					display = string.format("%s", entry[3]), -- 显示为
+					ordinal = entry[5], -- 用于过滤
+					display = string.format("%s", entry[3]), -- 显示为 (文件图标+文件名), 光标定位显示路径
 				}
 			end,
 		}),
+		previewer = conf.grep_previewer(opts),
+		sorter = conf.generic_sorter(opts),
 		attach_mappings = function(_, map)
 			map("i", "<c-d>", delete_buffers) -- 删除
 			map("i", "<s-d>", reverse_delete_buffers) -- 反向删除
@@ -109,7 +116,7 @@ local function show_buffers_list(opts)
 end
 
 M.run = function()
-	show_buffers_list()
+	show_buffers_list({})
 end
 
 require("telescope").register_extension({

@@ -702,7 +702,7 @@ return require('packer').startup({ function(use)
 						if current == nil then
 							for _, id in pairs(bufs) do
 								local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-								if vim.fn.filereadable(name) and string.find(name, vim.env.SESSION_DIR, 1, true) == 1 then
+								if vim.fn.filereadable(name)==1 and string.find(name, vim.env.SESSION_DIR, 1, true) == 1 then
 									vim.api.nvim_set_current_buf(id)
 									current = name
 									break
@@ -715,7 +715,7 @@ return require('packer').startup({ function(use)
 								current = id
 							else
 								local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-								if vim.fn.filereadable(name) and string.find(name, vim.env.SESSION_DIR, 1, true) ~= 1 then
+								if vim.fn.filereadable(name)==1 and string.find(name, vim.env.SESSION_DIR, 1, true) ~= 1 then
 									vim.api.nvim_buf_delete(id, { force = 1 })
 								end
 							end
