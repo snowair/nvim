@@ -30,6 +30,7 @@ vim.keymap.set({ 'n' }, '<s-F7>', function() dap.clear_breakpoints() end)
 
 -- 加载session
 vim.keymap.set({ 'n', 'i' }, '<c-F8>', function()
+	vim.cmd("silent! noa wall")
 	if vim.env.SESSION_DIR ~= nil then
 		vim.fn.chdir(vim.env.SESSION_DIR)
 	end
@@ -109,7 +110,10 @@ vim.keymap.set({ 'n', 'i' }, '<c-F11>', function()
 end)
 
 vim.keymap.set({ 'n', 'i' }, '<c-F12>', function() require 'telescope.builtin'.buffers({}) end) -- 搜buffer
-vim.keymap.set({ 'n' }, '<c-space>', function() require 'telescope.builtin'.buffers({ only_cwd = true }) end)
+vim.keymap.set({ 'n' }, '<c-space>', function()
+	vim.cmd("silent! noa wall")
+	require 'configs.bufferlist'.run({ only_cwd = true })
+end)
 
 
 -- 剪贴板操作

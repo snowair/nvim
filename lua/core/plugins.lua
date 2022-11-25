@@ -1035,11 +1035,7 @@ return require('packer').startup({ function(use)
 			vim.keymap.set('n', '<leader>dh', function()
 				diffview.file_history()
 			end)
-			local focus = require('focus')
 			vim.keymap.set('n', '<leader>dc', function()
-				if focus ~= nil then
-					focus.focus_enable()
-				end
 				vim.cmd('tabc')
 			end)
 		end
@@ -1066,7 +1062,7 @@ return require('packer').startup({ function(use)
 	use {
 		'beauwilliams/focus.nvim',
 		config = function()
-			require("focus").setup({ hybridnumber = false, excluded_filetypes = ignore_ft, excluded_buftypes = ignore_bt, })
+			require("focus").setup({ autoresize = false, hybridnumber = false, excluded_filetypes = ignore_ft, excluded_buftypes = ignore_bt, })
 			vim.keymap.set('n', '<leader>fd', ':FocusToggle<cr>')
 		end
 	}

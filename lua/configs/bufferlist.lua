@@ -4,62 +4,63 @@ local finders = require("telescope.finders")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local action_utils = require "telescope.actions.utils"
+local make_entry = require "telescope.make_entry"
+local filter = vim.tbl_filter
 local notify = require('notify')
 local conf = require("telescope.config").values
-
-local function get_bufs()
-	-- {bufnr,name,shortname,path,onlyname}
-	local items = {}
-	for _, bufnr in pairs(vim.api.nvim_list_bufs()) do
-		if vim.api.nvim_buf_is_valid(bufnr) and vim.fn.buflisted(bufnr)==1 then
-			local name = vim.fn.expand(vim.api.nvim_buf_get_name(bufnr))
-			if vim.fn.filereadable(name)==1 then
-				local shortname = vim.fs.basename(name)
-				local onlyname = shortname
-				local arr = vim.fn.split(shortname, '\\.')
-				if #arr >= 2 then
-					table.remove(arr, #arr)
-					onlyname = vim.fn.join(arr, '.')
-				end
-				local path = vim.fs.dirname(name)
-				if #shortname > 0 then
-					table.insert(items, { bufnr, name, shortname, path, onlyname })
-				end
-			end
-		end
-	end
-
-	return items
-end
 
 local function open_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	local buf_entries = {}
 	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
 		if current_picker._multi:is_selected(entry) then
-			table.insert(buf_entries, entry.value)
+			table.insert(buf_entries, entry.bufnr)
 		end
 	end)
 
 	actions.close(prompt_bufnr)
+
+	vim.api.nvim_set_current_buf(buf_entries[1])
 	if #buf_entries == 1 then
-		vim.api.nvim_set_current_buf(buf_entries[1])
 		return
 	end
+
+	-- 创建新tab
+	vim.cmd("tab split")
+	local curwin = vim.api.nvim_get_current_win()
+
 	if #buf_entries <= 3 then
-
+		-- 垂直窗口
+		vim.cmd("vsp")
+		vim.cmd("vsp")
 		return
 	end
+
 	if #buf_entries == 4 then
-
+		vim.cmd("vsp")
+		vim.cmd("sp")
+		vim.api.nvim_set_current_win(curwin)
+		vim.cmd("sp")
 		return
 	end
+
 	if #buf_entries == 5 then
-
+		vim.cmd("vsp")
+		vim.cmd("sp")
+		vim.api.nvim_set_current_win(curwin)
+		vim.cmd("sp")
+		vim.cmd("sp")
 		return
 	end
-	if #buf_entries == 6 then
 
+	if #buf_entries >= 6 then
+		vim.cmd("vsp")
+		vim.cmd("sp")
+		vim.api.nvim_set_current_win(curwin)
+		vim.cmd("sp")
+		vim.cmd("vsp")
+		vim.api.nvim_set_current_win(curwin)
+		vim.cmd("vsp")
 		return
 	end
 end
@@ -68,8 +69,8 @@ local function delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
 		if current_picker._multi:is_selected(entry) then
-			if vim.api.nvim_get_current_buf() ~= entry.value[1] then
-				vim.api.nvim_buf_delete(entry.value[1], { force = 1 })
+			if vim.api.nvim_get_current_buf() ~= entry.bufnr then
+				vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
 			end
 		end
 	end)
@@ -80,49 +81,112 @@ local function reverse_delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
 		if not current_picker._multi:is_selected(entry) then
-			if vim.api.nvim_get_current_buf() ~= entry.value[1] then
-				vim.api.nvim_buf_delete(entry.value[1], { force = 1 })
+			if vim.api.nvim_get_current_buf() ~= entry.bufnr then
+				vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
 			end
 		end
 	end)
 	actions.close(prompt_bufnr)
 end
 
-local function show_buffers_list(opts)
+-- Makes sure aliased options are set correctly
+local function apply_cwd_only_aliases(opts)
+	local has_cwd_only = opts.cwd_only ~= nil
+	local has_only_cwd = opts.only_cwd ~= nil
+
+	if has_only_cwd and not has_cwd_only then
+		-- Internally, use cwd_only
+		opts.cwd_only = opts.only_cwd
+		opts.only_cwd = nil
+	end
+
+	return opts
+end
+
+local show_buffers_list = function(opts)
 	opts = opts or {}
-	pickers.new(opts, {
-		prompt_title = "Buffers",
-		finder = finders.new_table({
-			results = get_bufs(),
-			entry_maker = function(entry)
-				return {
-					value = entry,
-					filename = entry[2], -- 用于回车选择
-					bufnr = entry[1], -- 用于回车选择
-					ordinal = entry[5], -- 用于过滤
-					display = string.format("%s", entry[3]), -- 显示为 (文件图标+文件名), 光标定位显示路径
-				}
+	opts = apply_cwd_only_aliases(opts)
+	local bufnrs = filter(function(b)
+		if 1 ~= vim.fn.buflisted(b) then
+			return false
+		end
+		-- only hide unloaded buffers if opts.show_all_buffers is false, keep them listed if true or nil
+		if opts.show_all_buffers == false and not vim.api.nvim_buf_is_loaded(b) then
+			return false
+		end
+		if opts.ignore_current_buffer and b == vim.api.nvim_get_current_buf() then
+			return false
+		end
+		if opts.cwd_only and not string.find(vim.api.nvim_buf_get_name(b), vim.loop.cwd(), 1, true) then
+			return false
+		end
+		return true
+	end, vim.api.nvim_list_bufs())
+	if not next(bufnrs) then
+		return
+	end
+	if opts.sort_mru then
+		table.sort(bufnrs, function(a, b)
+			return vim.fn.getbufinfo(a)[1].lastused > vim.fn.getbufinfo(b)[1].lastused
+		end)
+	end
+
+	local buffers = {}
+	local default_selection_idx = 1
+	for _, bufnr in ipairs(bufnrs) do
+		local flag = bufnr == vim.fn.bufnr "" and "%" or (bufnr == vim.fn.bufnr "#" and "#" or " ")
+
+		if opts.sort_lastused and not opts.ignore_current_buffer and flag == "#" then
+			default_selection_idx = 2
+		end
+
+		local element = {
+			bufnr = bufnr,
+			flag = flag,
+			info = vim.fn.getbufinfo(bufnr)[1],
+		}
+
+		if opts.sort_lastused and (flag == "#" or flag == "%") then
+			local idx = ((buffers[1] ~= nil and buffers[1].flag == "%") and 2 or 1)
+			table.insert(buffers, idx, element)
+		else
+			table.insert(buffers, element)
+		end
+	end
+
+	if not opts.bufnr_width then
+		local max_bufnr = math.max(unpack(bufnrs))
+		opts.bufnr_width = #tostring(max_bufnr)
+	end
+
+	pickers
+		.new(opts, {
+			prompt_title = "Buffers",
+			finder = finders.new_table {
+				results = buffers,
+				entry_maker = opts.entry_maker or make_entry.gen_from_buffer(opts),
+			},
+			previewer = conf.grep_previewer(opts),
+			sorter = conf.generic_sorter(opts),
+			default_selection_index = default_selection_idx,
+			attach_mappings = function(_, map)
+				map("i", "<c-d>", delete_buffers) -- 删除
+				map("i", "<s-d>", reverse_delete_buffers) -- 反向删除
+				map("i", "<c-o>", open_buffers) -- 批量打开
+				return true
 			end,
-		}),
-		previewer = conf.grep_previewer(opts),
-		sorter = conf.generic_sorter(opts),
-		attach_mappings = function(_, map)
-			map("i", "<c-d>", delete_buffers) -- 删除
-			map("i", "<s-d>", reverse_delete_buffers) -- 反向删除
-			map("i", "<c-o>", open_buffers) -- 批量打开
-			return true
-		end,
-	}):find()
+		})
+		:find()
 end
 
-M.run = function()
-	show_buffers_list({})
+M.run = function(opt)
+	show_buffers_list(opt)
 end
 
-require("telescope").register_extension({
-	exports = {
-		bufferslist = M.run,
-	},
-})
+--require("telescope").register_extension({
+	--exports = {
+		--bufferslist = M.run,
+	--},
+--})
 
 return M
