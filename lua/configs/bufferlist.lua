@@ -9,6 +9,14 @@ local filter = vim.tbl_filter
 local notify = require('notify')
 local conf = require("telescope.config").values
 
+local function set_buffer(buffers)
+	local tabnr = vim.api.nvim_get_current_tabpage()
+	local winnrs = vim.api.nvim_tabpage_list_wins(tabnr)
+	for i,win in ipairs(winnrs) do
+		vim.api.nvim_win_set_buf(win, buffers[i])
+	end
+end
+
 local function open_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	local buf_entries = {}
@@ -29,10 +37,18 @@ local function open_buffers(prompt_bufnr)
 	vim.cmd("tab split")
 	local curwin = vim.api.nvim_get_current_win()
 
-	if #buf_entries <= 3 then
+	if #buf_entries == 2 then
+		-- 垂直窗口
+		vim.cmd("vsp")
+		set_buffer(buf_entries)
+		return
+	end
+
+	if #buf_entries == 3 then
 		-- 垂直窗口
 		vim.cmd("vsp")
 		vim.cmd("vsp")
+		set_buffer(buf_entries)
 		return
 	end
 
@@ -41,6 +57,7 @@ local function open_buffers(prompt_bufnr)
 		vim.cmd("sp")
 		vim.api.nvim_set_current_win(curwin)
 		vim.cmd("sp")
+		set_buffer(buf_entries)
 		return
 	end
 
@@ -50,6 +67,7 @@ local function open_buffers(prompt_bufnr)
 		vim.api.nvim_set_current_win(curwin)
 		vim.cmd("sp")
 		vim.cmd("sp")
+		set_buffer(buf_entries)
 		return
 	end
 
@@ -61,9 +79,11 @@ local function open_buffers(prompt_bufnr)
 		vim.cmd("vsp")
 		vim.api.nvim_set_current_win(curwin)
 		vim.cmd("vsp")
+		set_buffer(buf_entries)
 		return
 	end
 end
+
 
 local function delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
