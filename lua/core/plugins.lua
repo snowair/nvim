@@ -662,6 +662,10 @@ return require('packer').startup({ function(use)
 				pattern = "SessionSavePre",
 				group = config_group,
 				callback = function()
+					-- 恢复窗口排列尺寸
+					local focus = require("focus")
+					focus.focus_disable()
+
 					-- 关闭插件的tab
 					local tabs = vim.api.nvim_list_tabpages()
 					if #tabs > 1 then
@@ -1063,8 +1067,10 @@ return require('packer').startup({ function(use)
 	use {
 		'beauwilliams/focus.nvim',
 		config = function()
-			require("focus").setup({ autoresize = false, hybridnumber = false, excluded_filetypes = ignore_ft,
+			local focus = require("focus")
+			focus.setup({ autoresize = false, hybridnumber = false, excluded_filetypes = ignore_ft,
 				excluded_buftypes = ignore_bt, })
+			focus.focus_disable()
 			vim.keymap.set('n', '<leader>fd', ':FocusToggle<cr>')
 		end
 	}

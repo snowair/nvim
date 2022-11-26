@@ -77,8 +77,8 @@ autocmd FileType markdown  vmap <leader>fb  :s/^.*$/> \0/g<cr>:nohl<cr>
 " 包围块代码
 autocmd FileType markdown  vmap <leader>fc  :s/^\(\%V\_.*\)\%V$/```\r\0\r```/<cr>:nohl<cr>
 
-"autocmd FileType DiffviewFiles  lua require('focus').focus_disable()
-"autocmd FileType DiffviewFileHistory  lua require('focus').focus_disable()
+autocmd FileType DiffviewFiles  lua require('focus').focus_disable()
+autocmd FileType DiffviewFileHistory  lua require('focus').focus_disable()
 "autocmd FileType NeogitStatus  lua require('focus').focus_enable()
 
 " 在插入模式禁止auto indent,否则粘贴文本时候, 会逐行缩进
