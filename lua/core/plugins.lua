@@ -702,7 +702,7 @@ return require('packer').startup({ function(use)
 						if current == nil then
 							for _, id in pairs(bufs) do
 								local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-								if vim.fn.filereadable(name)==1 and string.find(name, vim.env.SESSION_DIR, 1, true) == 1 then
+								if vim.fn.filereadable(name) == 1 and string.find(name, vim.env.SESSION_DIR, 1, true) == 1 then
 									vim.api.nvim_set_current_buf(id)
 									current = name
 									break
@@ -715,7 +715,7 @@ return require('packer').startup({ function(use)
 								current = id
 							else
 								local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-								if vim.fn.filereadable(name)==1 and string.find(name, vim.env.SESSION_DIR, 1, true) ~= 1 then
+								if vim.fn.filereadable(name) == 1 and string.find(name, vim.env.SESSION_DIR, 1, true) ~= 1 then
 									vim.api.nvim_buf_delete(id, { force = 1 })
 								end
 							end
@@ -898,9 +898,10 @@ return require('packer').startup({ function(use)
 		config = function()
 			local null_ls = require("null-ls")
 			local sources = {
-				--null_ls.builtins.code_actions.eslint,
+				null_ls.builtins.code_actions.eslint,
+				null_ls.builtins.code_actions.gitrebase,
 				null_ls.builtins.code_actions.gitsigns,
-				null_ls.builtins.completion.luasnip,
+				--null_ls.builtins.completion.luasnip,
 				--null_ls.builtins.diagnostics.eslint,
 				--null_ls.builtins.diagnostics.jsonlint,
 				--null_ls.builtins.diagnostics.textlint,
@@ -1062,7 +1063,8 @@ return require('packer').startup({ function(use)
 	use {
 		'beauwilliams/focus.nvim',
 		config = function()
-			require("focus").setup({ autoresize = false, hybridnumber = false, excluded_filetypes = ignore_ft, excluded_buftypes = ignore_bt, })
+			require("focus").setup({ autoresize = false, hybridnumber = false, excluded_filetypes = ignore_ft,
+				excluded_buftypes = ignore_bt, })
 			vim.keymap.set('n', '<leader>fd', ':FocusToggle<cr>')
 		end
 	}
