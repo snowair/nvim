@@ -130,3 +130,15 @@ vim.api.nvim_create_user_command('FontSize', function(params)
 	end
 
 end, { nargs = 1, bang = true, })
+
+vim.api.nvim_create_user_command('B', function(params)
+	if params ~= nil then
+		local branch = params.args
+		if branch == "" then
+			require 'telescope.builtin'.git_branches()
+		else
+			vim.cmd(string.format('!git checkout %s',branch))
+		end
+	end
+
+end, { nargs = "?", bang = true, })
