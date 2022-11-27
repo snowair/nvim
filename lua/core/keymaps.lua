@@ -96,11 +96,10 @@ local function get_dirs ()
 	end
 end
 
--- 搜目录
+-- 在cdlist中搜文件内容
 vim.keymap.set({ 'n', 'i' }, '<c-F9>', function()
 	require 'telescope.builtin'.live_grep({ search_dirs = get_dirs() })
 end)
-
 
 -- 在cdlist中搜文件
 vim.keymap.set({ 'n', 'i' }, '<c-F10>', function()
@@ -114,6 +113,15 @@ vim.keymap.set({ 'n', 'i' }, '<c-F11>', function()
 		require 'telescope.builtin'.find_files({ search_dirs = { ssdir } })
 	else
 		require 'telescope.builtin'.find_files()
+	end
+end)
+-- 在session dir中搜文件内容
+vim.keymap.set({ 'n', 'i' }, '<s-F11>', function()
+	local ssdir = vim.env.SESSION_DIR
+	if ssdir ~= nil then
+		require 'telescope.builtin'.live_grep({ search_dirs = { ssdir } })
+	else
+		require 'telescope.builtin'.live_grep()
 	end
 end)
 
