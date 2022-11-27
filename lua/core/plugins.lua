@@ -562,8 +562,8 @@ return require('packer').startup({ function(use)
 		requires = { "nvim-telescope/telescope.nvim" },
 		config = function()
 			require("dir-telescope").setup({
-				hidden = true,
-				respect_gitignore = true,
+				hidden = false, -- 是否搜索因此目录
+				respect_gitignore = true, -- 是否尊重.gitignore文件
 			})
 		end,
 	})
