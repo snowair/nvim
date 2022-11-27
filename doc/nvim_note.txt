@@ -760,7 +760,7 @@ vim.api
 vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
 callback = function()
 	vim.o.title = true
-	local f = vim.fn.getcwd()
+	local f = vim.loop.cwd()
 	if f ~= nil then
 		local root_files = {
 			f .. '/.git',
@@ -952,7 +952,7 @@ dap.configurations.go = {
 		name = "Remote Attached Debugger";
 		port = 2345; // dlv server 端口
 		host = '127.0.0.1'; // dlv server host
-		cwd = vim.fn.getcwd();
+		cwd = vim.loop.cwd();
 	},
 }
 ```

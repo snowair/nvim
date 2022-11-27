@@ -39,15 +39,12 @@ vim.keymap.set({ 'n', 'i' }, '<c-F8>', function()
 end)
 
 -- telescope
--- 搜历史记录
-vim.keymap.set({ 'n', 'i' }, '<c-F9>', function() require 'telescope.builtin'.oldfiles({ cwd = true }) end)
--- 在cdlist中搜文件
-vim.keymap.set({ 'n', 'i' }, '<c-F10>', function()
+local function get_dirs ()
 	local ssdir = vim.env.SESSION_DIR
 	local dirlist = vim.g.dirChangeHistory
+		local cwd = vim.loop.cwd()
 	if dirlist ~= nil and #dirlist >= 1 then
 		-- cdlist有可能不含有当前cwd,所以需要加入
-		local cwd = vim.fn.getcwd()
 		local cwd_exsist = false
 		for _, v in pairs(dirlist) do
 			if v == cwd then
@@ -89,16 +86,27 @@ vim.keymap.set({ 'n', 'i' }, '<c-F10>', function()
 				end
 			end
 		end
-
-		require 'telescope.builtin'.find_files({ search_dirs = dirlist_copy })
+		return dirlist_copy
 	else
 		if ssdir ~= nil then
-			require 'telescope.builtin'.find_files({ search_dirs = { ssdir } })
+			return ssdir
 		else
-			require 'telescope.builtin'.find_files()
+			return cwd
 		end
 	end
+end
+
+-- 搜目录
+vim.keymap.set({ 'n', 'i' }, '<c-F9>', function()
+	require 'telescope.builtin'.live_grep({ search_dirs = get_dirs() })
 end)
+
+
+-- 在cdlist中搜文件
+vim.keymap.set({ 'n', 'i' }, '<c-F10>', function()
+	require 'telescope.builtin'.find_files({ search_dirs = get_dirs() })
+end)
+
 -- 在session dir中搜文件
 vim.keymap.set({ 'n', 'i' }, '<c-F11>', function()
 	local ssdir = vim.env.SESSION_DIR

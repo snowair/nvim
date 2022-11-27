@@ -57,7 +57,7 @@ function M.config()
 			name = "Remote Attached Debugger";
 			port = 2345;
 			host = '127.0.0.1';
-			cwd = vim.fn.getcwd();
+			cwd = vim.loop.cwd();
 		},
 	}
 end

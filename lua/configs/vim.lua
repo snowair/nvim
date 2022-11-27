@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd({ "DirChangedPre" }, {
 			dirlist = {}
 		end
 
-		local cwd = vim.fn.getcwd()
+		local cwd = vim.loop.cwd()
 		vim.env.PRE_WORKING_DIR = cwd
 		for _, v in pairs(dirlist) do
 			if v == cwd then
@@ -62,7 +62,7 @@ vim.api.nvim_create_autocmd({ "DirChangedPre" }, {
 -- 而我们希望如果新的cwd是上一个cwd的子目录,则不change root
 vim.api.nvim_create_autocmd({ "DirChanged" }, {
 	callback = function()
-		local cwd = vim.fn.getcwd()
+		local cwd = vim.loop.cwd()
 		local predir = vim.env.PRE_WORKING_DIR
 
 		local start, _ = string.find(cwd, predir, 1, true)
