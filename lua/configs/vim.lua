@@ -131,14 +131,88 @@ vim.api.nvim_create_user_command('FontSize', function(params)
 
 end, { nargs = 1, bang = true, })
 
+-- :B -b newbranch
+-- :B local_branch
+-- :B .						  撤销所有变更
+-- :B -- filename			  撤销指定变更
+-- :B origin/serverfix        签出远程分支
 vim.api.nvim_create_user_command('B', function(params)
 	if params ~= nil then
 		local branch = params.args
 		if branch == "" then
 			require 'telescope.builtin'.git_branches()
 		else
-			vim.cmd(string.format('!git checkout %s',branch))
+			local arr = vim.fn.split(branch, "/")
+			if #arr == 2 then
+				vim.cmd(string.format('!git checkout --track %s', branch))
+			else
+				vim.cmd(string.format('!git checkout %s', branch))
+			end
 		end
 	end
 
+end, { nargs = "?", bang = true, })
+
+-- :Pull
+-- :Pull
+-- :Pull rebase
+-- :Pull merge
+vim.api.nvim_create_user_command('Pull', function(params)
+	if params ~= nil then
+		if params.args == "" then
+			vim.cmd('!git pull --ff')
+		elseif params.args == "rebase" then
+			vim.cmd('!git pull --rebase=true')
+		elseif params.args == "merge" then
+			vim.cmd('!git pull --rebase=false')
+		else
+			vim.cmd(string.format('!git pull %s', params.args))
+		end
+	end
+end, { nargs = "?", bang = true, })
+
+-- :Push
+-- :Push origin branchname
+vim.api.nvim_create_user_command('Push', function(params)
+	if params ~= nil then
+		if params.args == "" then
+			vim.cmd(string.format('!git push'))
+		else
+			vim.cmd(string.format('!git push --set-upstream %s', params.args))
+		end
+	end
+end, { nargs = "?", bang = true, })
+
+
+-- :Remote
+vim.api.nvim_create_user_command('Remote', function(params)
+	if params ~= nil then
+		if params.args == "" then
+			vim.cmd(string.format('!git remote -h'))
+		else
+			vim.cmd(string.format('!git remote %s', params.args))
+		end
+	end
+end, { nargs = "?", bang = true, })
+
+-- :Merge Abort
+vim.api.nvim_create_user_command('Merge', function(params)
+	if params ~= nil then
+		if params.args == "abort" then
+			vim.cmd('!git merge --abort')
+		elseif params.args == "continue" then
+			vim.cmd('!git merge --continue')
+		elseif params.args == "quit" then
+			vim.cmd('!git merge --quit')
+		else
+			vim.cmd(string.format('!git merge %s', params.args))
+		end
+	end
+end, { nargs = "?", bang = true, })
+
+-- :Blame 12,12
+vim.api.nvim_create_user_command('Blame', function(params)
+	if params ~= nil then
+		vim.cmd(string.format('!git blame -L %s %%', params.args))
+	end
 end, { nargs = "?", bang = true, })
