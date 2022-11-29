@@ -8,7 +8,11 @@ vim.keymap.set('n', '<F2>', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<s-F2>', vim.diagnostic.goto_prev)
 
 -- terminal 模式
-vim.keymap.set('n', '<s-f3>', ':FloatermToggle<cr>')
+vim.keymap.set('n', '<s-f3>',function()
+	vim.cmd("silent! noa wall")
+	vim.cmd("FloatermToggle")
+end)
+
 vim.keymap.set('t', '<s-f3>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<a-f3>', '<c-\\><c-n>:FloatermNext<return>')
 vim.keymap.set('n', '<s-f4>', function()
