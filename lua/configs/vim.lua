@@ -195,7 +195,9 @@ vim.api.nvim_create_user_command('Remote', function(params)
 	end
 end, { nargs = "?", bang = true, })
 
--- :Merge Abort
+-- :Merge abort
+-- :Merge continue
+-- :Merge quit
 vim.api.nvim_create_user_command('Merge', function(params)
 	if params ~= nil then
 		if params.args == "abort" then
@@ -215,4 +217,24 @@ vim.api.nvim_create_user_command('Blame', function(params)
 	if params ~= nil then
 		vim.cmd(string.format('!git blame -L %s %%', params.args))
 	end
+end, { nargs = "?", bang = true, })
+
+-- :Stash
+vim.api.nvim_create_user_command('Stash', function(params)
+	if params ~= nil then
+		if params.args == "" then
+			vim.cmd('!git stash')
+		else
+			vim.cmd(string.format('!git stash %s', params.args))
+		end
+	end
+end, { nargs = "?", bang = true, })
+
+vim.api.nvim_create_user_command('StashPop', function(params)
+	vim.cmd('!git stash pop')
+end, { nargs = "?", bang = true, })
+
+-- :Stash apply
+vim.api.nvim_create_user_command('StashApply', function(params)
+	vim.cmd('!git stash apply')
 end, { nargs = "?", bang = true, })
