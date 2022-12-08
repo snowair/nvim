@@ -505,7 +505,7 @@ return require('packer').startup({ function(use)
 
 	-- project.nvim
 	use {
-		-- 增加新命令打开历史工程列表 :Telescope project, 列出项目列表, 选择项目,列出此项目的文件列表供选择打开.
+		-- 列出历史 projects 列表 :Telescope project
 		-- 打开项目文件后,自动cd工作目录到项目根目录;
 		'ahmedkhalf/project.nvim',
 		require = 'nvim-telescope/telescope.nvim',
@@ -550,9 +550,43 @@ return require('packer').startup({ function(use)
 	}
 
 	use {
+		-- 用於通過搜索的方式切換projects
+		-- 搜索是递归的，所以会慢, 适用于搜索和打开项目依赖包
 		'cljoly/telescope-repo.nvim',
 		require = 'nvim-telescope/telescope.nvim',
 	}
+
+	use({
+		-- 用於通過指定的workspace切換projects, 适用于工作项目的组织.
+		-- workspace下的直接子目录才可能是project,不会递归，利于精确控制项目列表，避免列出不必要的项目.
+		"gnikdroy/projections.nvim",
+		config = function()
+			require("projections").setup({
+				workspaces = { -- Default workspaces to search for
+					{ "/mnt/wd/Git", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+					-- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
+					-- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
+				},
+				-- patterns = { ".git", ".svn", ".hg" },      -- Default patterns to use if none were specified. These are NOT regexps.
+				-- store_hooks = { pre = nil, post = nil },   -- pre and post hooks for store_session, callable | nil
+				-- restore_hooks = { pre = nil, post = nil }, -- pre and post hooks for restore_session, callable | nil
+				-- workspaces_file = "path/to/file",          -- Path to workspaces json file
+				-- sessions_directory = "path/to/dir",        -- Directory where sessions are stored
+			})
+
+			-- Bind <leader>fp to Telescope projections
+			require('telescope').load_extension('projections')
+			vim.keymap.set("n", "<leader>fp", function() vim.cmd("Telescope projections") end)
+
+			-- Switch to project if vim was started in a project dir
+			local switcher = require("projections.switcher")
+			vim.api.nvim_create_autocmd({ "VimEnter" }, {
+				callback = function()
+					if vim.fn.argc() == 0 then switcher.switch(vim.loop.cwd()) end
+				end,
+			})
+		end
+	})
 
 	-- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
 	use 'nvim-telescope/telescope-symbols.nvim'
