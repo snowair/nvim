@@ -47,7 +47,8 @@ function source:complete(params, callback)
 	-- 判断一下如果前面是 time.Parse(", .Format(" , 则触发; 否则不触发
 	local start1, _ = string.find(req, [[time%.Parse%s*%(%s*"]])
 	local start2, _ = string.find(req, [[%.Format%s*%(%s*"]])
-	if (start1 ~= nil and start1 >= 1) or (start2 ~= nil and start2 >= 1) then
+	local start3, _ = string.find(req, [[time%.ParseInLocation%s*%(%s*"]])
+	if (start1 ~= nil and start1 >= 1) or (start2 ~= nil and start2 >= 1) or (start3 ~= nil and start3 >= 1)then
 		callback({
 			{ word = fulltime, label = fulltime, insertText = fulltime, filterText = fulltime },
 			{ word = fulltime2, label = fulltime2, insertText = fulltime2, filterText = fulltime2 },
