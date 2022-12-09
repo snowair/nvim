@@ -12,7 +12,7 @@ local conf = require("telescope.config").values
 local function set_buffer(buffers)
 	local tabnr = vim.api.nvim_get_current_tabpage()
 	local winnrs = vim.api.nvim_tabpage_list_wins(tabnr)
-	for i,win in ipairs(winnrs) do
+	for i, win in ipairs(winnrs) do
 		vim.api.nvim_win_set_buf(win, buffers[i])
 	end
 end
@@ -20,7 +20,7 @@ end
 local function open_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
 	local buf_entries = {}
-	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
+	action_utils.map_entries(prompt_bufnr, function(entry, _, _)
 		if current_picker._multi:is_selected(entry) then
 			table.insert(buf_entries, entry.bufnr)
 		end
@@ -84,28 +84,49 @@ local function open_buffers(prompt_bufnr)
 	end
 end
 
-
 local function delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
-	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
+	local multi = false
+	action_utils.map_entries(prompt_bufnr, function(entry, _, _)
 		if current_picker._multi:is_selected(entry) then
-			if vim.api.nvim_get_current_buf() ~= entry.bufnr then
+			multi = true
+			if entry.bufnr~=current_picker.source_bufnr then
 				vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
 			end
 		end
 	end)
+	local entry = action_state.get_selected_entry()
+	if multi == false and entry.bufnr~=current_picker.source_bufnr then
+		vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
+	end
 	actions.close(prompt_bufnr)
 end
 
 local function reverse_delete_buffers(prompt_bufnr)
 	local current_picker = action_state.get_current_picker(prompt_bufnr)
-	action_utils.map_entries(prompt_bufnr, function(entry, _, row)
-		if not current_picker._multi:is_selected(entry) then
-			if vim.api.nvim_get_current_buf() ~= entry.bufnr then
-				vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
-			end
+	local multi = false
+	local selected_entry = action_state.get_selected_entry()
+	local save_bufs = {}
+	table.insert(save_bufs, current_picker.source_bufnr)
+
+	action_utils.map_entries(prompt_bufnr, function(entry, _, _)
+		if current_picker._multi:is_selected(entry) then
+			multi = true
+			table.insert(save_bufs, entry.bufnr)
 		end
 	end)
+
+	local entry = action_state.get_selected_entry()
+	if multi == false  then
+		table.insert(save_bufs, entry.bufnr)
+	end
+
+	action_utils.map_entries(prompt_bufnr, function(entry, _, _)
+		if not vim.tbl_contains(save_bufs, entry.bufnr) then
+			vim.api.nvim_buf_delete(entry.bufnr, { force = 0 })
+		end
+	end)
+
 	actions.close(prompt_bufnr)
 end
 
@@ -126,6 +147,7 @@ end
 local show_buffers_list = function(opts)
 	opts = opts or {}
 	opts = apply_cwd_only_aliases(opts)
+	local current_bufnr = vim.api.nvim_get_current_buf()
 	local bufnrs = filter(function(b)
 		if 1 ~= vim.fn.buflisted(b) then
 			return false
@@ -134,7 +156,7 @@ local show_buffers_list = function(opts)
 		if opts.show_all_buffers == false and not vim.api.nvim_buf_is_loaded(b) then
 			return false
 		end
-		if opts.ignore_current_buffer and b == vim.api.nvim_get_current_buf() then
+		if opts.ignore_current_buffer and b == current_bufnr then
 			return false
 		end
 		if opts.cwd_only and not string.find(vim.api.nvim_buf_get_name(b), vim.loop.cwd(), 1, true) then
@@ -179,8 +201,7 @@ local show_buffers_list = function(opts)
 		opts.bufnr_width = #tostring(max_bufnr)
 	end
 
-	pickers
-		.new(opts, {
+	local picker = pickers.new(opts, {
 			prompt_title = "Buffers",
 			finder = finders.new_table {
 				results = buffers,
@@ -196,7 +217,8 @@ local show_buffers_list = function(opts)
 				return true
 			end,
 		})
-		:find()
+	picker.source_bufnr = current_bufnr
+	picker:find()
 end
 
 M.run = function(opt)
@@ -204,9 +226,9 @@ M.run = function(opt)
 end
 
 --require("telescope").register_extension({
-	--exports = {
-		--bufferslist = M.run,
-	--},
+--exports = {
+--bufferslist = M.run,
+--},
 --})
 
 return M
