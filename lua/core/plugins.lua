@@ -564,6 +564,9 @@ return require('packer').startup({ function(use)
 			require("projections").setup({
 				workspaces = { -- Default workspaces to search for
 					{ "/mnt/wd/Git", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+					{ "~", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+					{ "~/git", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+					{ "~/git/mlol", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
 					-- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
 					-- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
 				},
@@ -575,7 +578,6 @@ return require('packer').startup({ function(use)
 			})
 
 			-- Bind <leader>fp to Telescope projections
-			require('telescope').load_extension('projections')
 			vim.keymap.set("n", "<leader>fp", function() vim.cmd("Telescope projections") end)
 
 			-- Switch to project if vim was started in a project dir
@@ -639,6 +641,7 @@ return require('packer').startup({ function(use)
 			vim.cmd('autocmd User TelescopePreviewerLoaded setlocal wrap') -- 预览窗口自动换行
 			vim.cmd('autocmd User TelescopePreviewerLoaded setlocal number') -- 预览窗口显示 行号
 
+			require('telescope').load_extension('projections')
 			require("telescope").load_extension "repo"
 			require("telescope").load_extension("ui-select")
 			require('telescope').load_extension('projects')
