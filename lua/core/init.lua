@@ -17,16 +17,17 @@ vim.opt.backup         = false -- 即 :set nobackup
 vim.opt.writebackup    = true
 --vim.opt.guifont        = 'SauceCodePro Nerd Font:h14'
 if (vim.fn.has('termguicolors') == 1) then
-	vim.opt.termguicolors = true
+    vim.opt.termguicolors = true
 end
 
 -- tabs
 vim.opt.autoindent    = true
-vim.opt.tabstop       = 4
-vim.opt.shiftwidth    = 4
-vim.opt.softtabstop   = 4
-vim.opt.mouse         = 'a'
 vim.opt.smarttab      = true
+vim.opt.softtabstop   = 4
+vim.opt.tabstop       = 4 -- 设定一个tab的显示宽度占4个空格
+vim.opt.shiftwidth    = 4 -- 设定自动缩进的宽度占4个空格
+vim.opt.expandtab     = true -- 设定使用空格代替tab
+vim.opt.mouse         = 'a'
 vim.opt.smartindent   = true
 vim.opt.ignorecase    = true
 vim.opt.smartcase     = true
