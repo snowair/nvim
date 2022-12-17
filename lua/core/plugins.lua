@@ -781,6 +781,7 @@ return require('packer').startup({ function(use)
 					vim.o.titlestring = ""
 					local f = vim.loop.cwd()
 					require("configs.lualine").gitStatusTaskFn()
+					vim.cmd('LspRestart')
 
 					if f ~= nil then
 						-- 由于此事件是在session的工作空间全部加载完成后执行, 此时cwd可能已经被project插件自动改成git项目的根目录了.
