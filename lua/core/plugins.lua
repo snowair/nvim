@@ -943,6 +943,7 @@ return require('packer').startup({ function(use)
 				null_ls.builtins.code_actions.eslint,
 				null_ls.builtins.code_actions.gitrebase,
 				null_ls.builtins.code_actions.gitsigns,
+                null_ls.builtins.formatting.eslint,
 				--null_ls.builtins.completion.luasnip,
 				--null_ls.builtins.diagnostics.eslint,
 				--null_ls.builtins.diagnostics.jsonlint,
@@ -952,7 +953,6 @@ return require('packer').startup({ function(use)
 				--null_ls.builtins.formatting.tidy,
 			}
 			null_ls.setup({ sources = sources, debug = false })
-			null_ls.setup()
 			require("../configs/go_code_actions") -- 加载自定义的code_actions
 		end
 	}

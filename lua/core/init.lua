@@ -22,11 +22,15 @@ end
 
 -- tabs
 vim.opt.autoindent    = true
-vim.opt.tabstop       = 4
-vim.opt.shiftwidth    = 4
-vim.opt.softtabstop   = 4
-vim.opt.mouse         = 'a'
 vim.opt.smarttab      = true
+-- 设定一个<tab>字符的显示宽度占4个空格
+vim.opt.softtabstop   = 4
+vim.opt.tabstop       = 4
+-- 设定使用空格代替<tab>字符
+vim.opt.expandtab     = true
+--  执行缩进的宽度，值可以任意设置值，会自动根据需要使用<tab>,和空格组合出相应的缩进宽度，且优先使用<tab>不足时用空格补足宽度. 注意:它是一个local buffer选项
+vim.opt.shiftwidth    = 4
+vim.opt.mouse         = 'a'
 vim.opt.smartindent   = true
 vim.opt.ignorecase    = true
 vim.opt.smartcase     = true
@@ -76,4 +80,3 @@ require("configs.grammar").config()
 require("configs.startscreen").config()
 require("configs.dap_conf").config()
 require("configs.lualine").config()
--- require("configs.bufferlist").run()

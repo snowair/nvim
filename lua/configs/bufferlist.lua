@@ -225,10 +225,4 @@ M.run = function(opt)
 	show_buffers_list(opt)
 end
 
---require("telescope").register_extension({
---exports = {
---bufferslist = M.run,
---},
---})
-
 return M
