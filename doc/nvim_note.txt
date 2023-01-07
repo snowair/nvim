@@ -1268,7 +1268,7 @@ git config --global i18n.logOutputEncoding utf-8
 
 ctrl-a,ctrl-x增强
 
-配置了go的时间format,  `int,inti32,in64`,  `uint,uinti32,uin64`, `[]byte(/string(`
+配置了go的时间format,  `int,int32,in64`,  `uint,uint32,uin64`, `[]byte(/string(`
 `and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
 `success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled,
 `+/-`, `,/, /，/,`, `./ 。/ ．`"/ “ / ”`
