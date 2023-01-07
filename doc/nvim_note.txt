@@ -447,9 +447,9 @@ NvimTree 高频快捷键
 - `E` [Expand] 展开光标目录的全部子目录
 - `H`  [Hidden toggle] 切换 . 文件显示
 - `I` 切换显示/隐藏 .gitignore 隐藏的文件
-- `P` 光标移动到上级目录
 - `R` [Refresh] 刷新Tree
-- `<c-]` 切换cwd到该目录
+- `P` 光标移动到上级目录
+- `<c-]` Tree Root切换到该目录
 - `-` Tree Root 切到上一级目录
 - `s` [system]  打开系统默认文件管理器
 - `f` [filter] 过滤tree中的文件,只显示与filter匹配的文件. 
@@ -1288,17 +1288,31 @@ ctrl-a,ctrl-x增强
 * `VisitLinkUnderCursor`  Open link under the cursor
 * `VisitLinkNearCursor`  Open link near the cursor
 
-# 多列编辑
+# 多重编辑
+
+有两种选择内容的方式: cursor模式和extend模式
 
 ## cursor模式多重选择操作
+
+cursor模式用来在不同的行里面选择相同的文本。
 
 * 光标移动到一个单词上，按下ctrl-n 会选中这个单词，然后n会增加选中下一处出现的该单词, 按下 N 会增加选中上一处出现的该单词.
 * 选择多个目标后，可以使用 shift+方向键，同时在多个目标上移动光标，调整所有目标的选择范围.
 * 也可以先在visual模式选择初始文本，然后用ctrl-n加选下一处相同文本.
 
-## ctrl+up ctrl+down 进行extend模式选择
+cursor模式选择完成后，执行任意编辑操作(删除，insert)后会自动进入extend模式
 
-与mac系统快捷键冲突
+## extend模式操作
+
+用来按列选择字符，可以选择很多列，不限于一列。
+
+具体操作: nomarl模式下，使用 `<c-up>`,`<c-down>` 在列上下移动光标进行选择，当按下 `<c-up>`,`<c-down>`后，光标落到的 **字符** 被选择
+
+extend模式编辑完成后esc会仍然返回extend模式, 再次esc退出多重编辑模式.
+
+extend模式下可以通过hljk改变选择的列和行，如果单纯移动光标不改变选择，需要使用方向键.
+
+注:与mac系统快捷键冲突,需要禁用系统的快捷键.
 
 ## tab切换选择模式
 
@@ -1306,8 +1320,8 @@ ctrl-a,ctrl-x增强
 
 ## 选择完成后的操作
 
-* 多重选择完成后，可以按下x, 删除选择；
-* 按下 i, I, a, A ，在每一处选择的文本上进入对应的insert模式，开始多重编辑.
+* 选择完成后，可以按下x, 一次删除选择的所有内容；
+* 按下 i, I, a, A ，在 **每一处选择的文本** 上进入对应的insert模式，开始多重编辑.
 
 | Key | Action                                              |
 |-----|-----------------------------------------------------|
