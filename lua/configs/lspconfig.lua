@@ -85,10 +85,6 @@ function M.config()
     }
     require 'lspconfig'.cssmodules_ls.setup {}
 
-    -- js,ts,json
-    vim.g.markdown_fenced_languages = {
-        "ts=typescript"
-    }
     require 'lspconfig'.jsonls.setup {
         on_attach = require "lsp-format".on_attach,
     }

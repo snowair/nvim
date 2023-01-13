@@ -15,9 +15,10 @@ vim.opt.autowrite      = true
 vim.opt.swapfile       = false -- 即 :set noswapfile
 vim.opt.backup         = false -- 即 :set nobackup
 vim.opt.writebackup    = true
+vim.opt.conceallevel   = 2
 --vim.opt.guifont        = 'SauceCodePro Nerd Font:h14'
 if (vim.fn.has('termguicolors') == 1) then
-	vim.opt.termguicolors = true
+    vim.opt.termguicolors = true
 end
 
 -- tabs
@@ -64,6 +65,21 @@ vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_remote_plugins    = 1
 require("core.theme")
 
+-- vim-markdown配置
+vim.g.vim_markdown_toc_autofit = 1
+vim.g.vim_markdown_fenced_languages = {
+    'js=javascript', 'py=python', 'golang=go', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'ts=typescript',
+    'md=markdown', 'cs=csharp', 'php'
+}
+vim.g.vim_markdown_folding_level = 3
+vim.g.vim_markdown_frontmatter = 1
+vim.g.vim_markdown_json_frontmatter = 1
+vim.g.vim_markdown_new_list_item_indent = 2
+vim.g.vim_markdown_strikethrough = 1
+vim.g.vim_markdown_conceal=2
+vim.g.tex_conceal = ""
+vim.g.vim_markdown_math = 1
+vim.g.vim_markdown_conceal_code_blocks = 0
 
 -- Load plugin configs
 -- plugins without extra configs are configured directly here

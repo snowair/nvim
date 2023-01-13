@@ -98,8 +98,7 @@ java
 https://github.com/georgewfraser/java-language-server
 ```
 
-FAQ
-=====
+# FAQ
 
 * 插件不用,必须用 `:PackerClean` 卸载干净
 
@@ -1268,10 +1267,8 @@ git config --global i18n.logOutputEncoding utf-8
 
 ctrl-a,ctrl-x增强
 
-配置了go的时间format,  `int,int32,in64`,  `uint,uint32,uin64`, `[]byte(/string(`
-`and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
-`success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled,
-`+/-`, `,/, /，/,`, `./ 。/ ．`"/ “ / ”`
+配置了go的时间format,  `int,int32,in64`,  `uint,uint32,uin64`, `[]byte(/string(`, `and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
+`success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled`
 
 
 # focus.nvim
@@ -1284,7 +1281,7 @@ ctrl-a,ctrl-x增强
 
 # link-visitor
 
-* `VisitLinkInBuffer  Open links in the buffer
+* `VisitLinkInBuffer`  Open links in the buffer
 * `VisitLinkUnderCursor`  Open link under the cursor
 * `VisitLinkNearCursor`  Open link near the cursor
 
@@ -1333,6 +1330,54 @@ extend模式下可以通过hljk改变选择的列和行，如果单纯移动光�
 | Q   | remove region                                       |
 | C-f | fast forward (go to first region in next page)      |
 | C-b | fast backward (go to first region in previous page) |
+
+# markdown
+
+## vim-markdown
+
+该插件和treesitter markdown 冲突
+
+| Cmd          | 说明         |
+|--------------|--------------|
+| :Toc         | 创建文档目录 |
+| :TableFormat | 格式化表格   |
+
+### 折叠键映射
+
+* zr: reduces fold level throughout the buffer
+* zR: opens all folds
+* zm: increases fold level throughout the buffer
+* zM: folds everything all the way
+* za: open a fold your cursor is on
+* zA: open a fold your cursor is on recursively
+* zc: close a fold your cursor is on
+* zC: close a fold your cursor is on recursively
+
+
+The rules for the cursor position are the same as the gx command.
+
+### 在header间移动
+
+* `]]`: go to next header.
+* `[[`: go to previous header. 
+* `][`: 移动到下一个同级header
+* `[]`: 移动到上一个同级header
+* `]h`: go to Current header.
+* `]u`: go to parent header (Up).
+
+## dhruvasagar/vim-table-mode
+
+通过修改配置，支持多种markdown表格写法。
+
+实时格式化表格
+
+在单元格之间快速移动
+
+Cell Text Object
+
+删除行，删除列，插入列
+
+Table Formulas
 
 # sqls
 

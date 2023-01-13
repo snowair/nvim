@@ -23,10 +23,6 @@ if exists('*GuiClipboard')
 	call GuiClipboard()
 end
 
-if exists(':TableModeEnable')
-	autocmd FileType markdown TableModeEnable
-endif
-
 " Right Click Context Menu (Copy-Cut-Paste): terminal模式中粘贴内容有用
 nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
 inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
