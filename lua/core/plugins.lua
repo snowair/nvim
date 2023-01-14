@@ -871,7 +871,7 @@ return require('packer').startup({ function(use)
 
     use { 'godlygeek/tabular' }
 
-    use { 'preservim/vim-markdown'}
+    use { 'preservim/vim-markdown' }
 
     -- 交换两个text objext
     use {
@@ -1136,6 +1136,17 @@ return require('packer').startup({ function(use)
                 }
             }
         end
+    }
+
+    use {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "VimEnter",
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup()
+            end, 100)
+        end,
     }
 
 end, config = { max_jobs = 5 } })

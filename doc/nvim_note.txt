@@ -1432,17 +1432,17 @@ TableSort 的参数和sort命令的参数一样，感叹号代表降序:
 
 ### Table Formulas
 
-可以代替excel做一些简单的数值表格数据处理
+可以代替excel做一些简单的整列数值或者单元格表格数据计算
 
-表达式: `$target = formula`, 
+表达式: `$cell_target = formula`, 
 
-target  有两种格式: 
+cell_target  有两种格式: 
 
-1. `$n`, 列编号，可以是负数，代表从后往前。
-2. `$n,m`, (行号，列号)列编号，可以是负数，代表从后往前。
+1. `$n`, 整列选择. 列编号，可以是负数，代表从后往前。
+2. `$n,m`, 单元格选择. (n行号，列m号)列编号，可以是负数，代表从后往前。
 
-formula 可以是一个类似target一样的简单表达式的运算，还可以在formula里使用所有的vim原生函数。 并且额外提供了Sum, Average 两个函数。这些函数接受一个range作为参数。参数格式如下:
-1. `r1:r2`: 代表当前列上第一行到第二行之间的单元格
+formula 可以是一个类似cell_target一样的简单表达式的运算，还可以在formula里使用所有的vim原生函数。 并且额外提供了Sum, Average 两个函数。这些函数接受一个range作为参数。函数参数格式如下:
+1. `r1:r2`: 从当前列上选择一段范围. 代表当前列上第一行到第二行之间的单元格
 2. `r1,c1:r2,c2`: 代表第一行第一列到第二行第二列
 3. 注意函数参数的分隔符后面要有空格，否则会被当做一个整体.
 
@@ -1496,6 +1496,12 @@ $5,3 = Average(1,2:5,2)/$5,1
 
 执行完以后，删掉 formula line
 
-# sqls
+# AI 编程
+
+OpenAI codex: https://github.com/jameshiew/nvim-magic
+
+Copilot : https://github.com/zbirenbaum/copilot.lua
+
+https://zhuanlan.zhihu.com/p/528369019
 
 vim:ft=markdown:norl:
