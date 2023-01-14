@@ -82,7 +82,7 @@ Mason 会将lsp server安装在 `~/.local/share/nvim/mason/bin/` 并在启动时
 
 rust:
 
-```
+```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # linux
@@ -592,7 +592,7 @@ Telescope
 
 有些 Telescope 命令支持需选项, 这种 Telescope 调用示例:
 
-```
+```lua
 require("telescope.builtin").find_files({hidden=true, layout_config={prompt_position="top"}})
 ```
 
@@ -690,7 +690,7 @@ Session
 
 示例:
 
-```
+```lua
 local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {}) -- A global group for all your config autocommands
 
 vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
@@ -753,7 +753,7 @@ vim.api
 
 ## nvim_create_autocmd
 
-```
+```lua
 vim.api.nvim_create_autocmd({ 'SessionLoadPost' }, {
 callback = function()
 	vim.o.title = true
@@ -812,7 +812,7 @@ DAP
 
 commands:
 
-```
+```vim
 :Telescope dap commands
 :Telescope dap configurations
 :Telescope dap list_breakpoints
@@ -822,7 +822,7 @@ commands:
 
 apis:
 
-```
+```lua
 require'telescope'.extensions.dap.commands{}
 require'telescope'.extensions.dap.configurations{}
 require'telescope'.extensions.dap.list_breakpoints{}
@@ -923,7 +923,7 @@ toggle_breakpoint({condition}, {hit_condition}, {log_message})
 
 先安装 vscode-go
 
-```
+```sh
 cd ~
 git clone https://github.com/golang/vscode-go
 cd vscode-go
@@ -933,7 +933,7 @@ npm run compile
 
 修改 nvim-dap 配置:
 
-```
+```lua
 dap.adapters.remoteDlv = {
 	type = "executable";
 	command = "node";
@@ -1337,10 +1337,10 @@ extend模式下可以通过hljk改变选择的列和行，如果单纯移动光�
 
 该插件和treesitter markdown 冲突
 
-| Cmd          | 说明         |
-|--------------|--------------|
-| :Toc         | 创建文档目录 |
-| :TableFormat | 格式化表格   |
+| Cmd            | 说明         |
+|----------------|--------------|
+| `Toc`         | 创建文档目录 |
+| `TableFormat` | 格式化表格   |
 
 ### 折叠键映射
 
@@ -1367,17 +1367,134 @@ The rules for the cursor position are the same as the gx command.
 
 ## dhruvasagar/vim-table-mode
 
-通过修改配置，支持多种markdown表格写法。
+快捷键 : 
 
-实时格式化表格
+| 快捷键        | 说明          | 配置变量                                             |
+|---------------|---------------|------------------------------------------------------|
+| `<Leader>tm`  | 切换tablemode | -                                                    |
+| `<Leader>tdd` | 删除行        | `g:table_mode_delete_row_map='<Leader>tdd'`          |
+| `<Leader>tdc` | 删除列        | `g:table_mode_delete_column_map='<Leader>tdc'`       |
+| `<Leader>tic` | 后面插入列    | `g:table_mode_insert_column_after_map='<Leader>tic'` |
+| `<Leader>tiC` | 前面插入列    | `g:table_mode_insert_column_after_map='<Leader>tic'` |
 
-在单元格之间快速移动
 
-Cell Text Object
 
-删除行，删除列，插入列
+### 编辑录入表格
 
-Table Formulas
+启用 table mode后， 使用markdown语法，写完第一行的表头以后，会车(不能离开insert mode), 在第二行，连续输入两个 `|` 就会自动插入表头分割行.
+然后继续编辑录入表格单元格部分时，可以自动调整表格的列宽.
+
+### 文本转表格
+
+`<Leader>tt` 可以将csv这样固定分隔的序列数据转为表格。
+
+`<Leader>T` 可以将选择的文本转为表格，会要求你输入分隔符。
+
+### 单元格光标移动
+
+在单元格之间快速移动: `[|`, `]|`, `{|` , `}|` to move left | right | up | down cells
+
+### 单元格 text object
+
+单元格 Text Object: `a|`, `i|`
+
+### 排序
+
+`<Leader>ts` : 依据光标所在列进行字符串比较模式的升序排序
+
+```
+:TableSort[!] [i][u][r][n][x][o]
+```
+
+TableSort 的参数和sort命令的参数一样，感叹号代表降序:
+
+默认为字符串比较，区分大小写
+
+* `i` : 字符串比较，忽略大小写
+* `l` : 如果有中文，一般要加这个(use current collation locale)
+* `n` : 十进制 number
+* `f` : float 
+* `x` : 十六进制
+* `o` : 8进制
+* `b` : 2进制
+* `u` : 去重
+
+### 表格对齐
+
+支持表格内文本对齐方向语法
+
+```
+| 左对齐 | 右对齐 |
+|--------|-------:|
+| left   |  right |
+```
+
+
+### Table Formulas
+
+可以代替excel做一些简单的数值表格数据处理
+
+表达式: `$target = formula`, 
+
+target  有两种格式: 
+
+1. `$n`, 列编号，可以是负数，代表从后往前。
+2. `$n,m`, (行号，列号)列编号，可以是负数，代表从后往前。
+
+formula 可以是一个类似target一样的简单表达式的运算，还可以在formula里使用所有的vim原生函数。 并且额外提供了Sum, Average 两个函数。这些函数接受一个range作为参数。参数格式如下:
+1. `r1:r2`: 代表第一行到第二行
+2. `r1,c1:r2,c2`: 代表第一行第一列到第二行第二列
+3. 注意函数参数的分隔符后面要有空格，否则会被当做一个整体.
+
+一些表达式示例:
+
+```
+$2 = $1 * $1  -- 第二列的值等于第一列乘以第一列
+$2 = pow($1, 5) NOTE: Remember to put space between the $1, and 5 here otherwise it will be treated like a table cell.
+$2 = $1 / $1,3 
+$1,2 = $1,1 * $1,1
+$5,1 = Sum(1:-1)
+$5,1 = float2nr(Sum(1:-1))
+$5,3 = Sum(1,2:5,2)
+$5,3 = Sum(1,2:5,2)/$5,1
+$5,3 = Average(1,2:5,2)/$5,1
+```
+
+#### 获得单元格的位置表达式
+
+表格很大时，要知道一个单元格的位置，可以在单元格上使用 `<Leader>t?`, 在命令行会输出位置.
+
+#### TableEvalFormulaLine
+
+可以使用在表格下面添加 formula line(` tmf: 表达式1;表达式2`), 然后执行.
+
+执行 table formula : `<Leader>tfe`
+
+#### TableAddFormula
+
+添加 table formula : 在一个单元格上使用 `<Leader>tfa` , 或者 `:TableAddFormula`, 执行结果会自动创建formula line
+
+### 示例
+
+原表格:
+
+```
+| 2    | 2    | 5    |
+| 2    | 11   | 8    |
+| 3    | 2    | 0    |
+<!-- tmf: $2=$1*$3 -->
+```
+
+执行后:
+
+```
+| 2 | 10 | 5 |
+| 2 | 16 | 8 |
+| 3 | 0  | 0 |
+<!-- tmf: $2=$1*$3 -->
+```
+
+执行完以后，删掉 formula line
 
 # sqls
 
