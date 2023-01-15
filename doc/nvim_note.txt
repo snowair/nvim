@@ -1147,7 +1147,7 @@ Gitsign和Telescope 可以满足基本的 文件diff, 分支管理
 
 ## diffview
 
-中文乱码处理:
+中文乱码处理, 添加3条配置(/etc/gitconfig, ~/.gitconfig):
 
 ```
 git config --global core.quotepath false
