@@ -92,3 +92,4 @@ autocmd FileChangedShellPost *  echohl WarningMsg | echo "File changed on disk. 
 " copilot 
 imap <silent><script><expr> <a-j> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true
+let g:copilot_enabled = 0

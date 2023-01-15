@@ -182,3 +182,7 @@ vim.keymap.set('n', '<leader>gu', ':VisitLinkUnderCursor<cr>') -- 打开Url
 vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder)
 vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder)
 vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
+
+
+-- copilot panel
+vim.keymap.set('n', '<leader>cp', ':vert Copilot panel <cr>')
