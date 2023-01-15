@@ -1139,14 +1139,7 @@ return require('packer').startup({ function(use)
     }
 
     use {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "VimEnter",
-        config = function()
-            vim.defer_fn(function()
-                require("copilot").setup()
-            end, 100)
-        end,
+        "github/copilot.vim",
     }
 
 end, config = { max_jobs = 5 } })

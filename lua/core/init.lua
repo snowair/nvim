@@ -69,7 +69,7 @@ require("core.theme")
 vim.g.vim_markdown_toc_autofit = 1
 vim.g.vim_markdown_fenced_languages = {
     'js=javascript', 'py=python', 'golang=go', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'ts=typescript',
-    'md=markdown', 'cs=csharp', 'php'
+    'md=markdown', 'cs=csharp', 'php', 'rb=ruby'
 }
 vim.g.vim_markdown_folding_level = 3
 vim.g.vim_markdown_frontmatter = 1

@@ -88,3 +88,7 @@ set autoread
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 " notification after file change
 autocmd FileChangedShellPost *  echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" copilot 
+imap <silent><script><expr> <a-j> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true

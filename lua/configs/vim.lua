@@ -238,3 +238,7 @@ end, { nargs = "?", bang = true, })
 vim.api.nvim_create_user_command('StashApply', function(params)
 	vim.cmd('!git stash apply')
 end, { nargs = "?", bang = true, })
+
+--vim.api.nvim_create_user_command('CopilotRestart', function(params)
+    --require("copilot.client").restart()
+--end, { nargs = "?", bang = true, })
