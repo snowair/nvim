@@ -1514,6 +1514,8 @@ $5,3 = Average(1,2:5,2)/$5,1
 
 # Copilot AI 编程
 
+https://www.youtube.com/watch?v=SXtMnn1v7d8
+
 https://github.com/github/copilot.vim
 
 https://docs.github.com/en/copilot
@@ -1540,4 +1542,142 @@ Copilot 子命令
 | status  | 查看当前状态是否正常                                                                  |
 | panel   | 在当前需要建议的地方(例如 AI建议注释下一行，代码行尾)执行，可以提供最多10个完成建议, 使用 `[[`,`]]` 在建议之间移动. 使用 `<cr>` 接受建议 |
 
-vim:ft=markdown:norl:
+## golang copilot 经验
+
+Copilot 的工作原理是基于对github上大量代码库的阅读，相当于一个具有一定智能的高级搜索引擎。根据你当前的代码，从其海量代码阅读经验中快速找到可能是你接下来想要的代码片段。
+
+因此，它的智能程度相当有限，并没有逻辑推理能力，给出的代码建议仍然需要你仔细确认采用，不可盲从。
+
+因此，官方也仅仅将copilot定义为你的“结伴编程帮手”, 是一个帮你打杂的角色，为你节省一些琐碎代码的编写时间，以及搜索引擎搜索时间。
+
+对于业务逻辑性的代码，它为你节省的时间可能不多。但对于算法类的代码，它可以快速提供非常准确的解决方案（只要leetcode上有）。
+
+### 快速定义struct
+
+一个大写英文单词作为注释，可以为你建议struct定义.
+
+```go
+// Animal
+type Animal struct {
+    Name string
+    Age  int
+}
+```
+
+你甚至可以先想好结构的fields,methods,再让copilot提供建议:
+
+```go
+// People : a struct that represents a person with fields: Id, Name, and Age
+type People struct {
+    Id int
+    Name string
+    Age int
+}
+```
+
+也可以在注释里写上方法，copilot也可以提供生成建议
+
+```go
+// Article: a struct that represents an article with fields: Id, Title, and Content,
+// with methods: GetTitle and GetContent
+type Article struct {
+    Id int
+    Title string
+    Content string
+}
+
+func (a Article) GetTitle() string {
+    return a.Title
+}
+
+func (a Article) GetContent() string {
+    return a.Content
+}
+```
+
+甚至可以在注释里写上需要实现的interface. 不过要在输入完`func`关键字以后才会触发接口方法建议
+
+```go
+// Article: a struct that represents an article,
+// and implement interface: Stringer, Marshaler, Unmarshaler
+type Article struct {
+    Id int
+    Title string
+    Content string
+}
+
+func (a Article) String() string {
+    return a.Title
+}
+
+func (a Article) MarshalJSON() ([]byte, error) {
+    return []byte(a.Title), nil
+}
+
+func (a *Article) UnmarshalJSON(data []byte) error {
+    a.Title = string(data)
+    return nil
+}
+```
+
+当你的struct已经定义了一些方法时，copilot也可以给你提供一些新方法的建议。比如你为某个字段定义了setter方法，那么copilot就可以自动为你建议它的getter方法，以及其他字段的setter,getter方法。
+
+
+我们可以接受方法推荐，然后在推荐的代码基础上，用`dif`快速删除代码块，修改完善形参和返回值定义后，让copilot重新建议代码块.
+
+#### struct tag
+
+用 copilot 可以很方便地补充struct tag, 能很好地提示 json,gorm,参数验证相关的tag
+
+### 快速创建函数
+
+注意: 函数逻辑建议是基于copilot学习过的逻辑代码进行建议，因此前提是你需要的建议在github代码库中有类似的功能和实现,且这些实现的注释能被copilot认为和你写的注释有非常的相似性.
+
+
+两种方法:
+
+1. 不用注释，直接通过合理的函数命名就可以提供函数建议，但是不要基于接受建议，把函数的参数和返回值定义完以后提供的建议才是可用性更好的建议。
+2. 通过注释(建议英文)说明函数功能和逻辑，由copilot提供建议.
+3. 如果是算法实现，通过标准的中英文算法描述就可以推荐出来.
+
+生成的代码建议，可能里面会用到一些没有定义过的函数，那么这些未定义的函数需要继续让copilot进行建议. 直到所有相关函数都被建议补全。
+
+如果是算法实现，copilot也可以直接给你拉出leetcode的链接:
+
+```
+// 函数: 求两组整数的中位数
+// 参数：nums1,nums2 两组整数
+// 返回值：中位数
+// document: https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
+```
+
+上门的链接就是在输入 document以后自动建议出来的
+
+### import package
+
+在import代码块内通过注释，可以要求copilot接下来提供package引用建议.
+
+```go
+import(
+    // import a postgres driver
+)
+```
+
+如果知道package name，可以更准确地提供建议:
+
+```go
+import(
+    // import redigo, gorm, and mysql driver
+    "github.com/gomodule/redigo/redis"
+    "gorm.io/gorm"
+    "gorm.io/driver/mysql"
+)
+```
+
+### 业务逻辑代码加速
+
+1. 根据代码编写进度，自动推断出接下来你想写的代码，属于一个高级版的代码只能提示。
+2. 在写业务逻辑时，可以通过注释让copilot替你写一些重复的简单的逻辑性代码片段.
+    * 能够成功推荐的前提是，代码库中存在一些代码，这些代码的注释与你写的注释相同或相似,否则也是无法提供建议的.
+    * 这就可能导致推荐的代码，需要你在修改完善才能使用. 比如推荐的代码不完全匹配你的代码上下文，或者推荐的代码过于陈旧。
+
