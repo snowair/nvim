@@ -1133,6 +1133,7 @@ return require('packer').startup({ function(use)
                         ["<enter>"] = "Toggle",
                         ["<c-enter>"] = "GoToFile",
                     }
+
                 }
             }
         end
