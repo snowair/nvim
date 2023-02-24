@@ -113,7 +113,7 @@ function M.config()
                     golang_time = "[Time]",
                     golang_json = "[Tag]",
                     nvim_lua = "[Lua]",
-                    cmp_tabnine = "[TN]",
+                    cmp_tabnine = "[T9]",
                 })[entry.source.name]
                 return vim_item
             end,
