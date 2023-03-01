@@ -49,6 +49,7 @@ require("core.plugins")
 require("core.keymaps")
 -- disable some useless standard plugins to save startup time
 -- these features have been better covered by plugins
+vim.g.EasyMotion_smartcase     = 1
 vim.g.loaded_matchparen        = 1
 vim.g.loaded_matchit           = 1
 vim.g.loaded_logiPat           = 1
