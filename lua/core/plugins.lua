@@ -1143,4 +1143,8 @@ return require('packer').startup({ function(use)
         "github/copilot.vim",
     }
 
+    use {
+        "voldikss/vim-translator"
+    }
+
 end, config = { max_jobs = 5 } })

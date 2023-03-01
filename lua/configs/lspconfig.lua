@@ -119,13 +119,11 @@ function M.config()
     }
 
     -- lua
-    -- https://github.com/sumneko/lua-language-server/wiki/PreCompiled-Binaries
-    -- brew install lua-language-server
-    require 'lspconfig'.sumneko_lua.setup {
-        on_attach = require "lsp-format".on_attach,
+    require'lspconfig'.lua_ls.setup {
         settings = {
             Lua = {
                 runtime = {
+                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                     version = 'Lua 5.4',
                     path = {
                         '?.lua',
@@ -137,17 +135,24 @@ function M.config()
                     }
                 },
                 diagnostics = {
-                    globals = { 'vim' }, -- 让lsp server 识别 `vim`全局变量
+                    -- Get the language server to recognize the `vim` global
+                    globals = {'vim'},
                 },
                 workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    -- library = vim.api.nvim_get_runtime_file("", true),
                     library = {
                         vim.fn.expand '~/.luarocks/share/lua/5.3',
                         '/usr/share/lua/5.4',
                         '/usr/local/lib/lua'
                     }
-                }
-            }
-        }
+                },
+                -- Do not send telemetry data containing a randomized but unique identifier
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
     }
 
     require 'lspconfig'.rust_analyzer.setup({
