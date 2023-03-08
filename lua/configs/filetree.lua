@@ -80,7 +80,6 @@ function M.config()
 			local inject_node = require("nvim-tree.utils").inject_node
             -- BEGIN_DEFAULT_ON_ATTACH
             vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node,          opts('CD'))
-            vim.keymap.set('n', '<C-e>',  '', { buffer = bufnr } )
             vim.keymap.set('n', '<C-k>', api.node.show_info_popup,              opts('Info'))
             vim.keymap.set('n', '<C-r>', '', { buffer = bufnr })
             vim.keymap.set('n', '<C-t>', api.node.open.tab,                     opts('Open: New Tab'))

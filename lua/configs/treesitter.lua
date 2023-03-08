@@ -8,10 +8,10 @@ function M.config()
             'make', 'perl', 'php', 'proto', 'python', 'ruby', 'rust', 'scss', 'sql', 'typescript', 'vim', 'vue', 'yaml',
         }, -- for installing all maintained parsers
         sync_install = true, -- install synchronously
-        ignore_install = {}, -- parsers to not install
+        ignore_install = { "markdown"," markdown_inline"}, -- parsers to not install
         highlight = {
             enable = true,
-            disable = { "markdown" },  -- 禁用nvim-treesitter markdown; 因为和vim-markdown冲突
+            disable = { "markdown"," markdown_inline"},  -- 禁用nvim-treesitter markdown; 因为和vim-markdown冲突
             additional_vim_regex_highlighting = false
         },
     }
