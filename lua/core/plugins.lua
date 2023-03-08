@@ -1147,4 +1147,8 @@ return require('packer').startup({ function(use)
         "voldikss/vim-translator"
     }
 
+    use {
+        "utilyre/sentiment.nvim"
+    }
+
 end, config = { max_jobs = 5 } })
