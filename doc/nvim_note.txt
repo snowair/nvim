@@ -119,6 +119,27 @@ VIM
 
 `set linespace` 行距设置, 解决部分gui行距不合适的问题
 
+## 宏
+
+录制和执行宏:
+
+1. `q{register}` 开始录制宏, `{register}` 为寄存器名, 默认为`q`
+    * register 一般用是 a-z, 0-9
+    * 开始录制后，会显示 `recording @q` , 表示正在录制宏
+2. 再次按下`q` 结束录制宏
+3. `@{register}` 执行宏, `{register}` 为寄存器名, 默认为`q`
+5. `{count}@{register}` 重复执行上一次宏, count次
+4. `@@` 重复执行上一次宏
+6. `:reg {register}` 查看指定寄存器内容, 宏的寄存器type为 c, content为录制的按键
+
+修改宏:
+
+1. 录制过程可以临时终止录制，然后使用A-Z作为寄存器继续录制宏。例如使用A录制宏，其实就是在a寄存器内的宏后面追加新的内容
+
+2. 使用 `:put {register}` 将寄存器内容放到编辑区域, 编辑内容后，再使用 `:d {register}` 将编辑后的内容放回寄存器
+
+删除宏： 例如: `:let @a=''`
+
 ## terminal
 
 进入 terminal 模式后，可以使用 `<c-\><c-n>`退出terminal模式回到normal模式.
