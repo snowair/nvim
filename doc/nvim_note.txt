@@ -123,13 +123,13 @@ VIM
 
 录制和执行宏:
 
-1. `q{register}` 开始录制宏, `{register}` 为寄存器名, 默认为`q`
+1. `q{register}` 开始录制宏, `{register}` 为寄存器名
     * register 一般用是 a-z, 0-9
-    * 开始录制后，会显示 `recording @q` , 表示正在录制宏
+    * 开始录制后，会显示 `recording @{register}` , 表示正在录制宏
 2. 再次按下`q` 结束录制宏
-3. `@{register}` 执行宏, `{register}` 为寄存器名, 默认为`q`
-5. `{count}@{register}` 重复执行上一次宏, count次
-4. `@@` 重复执行上一次宏
+3. `@{register}` 执行宏, `{register}` 为寄存器名
+5. `{count}@{register}` 重复执行宏若干次
+4. `@@` 重复执行上一次宏,`10@@` 重复执行上一次宏10次
 6. `:reg {register}` 查看指定寄存器内容, 宏的寄存器type为 c, content为录制的按键
 
 修改宏:
