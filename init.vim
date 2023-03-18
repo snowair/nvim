@@ -81,6 +81,10 @@ autocmd FileType DiffviewFiles  lua require('focus').focus_disable()
 autocmd FileType DiffviewFileHistory  lua require('focus').focus_disable()
 "autocmd FileType NeogitStatus  lua require('focus').focus_enable()
 
+" shiftwidth设置
+autocmd FileType go setlocal shiftwidth=4
+autocmd FileType lua setlocal shiftwidth=2
+
 " 在插入模式禁止auto indent,否则粘贴文本时候, 会逐行缩进
 set noautoindent
 " trigger `autoread` when files changes on disk

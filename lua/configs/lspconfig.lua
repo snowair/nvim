@@ -3,10 +3,6 @@ local M = {}
 function M.config()
   -- 可以参考某大佬的配置 https://github.com/ray-x/navigator.lua/blob/master/lua/navigator/lspclient/clients.lua
   -- lsp-format.nvim
-  require("lsp-format").setup {
-    lua = { tab_width = 2 },
-  }
-
   local lspconfig = require 'lspconfig'
   local util = lspconfig.util
   local uv = vim.loop
@@ -36,7 +32,7 @@ function M.config()
       filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gotexttmpl' },
       message_level = vim.lsp.protocol.MessageType.Error,
       cmd = {
-        'gopls',                              -- share the gopls instance if there is one already
+        'gopls', -- share the gopls instance if there is one already
         '-remote=auto', --[[ debug options ]] --
         -- "-logfile=auto",
         -- "-debug=:0",
@@ -51,7 +47,7 @@ function M.config()
           -- not supported
           analyses = { unusedparams = true, unreachable = true },
           codelenses = {
-            generate = true,   -- show the `go generate` lens.
+            generate = true, -- show the `go generate` lens.
             gc_details = true, --  // Show a code lens toggling the display of gc's choices.
             test = true,
             tidy = true,
@@ -122,7 +118,6 @@ function M.config()
   -- lua
   require 'lspconfig'.lua_ls.setup {
     on_attach = function(client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, 'shiftwidth', 2)
       require "lsp-format".on_attach(client, bufnr)
     end,
     settings = {
@@ -162,7 +157,7 @@ function M.config()
 
   require 'lspconfig'.rust_analyzer.setup({
     settings = {
-          ["rust-analyzer"] = {
+      ["rust-analyzer"] = {
         imports = {
           granularity = {
             group = "module",

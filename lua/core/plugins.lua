@@ -77,10 +77,10 @@ return require('packer').startup({
     }
     --  不要关闭 treesitter , 重新全部安装一遍要很久
     use 'nvim-treesitter/nvim-treesitter'
-    use 'neovim/nvim-lspconfig'                -- 官方lsp
-    use 'L3MON4D3/LuaSnip'                     -- 代码片段, nvim-cmp用到
-    use 'molleweide/LuaSnip-snippets.nvim'     -- 一些代码片段收集，java/lua/python/rust/c的都有
-    use 'onsails/lspkind-nvim'                 -- 给自动完成列表添加icon支持
+    use 'neovim/nvim-lspconfig' -- 官方lsp
+    use 'L3MON4D3/LuaSnip' -- 代码片段, nvim-cmp用到
+    use 'molleweide/LuaSnip-snippets.nvim' -- 一些代码片段收集，java/lua/python/rust/c的都有
+    use 'onsails/lspkind-nvim' -- 给自动完成列表添加icon支持
     -- sql工具
     use {
       'nanotee/sqls.nvim',
@@ -101,7 +101,7 @@ return require('packer').startup({
       end
     }
 
-    use 'folke/lsp-colors.nvim'     -- 为主题不支持的lsp颜色提供默认支持
+    use 'folke/lsp-colors.nvim' -- 为主题不支持的lsp颜色提供默认支持
 
     -- 函数参数文字颜色独立
     use {
@@ -116,11 +116,11 @@ return require('packer').startup({
       'ray-x/lsp_signature.nvim',
       config = function()
         require "lsp_signature".setup({
-          bind = true,                      -- This is mandatory, otherwise border config won't get registered.
+          bind = true, -- This is mandatory, otherwise border config won't get registered.
           handler_opts = {
-            border = "single"               -- double, rounded, single, shadow, none
+            border = "single" -- double, rounded, single, shadow, none
           },
-          auto_close_after = nil,           -- autoclose signature float win after x sec, disabled if nil.
+          auto_close_after = nil, -- autoclose signature float win after x sec, disabled if nil.
         })
       end
     }
@@ -132,16 +132,16 @@ return require('packer').startup({
       config = function()
         require('go').setup({
           icons = { breakpoint = "💔", currentpos = "👉" },
-          luasnip = true,            -- set true to enable included luasnip
-          verbose = false,           -- 记录日志,默认记录在  ~/tmp/gonvim.log
+          luasnip = true, -- set true to enable included luasnip
+          verbose = false, -- 记录日志,默认记录在  ~/tmp/gonvim.log
         })
       end
     }
 
     -- debug断点调试支持: go,c/cpp,python,rust,java
-    use 'mfussenegger/nvim-dap'                 -- 基础
-    use 'rcarriga/nvim-dap-ui'                  -- dap UI界面
-    use 'nvim-telescope/telescope-dap.nvim'     -- dap 命令 集成到 telescope ui
+    use 'mfussenegger/nvim-dap' -- 基础
+    use 'rcarriga/nvim-dap-ui' -- dap UI界面
+    use 'nvim-telescope/telescope-dap.nvim' -- dap 命令 集成到 telescope ui
     -- 虚拟文本显示调试过的变量的值
     use {
       'theHamsta/nvim-dap-virtual-text',
@@ -158,11 +158,11 @@ return require('packer').startup({
     }
     -- nvim-cmp source 插件
     use 'saadparwaiz1/cmp_luasnip'
-    use 'hrsh7th/cmp-buffer'       --使用buffe中的内容作为自动完成词源
-    use 'hrsh7th/cmp-cmdline'      -- vim cmdline 支持自动完成
-    use 'hrsh7th/cmp-path'         -- 文件路径自动完成
-    use 'hrsh7th/cmp-emoji'        -- emoji自动完成
-    use 'hrsh7th/cmp-nvim-lua'     -- neovim api 自动完成
+    use 'hrsh7th/cmp-buffer' --使用buffe中的内容作为自动完成词源
+    use 'hrsh7th/cmp-cmdline' -- vim cmdline 支持自动完成
+    use 'hrsh7th/cmp-path' -- 文件路径自动完成
+    use 'hrsh7th/cmp-emoji' -- emoji自动完成
+    use 'hrsh7th/cmp-nvim-lua' -- neovim api 自动完成
     use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
 
     -- gitsigns
@@ -171,10 +171,10 @@ return require('packer').startup({
       --tag = 'release',
       config = function()
         require('gitsigns').setup {
-          signcolumn = true,            -- Toggle with `:Gitsigns toggle_signs`
-          numhl      = false,           -- 行号高亮 Toggle with `:Gitsigns toggle_numhl`
-          linehl     = false,           -- 底色高亮 Toggle with `:Gitsigns toggle_linehl`
-          word_diff  = false,           -- change word高亮 Toggle with `:Gitsigns toggle_word_diff`
+          signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+          numhl      = false, -- 行号高亮 Toggle with `:Gitsigns toggle_numhl`
+          linehl     = false, -- 底色高亮 Toggle with `:Gitsigns toggle_linehl`
+          word_diff  = false, -- change word高亮 Toggle with `:Gitsigns toggle_word_diff`
         }
         -- 用到什么加什么
         vim.keymap.set('n', '<leader>hn', ':Gitsigns next_hunk<cr>')
@@ -266,7 +266,7 @@ return require('packer').startup({
           end
         })
         vim.o.foldcolumn = '1'
-        vim.o.foldlevel = 99         -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
         vim.o.foldlevelstart = -1
         vim.o.foldenable = true
         -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
@@ -328,8 +328,8 @@ return require('packer').startup({
           -- ...
           rainbow = {
             enable = true,
-            extended_mode = true,             -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = nil,             -- Do not enable for files with more than n lines, int
+            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+            max_file_lines = nil, -- Do not enable for files with more than n lines, int
           }
         }
       end
@@ -360,8 +360,8 @@ return require('packer').startup({
             -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
             augend.constant.new {
               elements = { "and", "or" },
-              word = true,                 -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
-              cyclic = true,               -- "or" is incremented into "and".
+              word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+              cyclic = true, -- "or" is incremented into "and".
             },
             augend.constant.new {
               elements = { "&&", "||" },
@@ -400,26 +400,6 @@ return require('packer').startup({
             },
             augend.constant.new {
               elements = { 'enabled', 'disabled' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { '+', '-' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { ',', '，', },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { '.', '。', '．' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { '"', '“ ', '”' },
               word = true,
               cyclic = true,
             },
@@ -562,11 +542,11 @@ return require('packer').startup({
       "gnikdroy/projections.nvim",
       config = function()
         require("projections").setup({
-          workspaces = {                               -- Default workspaces to search for
-            { "/mnt/wd/Git", { ".git" } },             --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~",           { ".git" } },             --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git",       { ".git" } },             --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git/mlol",  { ".git" } },             --        Documents/dev is a workspace. patterns = { ".git" }
+          workspaces = { -- Default workspaces to search for
+            { "/mnt/wd/Git", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~",           { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git",       { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/mlol",  { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             -- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
             -- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
           },
@@ -598,8 +578,8 @@ return require('packer').startup({
       requires = { "nvim-telescope/telescope.nvim" },
       config = function()
         require("dir-telescope").setup({
-          hidden = false,                     -- 是否搜索因此目录
-          respect_gitignore = true,           -- 是否尊重.gitignore文件
+          hidden = false, -- 是否搜索因此目录
+          respect_gitignore = true, -- 是否尊重.gitignore文件
         })
       end,
     })
@@ -621,7 +601,7 @@ return require('packer').startup({
             },
           },
           extensions = {
-                ["ui-select"] = {
+            ["ui-select"] = {
               require("telescope.themes").get_dropdown {}
             },
             repo = {
@@ -638,8 +618,8 @@ return require('packer').startup({
             },
           }
         }
-        vim.cmd('autocmd User TelescopePreviewerLoaded setlocal wrap')           -- 预览窗口自动换行
-        vim.cmd('autocmd User TelescopePreviewerLoaded setlocal number')         -- 预览窗口显示 行号
+        vim.cmd('autocmd User TelescopePreviewerLoaded setlocal wrap') -- 预览窗口自动换行
+        vim.cmd('autocmd User TelescopePreviewerLoaded setlocal number') -- 预览窗口显示 行号
 
         require('telescope').load_extension('projections')
         require("telescope").load_extension "repo"
@@ -660,10 +640,10 @@ return require('packer').startup({
           enabled = true,
           events = { "InsertLeave", "TextYankPost", "VimLeave" },
           conditions = {
-            exists = true,             -- 忽略不存在的文件
+            exists = true, -- 忽略不存在的文件
             filename_is_not = {},
             filetype_is_not = ignore_ft,
-            modifiable = true,             -- 忽略readonly文件
+            modifiable = true, -- 忽略readonly文件
           },
           write_all_buffers = false,
           on_off_commands = true,
@@ -681,16 +661,16 @@ return require('packer').startup({
       config = function()
         local Path = require('plenary.path')
         require('session_manager').setup({
-          sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'),           -- The directory where the session files will be saved.
-          path_replacer = '__',                                                          -- The character to which the path separator will be replaced for session files.
-          colon_replacer = '++',                                                         -- The character to which the colon symbol will be replaced for session files.
+          sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'), -- The directory where the session files will be saved.
+          path_replacer = '__', -- The character to which the path separator will be replaced for session files.
+          colon_replacer = '++', -- The character to which the colon symbol will be replaced for session files.
           -- Possible values: Disabled, CurrentDir(根据当前cwd加载对应的session), LastSession(总是加载最近的session)
           autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
-          autosave_last_session = true,                -- Automatically save last session on exit and on session switch.
-          autosave_ignore_not_normal = true,           -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
+          autosave_last_session = true, -- Automatically save last session on exit and on session switch.
+          autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
           autosave_ignore_filetypes = ignore_ft,
-          autosave_only_in_session = false,            -- Always autosaves session. If true, only autosaves after a session is active.
-          max_path_length = 80,                        -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+          autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
+          max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
         })
 
         local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {})
@@ -821,22 +801,22 @@ return require('packer').startup({
 
     -- Vim Plugins
     -- 编辑增强
-    use 'triglav/vim-visual-increment'     -- 列选择的数字或字母递增插件
-    use 'mg979/vim-visual-multi'           -- 多列编辑
-    use 'tpope/vim-repeat'                 -- ctrl+a ctrl+x 操作增强
-    use 'terryma/vim-expand-region'        -- 通过+ - 号选择内容插件
-    use 'scrooloose/nerdcommenter'         -- 快速注释插件
-    use 'kazhala/close-buffers.nvim'       -- :Bdelete menu
+    use 'triglav/vim-visual-increment' -- 列选择的数字或字母递增插件
+    use 'mg979/vim-visual-multi' -- 多列编辑
+    use 'tpope/vim-repeat' -- ctrl+a ctrl+x 操作增强
+    use 'terryma/vim-expand-region' -- 通过+ - 号选择内容插件
+    use 'scrooloose/nerdcommenter' -- 快速注释插件
+    use 'kazhala/close-buffers.nvim' -- :Bdelete menu
 
     ---- text object增强
     use 'kana/vim-textobj-user'
-    use 'kana/vim-textobj-indent'         --  ai/ii  aI/iI
-    use 'sgur/vim-textobj-parameter'      --  a,/i,
-    use 'mattn/vim-textobj-url'           --  au/iu
-    use 'kana/vim-textobj-line'           --  al/il
-    use 'glts/vim-textobj-comment'        --  ac/ic/aC
-    use 'glts/vim-textobj-indblock'       --  ao/io for a block of indentation (i.e. spaces)
-    use 'reedes/vim-textobj-sentence'     --  as/is for a sentence of prose (overrides hard-coded native object & motion)
+    use 'kana/vim-textobj-indent' --  ai/ii  aI/iI
+    use 'sgur/vim-textobj-parameter' --  a,/i,
+    use 'mattn/vim-textobj-url' --  au/iu
+    use 'kana/vim-textobj-line' --  al/il
+    use 'glts/vim-textobj-comment' --  ac/ic/aC
+    use 'glts/vim-textobj-indblock' --  ao/io for a block of indentation (i.e. spaces)
+    use 'reedes/vim-textobj-sentence' --  as/is for a sentence of prose (overrides hard-coded native object & motion)
     use {
       'nvim-treesitter/nvim-treesitter-textobjects',
       config = function()
@@ -846,21 +826,21 @@ return require('packer').startup({
               enable = true,
               lookahead = true,
               keymaps = {
-                    ["aF"] = "@function.outer",
-                    ["iF"] = "@function.inner",
-                    ["aB"] = "@block.outer",
-                    ["iB"] = "@block.inner",
-                    ["aL"] = "@loop.outer",
-                    ["iL"] = "@loop.inner",
-                    ["aC"] = "@conditional.outer",
-                    ["iC"] = "@conditional.inner",
-                    ["aS"] = "@class.outer",
-                    ["iS"] = "@class.inner",
+                ["aF"] = "@function.outer",
+                ["iF"] = "@function.inner",
+                ["aB"] = "@block.outer",
+                ["iB"] = "@block.inner",
+                ["aL"] = "@loop.outer",
+                ["iL"] = "@loop.inner",
+                ["aC"] = "@conditional.outer",
+                ["iC"] = "@conditional.inner",
+                ["aS"] = "@class.outer",
+                ["iS"] = "@class.inner",
               },
               selection_modes = {
-                    ['@parameter.outer'] = 'v',                 -- charwise   aaa
-                    ['@function.outer'] = 'V',                  -- linewise
-                    ['@class.outer'] = '<c-v>',                 -- blockwise
+                ['@parameter.outer'] = 'v', -- charwise   aaa
+                ['@function.outer'] = 'V', -- linewise
+                ['@class.outer'] = '<c-v>', -- blockwise
               },
             },
           },
@@ -909,8 +889,8 @@ return require('packer').startup({
       'xiyaowong/link-visitor.nvim',
       config = function()
         require("link-visitor").setup({
-          open_cmd = nil,           -- cmd to open url
-          silent = true,            -- disable all prints, `false` by default
+          open_cmd = nil, -- cmd to open url
+          silent = true, -- disable all prints, `false` by default
         })
       end
     }
@@ -945,7 +925,7 @@ return require('packer').startup({
           --null_ls.builtins.formatting.tidy,
         }
         null_ls.setup({ sources = sources, debug = false })
-        require("../configs/go_code_actions")         -- 加载自定义的code_actions
+        require("../configs/go_code_actions") -- 加载自定义的code_actions
       end
     }
 
@@ -976,14 +956,14 @@ return require('packer').startup({
         local lazy = require("diffview.lazy")
         local diffview = lazy.require("diffview")
         require("diffview").setup({
-          diff_binaries = true,                 -- Show diffs for binaries
-          enhanced_diff_hl = false,             -- See ':h diffview-config-enhanced_diff_hl'
+          diff_binaries = true, -- Show diffs for binaries
+          enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
           file_panel = {
-            listing_style = "tree",             -- One of 'list' or 'tree'
+            listing_style = "tree", -- One of 'list' or 'tree'
             tree_options = {
               -- Only applies when listing_style is 'tree'
-              flatten_dirs = true,                           -- Flatten dirs that only contain one single dir
-              folder_statuses = "only_folded",               -- One of 'never', 'only_folded' or 'always'.
+              flatten_dirs = true, -- Flatten dirs that only contain one single dir
+              folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
             },
           },
           file_history_panel = {
@@ -1000,70 +980,70 @@ return require('packer').startup({
             },
           },
           keymaps = {
-            disable_defaults = false,             -- Disable the default keymaps
+            disable_defaults = false, -- Disable the default keymaps
             view = {
               -- The `view` bindings are active in the diff buffers, only when the current
               -- tabpage is a Diffview.
-                  ["<tab>"]  = actions.select_next_entry,                 -- Open the diff for the next file
-                  ["<s-tab>"] = actions.select_prev_entry,                -- Open the diff for the previous file
-                  ["gf"]     = actions.goto_file,                         -- Open the file in a new split in the previous tabpage
-                  ["<C-w><C-f>"] = actions.goto_file_split,               -- Open the file in a new split
-                  ["<C-w>gf"] = actions.goto_file_tab,                    -- Open the file in a new tabpage
-                  ["<leader>e"] = actions.focus_files,                    -- Bring focus to the files panel
-                  ["<leader>b"] = actions.toggle_files,                   -- Toggle the files panel.
+              ["<tab>"]      = actions.select_next_entry, -- Open the diff for the next file
+              ["<s-tab>"]    = actions.select_prev_entry, -- Open the diff for the previous file
+              ["gf"]         = actions.goto_file, -- Open the file in a new split in the previous tabpage
+              ["<C-w><C-f>"] = actions.goto_file_split, -- Open the file in a new split
+              ["<C-w>gf"]    = actions.goto_file_tab, -- Open the file in a new tabpage
+              ["<leader>e"]  = actions.focus_files, -- Bring focus to the files panel
+              ["<leader>b"]  = actions.toggle_files, -- Toggle the files panel.
             },
             file_panel = {
-                  ["j"]      = actions.next_entry,               -- Bring the cursor to the next file entry
-                  ["k"]      = actions.prev_entry,               -- Bring the cursor to the previous file entry.
-                  ["<down>"] = actions.next_entry,
-                  ["<up>"]   = actions.prev_entry,
-                  ["<cr>"]   = actions.select_entry,                     -- Open the diff for the selected entry.
-                  ["o"]      = actions.select_entry,
-                  ["-"]      = actions.toggle_stage_entry,               -- Stage / unstage the selected entry.
-                  ["S"]      = actions.stage_all,                        -- Stage all entries.
-                  ["U"]      = actions.unstage_all,                      -- Unstage all entries.
-                  ["X"]      = actions.restore_entry,                    -- Restore entry to the state on the left side.
-                  ["R"]      = actions.refresh_files,                    -- Update stats and entries in the file list.
-                  ["L"]      = actions.open_commit_log,                  -- Open the commit log panel.
-                  ["<c-b>"]  = actions.scroll_view(-0.25),               -- Scroll the view up
-                  ["<c-f>"]  = actions.scroll_view(0.25),                -- Scroll the view down
-                  ["<tab>"]  = actions.select_next_entry,
-                  ["<s-tab>"] = actions.select_prev_entry,
-                  ["gf"]     = actions.goto_file,
-                  ["<C-w><C-f>"] = actions.goto_file_split,
-                  ["<C-w>gf"] = actions.goto_file_tab,
-                  ["i"]      = actions.listing_style,                     -- Toggle between 'list' and 'tree' views
-                  ["f"]      = actions.toggle_flatten_dirs,               -- Flatten empty subdirectories in tree listing style.
-                  ["<leader>e"] = actions.focus_files,
-                  ["<leader>b"] = actions.toggle_files,
+              ["j"]          = actions.next_entry, -- Bring the cursor to the next file entry
+              ["k"]          = actions.prev_entry, -- Bring the cursor to the previous file entry.
+              ["<down>"]     = actions.next_entry,
+              ["<up>"]       = actions.prev_entry,
+              ["<cr>"]       = actions.select_entry, -- Open the diff for the selected entry.
+              ["o"]          = actions.select_entry,
+              ["-"]          = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
+              ["S"]          = actions.stage_all, -- Stage all entries.
+              ["U"]          = actions.unstage_all, -- Unstage all entries.
+              ["X"]          = actions.restore_entry, -- Restore entry to the state on the left side.
+              ["R"]          = actions.refresh_files, -- Update stats and entries in the file list.
+              ["L"]          = actions.open_commit_log, -- Open the commit log panel.
+              ["<c-b>"]      = actions.scroll_view( -0.25), -- Scroll the view up
+              ["<c-f>"]      = actions.scroll_view(0.25), -- Scroll the view down
+              ["<tab>"]      = actions.select_next_entry,
+              ["<s-tab>"]    = actions.select_prev_entry,
+              ["gf"]         = actions.goto_file,
+              ["<C-w><C-f>"] = actions.goto_file_split,
+              ["<C-w>gf"]    = actions.goto_file_tab,
+              ["i"]          = actions.listing_style, -- Toggle between 'list' and 'tree' views
+              ["f"]          = actions.toggle_flatten_dirs, -- Flatten empty subdirectories in tree listing style.
+              ["<leader>e"]  = actions.focus_files,
+              ["<leader>b"]  = actions.toggle_files,
             },
             file_history_panel = {
-                  ["g!"]        = actions.options,                        -- Open the option panel
-                  ["<C-A-d>"]   = actions.open_in_diffview,               -- Open the entry under the cursor in a diffview
-                  ["y"]         = actions.copy_hash,                      -- Copy the commit hash of the entry under the cursor
-                  ["L"]         = actions.open_commit_log,
-                  ["zR"]        = actions.open_all_folds,
-                  ["zM"]        = actions.close_all_folds,
-                  ["j"]         = actions.next_entry,
-                  ["<down>"]    = actions.next_entry,
-                  ["k"]         = actions.prev_entry,
-                  ["<up>"]      = actions.prev_entry,
-                  ["<cr>"]      = actions.select_entry,
-                  ["o"]         = actions.select_entry,
-                  ["<2-LeftMouse>"] = actions.select_entry,
-                  ["<c-b>"]     = actions.scroll_view(-0.25),
-                  ["<c-f>"]     = actions.scroll_view(0.25),
-                  ["<tab>"]     = actions.select_next_entry,
-                  ["<s-tab>"]   = actions.select_prev_entry,
-                  ["gf"]        = actions.goto_file,
-                  ["<C-w><C-f>"] = actions.goto_file_split,
-                  ["<C-w>gf"]   = actions.goto_file_tab,
-                  ["<leader>e"] = actions.focus_files,
-                  ["<leader>b"] = actions.toggle_files,
+              ["g!"]            = actions.options, -- Open the option panel
+              ["<C-A-d>"]       = actions.open_in_diffview, -- Open the entry under the cursor in a diffview
+              ["y"]             = actions.copy_hash, -- Copy the commit hash of the entry under the cursor
+              ["L"]             = actions.open_commit_log,
+              ["zR"]            = actions.open_all_folds,
+              ["zM"]            = actions.close_all_folds,
+              ["j"]             = actions.next_entry,
+              ["<down>"]        = actions.next_entry,
+              ["k"]             = actions.prev_entry,
+              ["<up>"]          = actions.prev_entry,
+              ["<cr>"]          = actions.select_entry,
+              ["o"]             = actions.select_entry,
+              ["<2-LeftMouse>"] = actions.select_entry,
+              ["<c-b>"]         = actions.scroll_view( -0.25),
+              ["<c-f>"]         = actions.scroll_view(0.25),
+              ["<tab>"]         = actions.select_next_entry,
+              ["<s-tab>"]       = actions.select_prev_entry,
+              ["gf"]            = actions.goto_file,
+              ["<C-w><C-f>"]    = actions.goto_file_split,
+              ["<C-w>gf"]       = actions.goto_file_tab,
+              ["<leader>e"]     = actions.focus_files,
+              ["<leader>b"]     = actions.toggle_files,
             },
             option_panel = {
-                  ["<tab>"] = actions.select_entry,
-                  ["q"] = actions.close,
+              ["<tab>"] = actions.select_entry,
+              ["q"] = actions.close,
             },
           },
         })
@@ -1114,7 +1094,7 @@ return require('packer').startup({
     }
 
     use "tversteeg/registers.nvim"
-    use { 'michaelb/sniprun', run = 'bash ./install.sh' }     -- 代码片段执行，写vim lua脚本方便调试
+    use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
     use { 'TimUntersberger/neogit',
       requires = 'nvim-lua/plenary.nvim',
@@ -1133,8 +1113,8 @@ return require('packer').startup({
           mappings = {
             -- modify status buffer mappings
             status = {
-                  ["<enter>"] = "Toggle",
-                  ["<c-enter>"] = "GoToFile",
+              ["<enter>"] = "Toggle",
+              ["<c-enter>"] = "GoToFile",
             }
           }
         }
