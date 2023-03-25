@@ -77,10 +77,6 @@ autocmd FileType markdown  vmap <leader>fb  :s/^.*$/> \0/g<cr>:nohl<cr>
 " 包围块代码
 autocmd FileType markdown  vmap <leader>fc  :s/^\(\%V\_.*\)\%V$/```\r\0\r```/<cr>:nohl<cr>
 
-autocmd FileType DiffviewFiles  lua require('focus').focus_disable()
-autocmd FileType DiffviewFileHistory  lua require('focus').focus_disable()
-"autocmd FileType NeogitStatus  lua require('focus').focus_enable()
-
 " shiftwidth设置
 autocmd FileType go setlocal shiftwidth=4
 autocmd FileType lua setlocal shiftwidth=2

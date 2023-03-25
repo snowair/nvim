@@ -678,9 +678,6 @@ return require('packer').startup({
           pattern = "SessionSavePre",
           group = config_group,
           callback = function()
-            -- 恢复窗口排列尺寸
-            local focus = require("focus")
-            focus.focus_disable()
 
             -- 关闭插件的tab
             local tabs = vim.api.nvim_list_tabpages()
@@ -1077,21 +1074,6 @@ return require('packer').startup({
     --end
     --}
 
-    -- 多窗口时，自动调整当前window的大小，
-    use {
-      'beauwilliams/focus.nvim',
-      config = function()
-        local focus = require("focus")
-        focus.setup({
-          autoresize = false,
-          hybridnumber = false,
-          excluded_filetypes = ignore_ft,
-          excluded_buftypes = ignore_bt,
-        })
-        focus.focus_disable()
-        vim.keymap.set('n', '<leader>fd', ':FocusToggle<cr>')
-      end
-    }
 
     use "tversteeg/registers.nvim"
     use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试

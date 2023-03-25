@@ -1309,15 +1309,6 @@ ctrl-a,ctrl-x增强
 配置了go的时间format,  `int,int32,in64`,  `uint,uint32,uin64`, `[]byte(/string(`, `and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
 `success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled`
 
-
-# focus.nvim
-
-多窗口时，自动调整当前window的大小
-
-* `:FocusDisable`	Disable the plugin per session. Splits will be normalised back to defaults and then spaced evenly.
-* `:FocusEnable`	Enable the plugin per session. Splits will be resized back to your configs or defaults if not set.
-* `:FocusToggle`	Toggle focus on and off again.
-
 # link-visitor
 
 * `VisitLinkInBuffer`  Open links in the buffer
