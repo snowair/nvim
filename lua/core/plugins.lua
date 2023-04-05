@@ -1120,6 +1120,8 @@ return require('packer').startup({
         })
       end,
     }
+    use { "chrisgrieser/nvim-spider" }
+    use { "wellle/targets.vim" }
   end,
   config = { max_jobs = 5 }
 })
