@@ -41,6 +41,8 @@ return require('packer').startup({
         -- noremap 用于切换tab ; insert map用于Luasnip
         vim.keymap.set('n', '<C-Tab>', ':BufferLineCycleNext<cr>')
         vim.keymap.set('n', '<A-Tab>', ':BufferLineCycleNext<cr>')
+        vim.keymap.set('n', '<D-Tab>', ':BufferLineCycleNext<cr>')
+        vim.keymap.set('n', '<M-Tab>', ':BufferLineCycleNext<cr>')
         vim.keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<cr>')
       end
     }
