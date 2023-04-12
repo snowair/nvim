@@ -31,7 +31,7 @@ vim.opt.tabstop       = 4
 vim.opt.expandtab     = true
 --  执行缩进的宽度，值可以任意设置值，会自动根据需要使用<tab>,和空格组合出相应的缩进宽度，且优先使用<tab>不足时用空格补足宽度. 注意:它是一个local buffer选项
 vim.opt.shiftwidth    = 4
-vim.opt.mouse         = 'ni' -- 如果是 'a' 会导致ssh模式下无法复制
+vim.opt.mouse         = 'a' -- 如果是 'a' 会导致ssh模式下无法复制
 vim.opt.mousemodel    = 'extend'
 vim.opt.smartindent   = true
 vim.opt.ignorecase    = true
