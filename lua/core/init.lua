@@ -18,7 +18,7 @@ vim.opt.writebackup    = true
 vim.opt.conceallevel   = 2
 --vim.opt.guifont        = 'SauceCodePro Nerd Font:h14'
 if (vim.fn.has('termguicolors') == 1) then
-    vim.opt.termguicolors = true
+  vim.opt.termguicolors = true
 end
 
 -- tabs
@@ -31,7 +31,8 @@ vim.opt.tabstop       = 4
 vim.opt.expandtab     = true
 --  执行缩进的宽度，值可以任意设置值，会自动根据需要使用<tab>,和空格组合出相应的缩进宽度，且优先使用<tab>不足时用空格补足宽度. 注意:它是一个local buffer选项
 vim.opt.shiftwidth    = 4
-vim.opt.mouse         = 'a'
+vim.opt.mouse         = 'a' -- 如果是 'a' 会导致ssh模式下无法复制
+vim.opt.mousemodel    = 'extend'
 vim.opt.smartindent   = true
 vim.opt.ignorecase    = true
 vim.opt.smartcase     = true
@@ -42,8 +43,9 @@ vim.opt.wildignore    = '*/tmp/*,*.so,*.swp,*.zip,*.7z,*.tar,*.tar.*,*.rar,.idea
 vim.opt.nrformats     = 'alpha,octal,hex'
 
 
-vim.g.neovide_confirm_quit = 1 -- 退出前确认处理未保存的文件
-vim.g.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages' -- https://github.com/Shatur/neovim-session-manager/issues/47
+vim.g.neovide_confirm_quit = 1                                    -- 退出前确认处理未保存的文件
+vim.g.sessionoptions =
+'blank,buffers,curdir,folds,help,tabpages'                        -- https://github.com/Shatur/neovim-session-manager/issues/47
 
 require("core.plugins")
 require("core.keymaps")
@@ -69,15 +71,15 @@ require("core.theme")
 -- vim-markdown配置
 vim.g.vim_markdown_toc_autofit = 1
 vim.g.vim_markdown_fenced_languages = {
-    'js=javascript', 'py=python', 'golang=go', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'ts=typescript',
-    'md=markdown', 'cs=csharp', 'php', 'rb=ruby'
+  'js=javascript', 'py=python', 'golang=go', 'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'ts=typescript',
+  'md=markdown', 'cs=csharp', 'php', 'rb=ruby'
 }
 vim.g.vim_markdown_folding_level = 3
 vim.g.vim_markdown_frontmatter = 1
 vim.g.vim_markdown_json_frontmatter = 1
 vim.g.vim_markdown_new_list_item_indent = 2
 vim.g.vim_markdown_strikethrough = 1
-vim.g.vim_markdown_conceal=2
+vim.g.vim_markdown_conceal = 2
 vim.g.tex_conceal = ""
 vim.g.vim_markdown_math = 1
 vim.g.vim_markdown_conceal_code_blocks = 0

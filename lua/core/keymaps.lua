@@ -4,43 +4,62 @@ vim.g.mapleader = ';;'
 -- F1~F12
 -- t: terminal
 vim.keymap.set({ 'n', 'i' }, '<s-F1>', '<Esc>:NvimTreeToggle<cr>')
+vim.keymap.set({ 'n', 'i' }, '<F13>', '<Esc>:NvimTreeToggle<cr>')
 vim.keymap.set('n', '<F2>', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<s-F2>', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<F14>', vim.diagnostic.goto_prev)
 
 -- terminal 模式
-vim.keymap.set('n', '<s-f3>',function()
+local function floatTerm()
 	vim.cmd("silent! noa wall")
 	vim.cmd("FloatermToggle")
-end)
-
+end
+vim.keymap.set('n', '<s-f3>',floatTerm)
+vim.keymap.set('n', '<f15>',floatTerm)
 vim.keymap.set('t', '<s-f3>', '<c-\\><c-n>:FloatermToggle<return>')
-vim.keymap.set('t', '<a-f3>', '<c-\\><c-n>:FloatermNext<return>')
-vim.keymap.set('n', '<s-f4>', function()
+vim.keymap.set('t', '<f15>', '<c-\\><c-n>:FloatermToggle<return>')
+vim.keymap.set('t', '<f27>', '<c-\\><c-n>:FloatermNext<return>')
+
+-- NeoGit
+local function neogit()
 	vim.cmd("silent! noa wall")
 	vim.cmd("Neogit")
-end)
+end
+vim.keymap.set('n', '<s-f4>', neogit)
+vim.keymap.set('n', '<f16>', neogit)
+
 vim.keymap.set('n', '<s-f5>', function() require 'telescope.builtin'.lsp_dynamic_workspace_symbols() end)
+vim.keymap.set('n', '<F17>', function() require 'telescope.builtin'.lsp_dynamic_workspace_symbols() end)
 vim.keymap.set('n', '<c-f5>', function() require 'telescope.builtin'.lsp_document_symbols() end) -- <c-l>弹出类型过滤以后，<c-p> , <c-n> 进行选择
+vim.keymap.set('n', '<F29>', function() require 'telescope.builtin'.lsp_document_symbols() end) -- <c-l>弹出类型过滤以后，<c-p> , <c-n> 进行选择
+
 vim.keymap.set('n', '<s-f6>', vim.lsp.buf.rename) -- refactor: 重命名
+vim.keymap.set('n', '<F18>', vim.lsp.buf.rename) -- refactor: 重命名
 vim.keymap.set('n', '<a-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
+vim.keymap.set('n', '<d-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
+vim.keymap.set('n', '<m-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
 vim.keymap.set('n', '<a-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
 vim.keymap.set('n', '<d-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
-vim.keymap.set('n', '<d-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
+vim.keymap.set('n', '<m-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
 
 -- 仅提供基本的断点设置和清除键，调试过程控制由语言支持插件，例如 go.nvim 提供的相关命令
 local dap = require("dap")
 vim.keymap.set({ 'n' }, '<c-F7>', function() dap.toggle_breakpoint() end)
 vim.keymap.set({ 'n' }, '<s-F7>', function() dap.clear_breakpoints() end)
+vim.keymap.set({ 'n' }, '<F31>', function() dap.toggle_breakpoint() end)
+vim.keymap.set({ 'n' }, '<F19>', function() dap.clear_breakpoints() end)
 
 -- 加载session
-vim.keymap.set({ 'n', 'i' }, '<c-F8>', function()
+local function load_session()
 	vim.cmd("silent! noa wall")
 	if vim.env.SESSION_DIR ~= nil then
 		vim.fn.chdir(vim.env.SESSION_DIR)
 	end
 	vim.cmd('only')
 	vim.cmd('SessionManager load_session')
-end)
+end
+vim.keymap.set({ 'n', 'i' }, '<c-F8>', load_session)
+vim.keymap.set({ 'n', 'i' }, '<F32>', load_session)
 
 -- telescope
 local function get_dirs ()
@@ -101,35 +120,45 @@ local function get_dirs ()
 end
 
 -- 在cdlist中搜文件内容
-vim.keymap.set({ 'n', 'i' }, '<c-F9>', function()
-	require 'telescope.builtin'.live_grep({ search_dirs = get_dirs() })
-end)
+local function live_grep_in_cdlist()
+  require 'telescope.builtin'.live_grep({ search_dirs = get_dirs() })
+end
+vim.keymap.set({ 'n', 'i' }, '<c-F9>', live_grep_in_cdlist)
+vim.keymap.set({ 'n', 'i' }, '<F33>', live_grep_in_cdlist)
 
 -- 在cdlist中搜文件
-vim.keymap.set({ 'n', 'i' }, '<c-F10>', function()
-	require 'telescope.builtin'.find_files({ search_dirs = get_dirs() })
-end)
+local function find_files_in_cdlist()
+  require 'telescope.builtin'.find_files({ search_dirs = get_dirs() })
+end
+vim.keymap.set({ 'n', 'i' }, '<c-F10>', find_files_in_cdlist)
+vim.keymap.set({ 'n', 'i' }, '<F34>', find_files_in_cdlist)
 
 -- 在session dir中搜文件
-vim.keymap.set({ 'n', 'i' }, '<c-F11>', function()
-	local ssdir = vim.env.SESSION_DIR
-	if ssdir ~= nil then
-		require 'telescope.builtin'.find_files({ search_dirs = { ssdir } })
-	else
-		require 'telescope.builtin'.find_files()
-	end
-end)
+local function find_files_in_session_dir()
+  local ssdir = vim.env.SESSION_DIR
+  if ssdir ~= nil then
+    require 'telescope.builtin'.find_files({ search_dirs = { ssdir } })
+  else
+    require 'telescope.builtin'.find_files()
+  end
+end
+vim.keymap.set({ 'n', 'i' }, '<c-F11>', find_files_in_session_dir)
+vim.keymap.set({ 'n', 'i' }, '<F35>', find_files_in_session_dir)
+
 -- 在session dir中搜文件内容
-vim.keymap.set({ 'n', 'i' }, '<s-F11>', function()
-	local ssdir = vim.env.SESSION_DIR
-	if ssdir ~= nil then
-		require 'telescope.builtin'.live_grep({ search_dirs = { ssdir } })
-	else
-		require 'telescope.builtin'.live_grep()
-	end
-end)
+local function live_grep_in_session_dir()
+  local ssdir = vim.env.SESSION_DIR
+  if ssdir ~= nil then
+    require 'telescope.builtin'.live_grep({ search_dirs = { ssdir } })
+  else
+    require 'telescope.builtin'.live_grep()
+  end
+end
+vim.keymap.set({ 'n', 'i' }, '<s-F11>', live_grep_in_session_dir)
+vim.keymap.set({ 'n', 'i' }, '<F23>', live_grep_in_session_dir)
 
 vim.keymap.set({ 'n', 'i' }, '<c-F12>', function() require 'telescope.builtin'.buffers({}) end) -- 搜buffer
+vim.keymap.set({ 'n', 'i' }, '<F36>', function() require 'telescope.builtin'.buffers({}) end) -- 搜buffer
 vim.keymap.set({ 'n' }, '<c-space>', function()
 	vim.cmd("silent! noa wall")
 	require 'configs.bufferlist'.run({ only_cwd = true })

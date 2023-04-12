@@ -95,6 +95,7 @@ if has('mac')
 else
     imap <silent><script><expr> <d-j> copilot#Accept("\<CR>")
 endif
+imap <silent><script><expr> <m-j> copilot#Accept("\<CR>")
 imap <silent><script><expr> <a-j> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true
 let g:copilot_enabled = 1
