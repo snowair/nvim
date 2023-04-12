@@ -108,13 +108,6 @@ function M.config()
   -- npm i -g bash-language-server
   require 'lspconfig'.bashls.setup {}
 
-  -- nanotee/sqls.nvim
-  require 'lspconfig'.sqls.setup {
-    on_attach = function(client, bufnr)
-      require('sqls').on_attach(client, bufnr)
-    end
-  }
-
   -- lua
   require 'lspconfig'.lua_ls.setup {
     on_attach = function(client, bufnr)

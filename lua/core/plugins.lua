@@ -81,17 +81,6 @@ return require('packer').startup({
     use 'L3MON4D3/LuaSnip' -- 代码片段, nvim-cmp用到
     use 'molleweide/LuaSnip-snippets.nvim' -- 一些代码片段收集，java/lua/python/rust/c的都有
     use 'onsails/lspkind-nvim' -- 给自动完成列表添加icon支持
-    -- sql工具
-    use {
-      'nanotee/sqls.nvim',
-      config = function()
-        require('lspconfig').sqls.setup {
-          on_attach = function(client, bufnr)
-            require('sqls').on_attach(client, bufnr)
-          end
-        }
-      end
-    }
     -- 使用 lsp 的代码文件structrue插件, 支持预览代码和文档, 只能显示当前文件的,不支持按package查看,不支持隐藏不可见成员 :SymbolsOutline
     -- go.nvim 的 GoPkgOutline 支持package级别的outline,但不太稳定
     use {
