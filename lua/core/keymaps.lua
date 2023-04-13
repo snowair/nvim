@@ -167,6 +167,7 @@ end)
 
 -- 剪贴板操作
 vim.keymap.set('v', '<C-Insert>', '"+y')
+vim.keymap.set('v', '<C-Y>', '"+y') -- visual模式复制
 vim.keymap.set('v', '<C-Del>', '"+x')
 vim.keymap.set('v', '<S-Insert>', '"+p')
 vim.keymap.set('v', '<S-Help>', '"+p')
