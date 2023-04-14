@@ -52,6 +52,7 @@ function source:complete(params, callback)
 	local before = params.context.cursor_before_line
 	local after  = params.context.cursor_after_line
 	local items  = {
+		{ label = "update:" },
 		{ label = "fix:" },
 		{ label = "feat:" },
 		{ label = "refactor:" },
