@@ -102,6 +102,30 @@ return require('packer').startup({
       end
     }
 
+    use({
+      "glepnir/lspsaga.nvim",
+      opt = true,
+      branch = "main",
+      event = "LspAttach",
+      config = function()
+        require("lspsaga").setup({
+          lightbulb = {
+            enable = false,
+          },
+          symbol_in_winbar = {
+            enable = true,
+            separator = " ",
+            ignore_patterns = {},
+            hide_keyword = true,
+            show_file = true,
+            folder_level = 2,
+            respect_root = false,
+            color_mode = true,
+          },
+        })
+      end,
+    })
+
     -- 类似goland的, 在函数参数sign位置可以提示该参数的类型
     use {
       'ray-x/lsp_signature.nvim',
@@ -669,7 +693,6 @@ return require('packer').startup({
           pattern = "SessionSavePre",
           group = config_group,
           callback = function()
-
             -- 关闭插件的tab
             local tabs = vim.api.nvim_list_tabpages()
             if #tabs > 1 then
