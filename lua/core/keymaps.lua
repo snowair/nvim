@@ -11,19 +11,19 @@ vim.keymap.set('n', '<F14>', vim.diagnostic.goto_prev)
 
 -- terminal 模式
 local function floatTerm()
-	vim.cmd("silent! noa wall")
-	vim.cmd("FloatermToggle")
+  vim.cmd("silent! noa wall")
+  vim.cmd("FloatermToggle")
 end
-vim.keymap.set('n', '<s-f3>',floatTerm)
-vim.keymap.set('n', '<f15>',floatTerm)
+vim.keymap.set('n', '<s-f3>', floatTerm)
+vim.keymap.set('n', '<f15>', floatTerm)
 vim.keymap.set('t', '<s-f3>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<f15>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<f27>', '<c-\\><c-n>:FloatermNext<return>')
 
 -- NeoGit
 local function neogit()
-	vim.cmd("silent! noa wall")
-	vim.cmd("Neogit")
+  vim.cmd("silent! noa wall")
+  vim.cmd("Neogit")
 end
 vim.keymap.set('n', '<s-f4>', neogit)
 vim.keymap.set('n', '<f16>', neogit)
@@ -51,72 +51,71 @@ vim.keymap.set({ 'n' }, '<F19>', function() dap.clear_breakpoints() end)
 
 -- 加载session
 local function load_session()
-	vim.cmd("silent! noa wall")
-	if vim.env.SESSION_DIR ~= nil then
-		vim.fn.chdir(vim.env.SESSION_DIR)
-	end
-	vim.cmd('only')
-	vim.cmd('SessionManager load_session')
+  vim.cmd("silent! noa wall")
+  if vim.env.SESSION_DIR ~= nil then
+    vim.fn.chdir(vim.env.SESSION_DIR)
+  end
+  vim.cmd('only')
+  vim.cmd('SessionManager load_session')
 end
 vim.keymap.set({ 'n', 'i' }, '<c-F8>', load_session)
 vim.keymap.set({ 'n', 'i' }, '<F32>', load_session)
 
 -- telescope
-local function get_dirs ()
-	local ssdir = vim.env.SESSION_DIR
-	local dirlist = vim.g.dirChangeHistory
-		local cwd = vim.loop.cwd()
-	if dirlist ~= nil and #dirlist >= 1 then
-		-- cdlist有可能不含有当前cwd,所以需要加入
-		local cwd_exsist = false
-		for _, v in pairs(dirlist) do
-			if v == cwd then
-				cwd_exsist = true
-			end
-		end
+local function get_dirs()
+  local ssdir = vim.env.SESSION_DIR
+  local dirlist = vim.g.dirChangeHistory
+  local cwd = vim.loop.cwd()
+  if dirlist ~= nil and #dirlist >= 1 then
+    -- cdlist有可能不含有当前cwd,所以需要加入
+    local cwd_exsist = false
+    for _, v in pairs(dirlist) do
+      if v == cwd then
+        cwd_exsist = true
+      end
+    end
 
-		if cwd_exsist == false then
-			table.insert(dirlist, cwd)
-		end
+    if cwd_exsist == false then
+      table.insert(dirlist, cwd)
+    end
 
-		local dirlist_copy = {}
-		local inited = false
-		for _, v in pairs(dirlist) do
-			if inited == false then
-				table.insert(dirlist_copy, v)
-				inited = true
-			else
-				local breaked = false
-				for iCopy, copyVal in pairs(dirlist_copy) do
-					local start, _ = string.find(copyVal, v)
-					if start == 1 then -- v更短
-						table.insert(dirlist_copy, v)
-						table.remove(dirlist_copy, iCopy)
-						breaked = true
-						break
-					end
+    local dirlist_copy = {}
+    local inited = false
+    for _, v in pairs(dirlist) do
+      if inited == false then
+        table.insert(dirlist_copy, v)
+        inited = true
+      else
+        local breaked = false
+        for iCopy, copyVal in pairs(dirlist_copy) do
+          local start, _ = string.find(copyVal, v)
+          if start == 1 then -- v更短
+            table.insert(dirlist_copy, v)
+            table.remove(dirlist_copy, iCopy)
+            breaked = true
+            break
+          end
 
-					local start2, _ = string.find(v, copyVal)
-					if start2 == 1 then -- copyVal 更短
-						breaked = true
-						break
-					end
+          local start2, _ = string.find(v, copyVal)
+          if start2 == 1 then -- copyVal 更短
+            breaked = true
+            break
+          end
+        end
 
-				end
-
-				if breaked == false then
-					table.insert(dirlist_copy, v)
-				end
-			end
-		end
-		return dirlist_copy
-	else
-		if ssdir ~= nil then
-			return ssdir
-		else
-			return cwd
-		end
-	end
+        if breaked == false then
+          table.insert(dirlist_copy, v)
+        end
+      end
+    end
+    return dirlist_copy
+  else
+    if ssdir ~= nil then
+      return ssdir
+    else
+      return cwd
+    end
+  end
 end
 
 -- 在cdlist中搜文件内容
@@ -160,8 +159,8 @@ vim.keymap.set({ 'n', 'i' }, '<F23>', live_grep_in_session_dir)
 vim.keymap.set({ 'n', 'i' }, '<c-F12>', function() require 'telescope.builtin'.buffers({}) end) -- 搜buffer
 vim.keymap.set({ 'n', 'i' }, '<F36>', function() require 'telescope.builtin'.buffers({}) end) -- 搜buffer
 vim.keymap.set({ 'n' }, '<c-space>', function()
-	vim.cmd("silent! noa wall")
-	require 'configs.bufferlist'.run({ only_cwd = true })
+  vim.cmd("silent! noa wall")
+  require 'configs.bufferlist'.run({ only_cwd = true })
 end)
 
 
@@ -197,7 +196,10 @@ vim.keymap.set({ 'n', 'i' }, '<leader>fw', '<ESC>:tabnew %<cr>')
 -- l: general
 vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float) -- 光标停留在诊断错误处执行，打开悬浮窗显示所有诊断内容
 vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist) -- 在loclist 列出诊断错误
-vim.keymap.set('n', '<leader>lf', vim.lsp.buf.formatting) -- 执行代码格式化
+vim.keymap.set('n', '<leader>lf', function() require('lspsaga.finder'):lsp_finder() end) -- lsp_finder
+vim.keymap.set('n', '<leader>li', function() require('lspsaga.callhierarchy'):send_method(2) end) --  incoming_calls
+vim.keymap.set('n', '<leader>ld', function() require('lspsaga.definition'):peek_definition(1) end) -- peek_definition
+vim.keymap.set('n', '<leader>lD', function() require('lspsaga.definition'):peek_definition(2) end) -- peek_type_definition
 
 -- g: goto
 vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration) -- 跳转到变量被声明的地方
