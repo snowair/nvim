@@ -198,6 +198,7 @@ vim.keymap.set('n', '<leader>le', vim.diagnostic.open_float) -- 光标停留在�
 vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist) -- 在loclist 列出诊断错误
 vim.keymap.set('n', '<leader>lf', function() require('lspsaga.finder'):lsp_finder() end) -- lsp_finder
 vim.keymap.set('n', '<leader>li', function() require('lspsaga.callhierarchy'):send_method(2) end) --  incoming_calls
+vim.keymap.set('n', '<leader>lo', function() require('lspsaga.callhierarchy'):send_method(3) end) --  incoming_calls
 vim.keymap.set('n', '<leader>ld', function() require('lspsaga.definition'):peek_definition(1) end) -- peek_definition
 vim.keymap.set('n', '<leader>lD', function() require('lspsaga.definition'):peek_definition(2) end) -- peek_type_definition
 
@@ -212,7 +213,13 @@ vim.keymap.set('n', '<leader>gu', ':VisitLinkUnderCursor<cr>') -- 打开Url
 
 -- w: workspace
 vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder)
-vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder)
+vim.keymap.set('n', '<leader>wr', function()
+  vim.ui.select(vim.lsp.buf.list_workspace_folders(),
+    { prompt = 'Delete LSP Workspace folder:', },
+    function(choice)
+      vim.lsp.buf.remove_workspace_folder(choice)
+    end)
+end)
 vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
 
 

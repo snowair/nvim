@@ -1703,12 +1703,12 @@ lsp 实用工具
     * enter : 在列表中切换目标
     * o : 在新窗口打开目标
     * p : 光标进入预览窗口
-* `Lspsaga incoming_calls` 外部调用链路
+* `Lspsaga incoming_calls` 列出所有调用光标所在函数的外部函数
     * enter : 在列表中切换目标
     * o : 在新窗口打开目标
     * p : 光标进入预览窗口
     * u : 折叠展开列表
-* `Lspsaga outgoing_calls` 内部调用函数
+* `Lspsaga outgoing_calls` 列出光标所在函数里调用的所有函数
 * `Lspsaga peek_definition` 浮动窗口显示定义 , 
     * `<c-t>` 返回
     * `<c-c>v` 垂直窗口打开
