@@ -1155,8 +1155,28 @@ return require('packer').startup({
         })
       end,
     }
-    use { "chrisgrieser/nvim-spider" }
-    use { "wellle/targets.vim" }
+    use { "chrisgrieser/nvim-spider" } -- 让 w e b 移动更适合一些
+    use { "wellle/targets.vim" } -- text object
+
+    -- 允许在终端中直接编辑执行的命令,而不用繁琐的使用方向键移动光标
+    -- <c-\><c-n> 退出terminal模式, 进入normal模式
+    use {
+      'chomosuke/term-edit.nvim', tag = 'v1.*',
+      config = function()
+        -- Calling require 'term-edit'.setup(opts) is mandatory
+        require 'term-edit'.setup {
+          -- Mandatory option:
+          -- Set this to a lua pattern that would match the end of your prompt.
+          -- Or a table of multiple lua patterns where at least one would match the
+          -- end of your prompt at any given time.
+          -- For most bash/zsh user this is '%$ '.
+          -- For most powershell/fish user this is '> '.
+          -- For most windows cmd user this is '>'.
+          prompt_end = '%$ ',
+          -- How to write lua patterns: https://www.lua.org/pil/20.2.html
+        }
+      end
+    }
   end,
   config = { max_jobs = 5 }
 })

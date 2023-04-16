@@ -81,6 +81,12 @@ autocmd FileType markdown  vmap <leader>fc  :s/^\(\%V\_.*\)\%V$/```\r\0\r```/<cr
 autocmd FileType go setlocal shiftwidth=4
 autocmd FileType lua setlocal shiftwidth=2
 
+" terminal
+autocmd TermOpen * setlocal wrap
+autocmd TermOpen * setlocal linebreak
+autocmd TermOpen * setlocal list
+autocmd TermOpen * setlocal textwidth=0
+
 " 在插入模式禁止auto indent,否则粘贴文本时候, 会逐行缩进
 set noautoindent
 " trigger `autoread` when files changes on disk

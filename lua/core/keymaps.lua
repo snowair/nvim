@@ -19,6 +19,7 @@ vim.keymap.set('n', '<f15>', floatTerm)
 vim.keymap.set('t', '<s-f3>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<f15>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<f27>', '<c-\\><c-n>:FloatermNext<return>')
+vim.keymap.set('t', '<esc>', '<c-\\><c-n>')
 
 -- NeoGit
 local function neogit()
