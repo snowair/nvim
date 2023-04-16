@@ -112,16 +112,37 @@ return require('packer').startup({
           lightbulb = {
             enable = false,
           },
-          symbol_in_winbar = {
-            enable = true,
-            separator = " ",
-            ignore_patterns = {},
-            hide_keyword = true,
-            show_file = true,
-            folder_level = 2,
-            respect_root = false,
-            color_mode = true,
+          callhierarchy = {
+            show_detail = false,
+            keys = {
+              edit = "o",
+              jump = "p",
+              vsplit = "v",
+              split = "s",
+              tabe = "t",
+              quit = "q",
+              expand_collapse = "u",
+            },
           },
+          finder = {
+            keys = {
+              expand_or_jump = 'o',
+              jump_to = 'p',
+              vsplit = 'v',
+              split = 's',
+              tabe = 't',
+              tabnew = 'r',
+              quit = { 'q', '<ESC>' },
+              close_in_preview = '<ESC>',
+            },
+          },
+          definition = {
+            edit = "<C-c>o",
+            vsplit = "<C-c>v",
+            split = "<C-c>s",
+            tabe = "<C-c>t",
+            quit = "q",
+          }
         })
       end,
     })

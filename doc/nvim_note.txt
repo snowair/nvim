@@ -1698,3 +1698,19 @@ import(
 ## nvimdev/lspsaga.nvim
 
 lsp 实用工具
+
+* `Lspsaga lsp_finder` 查找所有用到该标识符的地方
+    * enter : 在列表中切换目标
+    * o : 在新窗口打开目标
+    * p : 光标进入预览窗口
+* `Lspsaga incoming_calls` 外部调用链路
+    * enter : 在列表中切换目标
+    * o : 在新窗口打开目标
+    * p : 光标进入预览窗口
+    * u : 折叠展开列表
+* `Lspsaga outgoing_calls` 内部调用函数
+* `Lspsaga peek_definition` 浮动窗口显示定义 , 
+    * `<c-t>` 返回
+    * `<c-c>v` 垂直窗口打开
+* `Lspsaga peek_type_definition` 浮动窗口显示类型定义
+
