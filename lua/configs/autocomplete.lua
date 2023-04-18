@@ -40,7 +40,7 @@ function M.config()
         sorting = {
             priority_weight = 2,
             comparators = {
-                require('cmp_tabnine.compare'),
+                -- require('cmp_tabnine.compare'),
                 compare.offset,
                 compare.exact,
                 compare.score,
@@ -113,7 +113,7 @@ function M.config()
                     golang_time = "[Time]",
                     golang_json = "[Tag]",
                     nvim_lua = "[Lua]",
-                    cmp_tabnine = "[T9]",
+                    -- cmp_tabnine = "[T9]",
                 })[entry.source.name]
                 return vim_item
             end,
@@ -123,7 +123,7 @@ function M.config()
         -- 下面的source 都是插件提供的
         sources = cmp.config.sources(
             {
-                { name = 'cmp_tabnine' },
+                -- { name = 'cmp_tabnine' },
                 { name = 'nvim_lsp' }, -- lsp 提供的自动完成
                 { name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
                 { name = 'nvim_lua' }, --  cmp-nvim-lua 插件提供的 neovim api自动完成
@@ -226,7 +226,7 @@ function M.config()
             },
             {
                 { name = 'nvim_lsp' }, -- lsp 提供的自动完成
-                { name = 'cmp_tabnine' },
+                -- { name = 'cmp_tabnine' },
                 --{ name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
             })
     })
