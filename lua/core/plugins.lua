@@ -199,7 +199,7 @@ return require('packer').startup({
     use 'hrsh7th/cmp-path' -- 文件路径自动完成
     use 'hrsh7th/cmp-emoji' -- emoji自动完成
     use 'hrsh7th/cmp-nvim-lua' -- neovim api 自动完成
-    use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
+    --use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
 
     -- gitsigns
     use {
