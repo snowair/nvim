@@ -953,6 +953,11 @@ toggle_breakpoint({condition}, {hit_condition}, {log_message})
 
 1. GoTest 在success的时候，只输出成功。不会自动打开quickfix窗口显示log. 在fail的时候自动打开quickfix窗口显示log.
 2. go test 会缓存结果, 禁用缓存可以使用 `go test -count=1` 或清除缓存 `go clean -testcache`
+3. GoTestFunc 的参数不是 go test的参数, 而是自己定义的参数。有 `-n`(对应 -count), `-v`(对应-v). 如果要使用 `go test` 的 `-args` 功能，需要像下面这样使用
+    ```
+    :GoTestFunc -v -n 1 -a -ip=abc\ -port=456
+    ```
+    * `-a` 之后的参数作为整体传给 `go test` 的 `-args` 参数， 中间的空格需要转移
 
 ## Debug
 
