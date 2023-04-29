@@ -1230,8 +1230,8 @@ git config --global i18n.logOutputEncoding utf-8
 1. 查看commit之间的diff(可以使用HEAD,commit hash,tagname,branch name)
 	* 命令自带自动完成功能
 2. 查看工作区与index之间的diff, 在file_panel里可以进行 
-    * stage(`S`)/unstage(`U`)操作,
-	* 使用 `-` 可以对单个文件进行 stage/unstage
+    * stage(`S`)/unstage(`U`) 对所有文件执行操作(为了防止误提交,不建议使用),
+	* 使用 `-` 可以对单个文件进行 stage/unstage( 建议使用, 明确选择每一个要提交的文件, 避免误提交)
 3. 如果在 merge 或者 rebase 操作时使用，则选择冲突文件时, 会使用3-way diff 方便你
 处理冲突. 左侧是Ours(冲突之前的本地分支),右侧是Theirs(被合并进来的分支),中间是待解决冲突的本地index文件
 	* 使用 `]x`,`[x` 在冲突之间跳转.
