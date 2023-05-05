@@ -1177,6 +1177,18 @@ return require('packer').startup({
         }
       end
     }
+
+    use({
+      "jackMort/ChatGPT.nvim",
+      config = function()
+        require("chatgpt").setup()
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      }
+    })
   end,
   config = { max_jobs = 5 }
 })
