@@ -1810,10 +1810,12 @@ lsp 实用工具
 * `<c-u>`,`<c-d>` 向上向下滚动chat窗口
 * `<c-r>` 在 user/assistant 间切换角色 
 
-在 ChatGPTEditWithInstructions window中:
+在 ChatGPTEditWithInstructions 中:
 
-* `<c-i>` use response as input.
-* `<c-d>` diff编辑前和编辑后
+* `<c-i>` : 把右侧respone内容载入到左侧的input窗口
+* `<c-d>` : toggle diff 左右input和resonse的差异
+* `<c-y>` : Accept response内容
+
 
 
 
