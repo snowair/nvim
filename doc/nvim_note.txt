@@ -953,6 +953,11 @@ toggle_breakpoint({condition}, {hit_condition}, {log_message})
 
 1. GoTest 在success的时候，只输出成功。不会自动打开quickfix窗口显示log. 在fail的时候自动打开quickfix窗口显示log.
 2. go test 会缓存结果, 禁用缓存可以使用 `go test -count=1` 或清除缓存 `go clean -testcache`
+3. GoTestFunc 的参数不是 go test的参数, 而是自己定义的参数。有 `-n`(对应 -count), `-v`(对应-v). 如果要使用 `go test` 的 `-args` 功能，需要像下面这样使用
+    ```
+    :GoTestFunc -v -n 1 -a -ip=abc\ -port=456
+    ```
+    * `-a` 之后的参数作为整体传给 `go test` 的 `-args` 参数， 中间的空格需要转移
 
 ## Debug
 
@@ -1225,8 +1230,8 @@ git config --global i18n.logOutputEncoding utf-8
 1. 查看commit之间的diff(可以使用HEAD,commit hash,tagname,branch name)
 	* 命令自带自动完成功能
 2. 查看工作区与index之间的diff, 在file_panel里可以进行 
-    * stage(`S`)/unstage(`U`)操作,
-	* 使用 `-` 可以对单个文件进行 stage/unstage
+    * stage(`S`)/unstage(`U`) 对所有文件执行操作(为了防止误提交,不建议使用),
+	* 使用 `-` 可以对单个文件进行 stage/unstage( 建议使用, 明确选择每一个要提交的文件, 避免误提交)
     * X 撤销单个文件的修改
     * R 撤销所有文件的修改
 3. 如果在 merge 或者 rebase 操作时使用，则选择冲突文件时, 会使用3-way diff 方便你
@@ -1736,4 +1741,83 @@ lsp 实用工具
     * `<c-t>` 返回
     * `<c-c>v` 垂直窗口打开
 * `Lspsaga peek_type_definition` 浮动窗口显示类型定义
+
+## jackMort/ChatGPT.nvim
+
+### :ChatGPT
+
+使用 gpt-3.5-turbo 模型对话
+
+### :ChatGPTActAs
+
+预设一系列 prompt 对话模式初始设定
+
+### ChatGPTEditWithInstructions
+
+对整个文件或所选择的文本内容，使用openai api进行编辑. 所使用的模型是 `code-davinci-edit-001` (GPT 3.5 fine-tuned for coding)
+
+### ChatGPTRun [action]
+
+使用 gpt-3.5-turbo 模型， 预设了一组 action prompt 定义，可以对所选则的文本进行编辑:
+
+* `docstring` 为代码自动生成注释
+* `optimize_code` 代码优化 
+* `fix_bugs` 修复代码中的bug
+* `explain_code` 解释代码
+* `code_readability_analysis` 代码可读性分析
+* `translate [lang]` 将输入内容翻译为lang. lang默认为 english
+* `grammar_correction [lang]` 对输入内容语法纠正. lang默认为english
+* `keywords` 提取输入内容的关键词
+* `summarize` 对输入内容进行摘要
+
+以上 action 的prompt配置定义在: `https://github.com/jackMort/ChatGPT.nvim/blob/main/lua/chatgpt/flows/actions/actions.json`
+
+你可以参考下面配置定义自己的action文件，配置在`actions_paths`
+
+```
+{
+  "action_name": {
+    "type": "chat", # 支持 "chat", "completion", "edit" 三种类型
+    "opts": {
+      "template": "模板支持的变量: {{filetype}} (neovim filetype), {{input}} (选择的文本) an {{argument}} (命令参数)",
+      "strategy": "replace", # 策略支持 "replace"和"append"是直接编辑buffer内容, "display"(在floating窗口显示), "edit"(仅支持chat类型)
+      "params": { # parameters according to the official OpenAI API
+        "model": "gpt-3.5-turbo", # or any other model supported by `"type"` in the OpenAI API, use the playground for reference
+        "stop": [
+          "```" # a string used to stop the model
+        ]
+      }
+    },
+    "args": {
+      "argument": {
+          "type": "string",
+          "optional": "true",
+          "default": "some value"
+      }
+    }
+  }
+}
+```
+
+### 默认键映射
+
+* `<c-enter>` 提交输入到server
+* `<c-d>` 提交输入到chat窗口，但不提交到server
+* `<c-y>` 复制最近的回答
+* `<c-k>` 从最近的回答复制代码
+* `<c-o>` 打开设置,可以对api请求参数进行调整, 可以看到历史会话列表. 在会话列表，按空格可以勾选,按`d`可以删除会话,按`r`可以重命名会话.
+* `<Tab>` 在创建之间切换.
+* `<c-s>` 打开/关闭 system 窗口，查看会话的system信息
+* `<c-n>` 开始一个新chat会话
+* `<c-u>`,`<c-d>` 向上向下滚动chat窗口
+* `<c-r>` 在 user/assistant 间切换角色 
+
+在 ChatGPTEditWithInstructions 中:
+
+* `<c-i>` : 把右侧respone内容载入到左侧的input窗口
+* `<c-d>` : toggle diff 左右input和resonse的差异
+* `<c-y>` : Accept response内容
+
+
+
 
