@@ -253,7 +253,7 @@ vim.api.nvim_create_user_command('Commit', function()
     end,
   }):sync()
 
-  vim.cmd([[!git commit -m "]] .. table.concat(files, [[\n]]) .. '"')
+  vim.cmd([[!git commit -m "]] .. table.concat(files, "\\n") .. '"')
 end, { nargs = "?", bang = true, })
 
 -- 列出所有被修改过的文件
