@@ -253,9 +253,7 @@ vim.api.nvim_create_user_command('Commit', function()
     end,
   }):sync()
 
-  local join = table.concat(files, "\\\n")
-
-  vim.cmd("!git commit -m '".. join .." '")
+  vim.cmd([[!git commit -m "]] .. table.concat(files, [[\\n]]) .. '"')
 end, { nargs = "?", bang = true, })
 
 -- 列出所有被修改过的文件
@@ -263,3 +261,5 @@ vim.api.nvim_create_user_command('Modified', function()
   vim.cmd("silent! noa wall")
   require 'configs.lualine'.modifiedList()
 end, { nargs = "?", bang = true, })
+
+
