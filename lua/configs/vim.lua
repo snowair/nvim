@@ -1,3 +1,6 @@
+local Job = require 'plenary.job'
+local lualine = require('lualine.components.branch.git_branch')
+
 -- 自动保存[No Name]
 vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
   callback = function()
@@ -225,32 +228,38 @@ vim.api.nvim_create_user_command('Stash', function(params)
   end
 end, { nargs = "?", bang = true, })
 
-vim.api.nvim_create_user_command('StashPop', function(params)
+vim.api.nvim_create_user_command('StashPop', function()
   vim.cmd('!git stash pop')
 end, { nargs = "?", bang = true, })
 
 -- :Stash apply
-vim.api.nvim_create_user_command('StashApply', function(params)
+vim.api.nvim_create_user_command('StashApply', function()
   vim.cmd('!git stash apply')
 end, { nargs = "?", bang = true, })
 
-vim.api.nvim_create_user_command('Modified', function(params)
+-- 快速提交
+vim.api.nvim_create_user_command('Commit', function()
+  local files = {}
+  Job:new({
+    command = 'git',
+    args = { 'status', '-s', '--untracked-files=no' },
+    cwd = lualine.find_git_dir() .. '/..',
+    on_exit = function(j, return_val)
+      if return_val == 0 then
+        for _, b in pairs(j:result()) do
+          table.insert(files, b)
+        end
+      end
+    end,
+  }):sync()
+
+  local join = table.concat(files, "\n")
+
+  vim.cmd("!git commit -m '".. join .." '")
+end, { nargs = "?", bang = true, })
+
+-- 列出所有被修改过的文件
+vim.api.nvim_create_user_command('Modified', function()
   vim.cmd("silent! noa wall")
   require 'configs.lualine'.modifiedList()
-end, { nargs = "?", bang = true, })
-
-
--- 关闭一些选项，以方便ssh远程编辑时复制内容
-vim.api.nvim_create_user_command('ViewClean', function(params)
-  vim.opt.number = false
-  vim.opt.relativenumber = false
-  vim.cmd("Gitsigns detach")
-  vim.cmd("IndentBlanklineDisable")
-end, { nargs = "?", bang = true, })
-
-vim.api.nvim_create_user_command('ViewRestore', function(params)
-  vim.opt.number = true
-  vim.opt.relativenumber = true
-  vim.cmd("Gitsigns attach")
-  vim.cmd("IndentBlanklineEnable")
 end, { nargs = "?", bang = true, })
