@@ -783,6 +783,8 @@ return require('packer').startup({
           group = config_group,
           callback = function()
             vim.env.SESSION_DIR = nil
+            local chat = require("chatgpt.flows.chat")
+            chat.chat = nil
           end,
         })
 
