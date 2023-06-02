@@ -238,8 +238,11 @@ vim.api.nvim_create_user_command('StashApply', function()
 end, { nargs = "?", bang = true, })
 
 -- 快速提交
-vim.api.nvim_create_user_command('Commit', function()
+vim.api.nvim_create_user_command('Commit', function(params)
   local files = {}
+  if params ~= nil then
+    table.insert(files, params.args)
+  end
   Job:new({
     command = 'git',
     args = { 'status', '-s', '--untracked-files=no' },
@@ -253,7 +256,8 @@ vim.api.nvim_create_user_command('Commit', function()
     end,
   }):sync()
 
-  vim.cmd([[!git commit -m "]] .. table.concat(files, "\\\n") .. '"')
+  local cmd = '!git commit -m "' .. table.concat(files, "\\\n") .. '"'
+  vim.api.nvim_command(cmd)
 end, { nargs = "?", bang = true, })
 
 -- 列出所有被修改过的文件
@@ -261,5 +265,3 @@ vim.api.nvim_create_user_command('Modified', function()
   vim.cmd("silent! noa wall")
   require 'configs.lualine'.modifiedList()
 end, { nargs = "?", bang = true, })
-
-
