@@ -253,7 +253,7 @@ vim.api.nvim_create_user_command('Commit', function()
     end,
   }):sync()
 
-  local join = table.concat(files, "\n")
+  local join = table.concat(files, "\\\n")
 
   vim.cmd("!git commit -m '".. join .." '")
 end, { nargs = "?", bang = true, })
