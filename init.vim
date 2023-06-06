@@ -96,12 +96,15 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 autocmd FileChangedShellPost *  echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " copilot  mac
-if has('mac')
-    imap <silent><script><expr> <m-j> copilot#Accept("\<CR>")
-else
-    imap <silent><script><expr> <d-j> copilot#Accept("\<CR>")
-endif
-imap <silent><script><expr> <m-j> copilot#Accept("\<CR>")
-imap <silent><script><expr> <a-j> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
-let g:copilot_enabled = 1
+"if has('mac')
+    "imap <silent><script><expr> <m-j> copilot#Accept("\<CR>")
+"else
+    "imap <silent><script><expr> <d-j> copilot#Accept("\<CR>")
+"endif
+"imap <silent><script><expr> <m-j> copilot#Accept("\<CR>")
+"imap <silent><script><expr> <a-j> copilot#Accept("\<CR>")
+"let g:copilot_no_tab_map = v:true
+"let g:copilot_enabled = 1
+
+
+" codeium
