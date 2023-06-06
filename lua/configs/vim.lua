@@ -245,7 +245,7 @@ vim.api.nvim_create_user_command('Commit', function(params)
   end
   Job:new({
     command = 'git',
-    args = { 'status', '-s', '--untracked-files=no' },
+    args = { 'diff', '--staged', '--name-only' },
     cwd = lualine.find_git_dir() .. '/..',
     on_exit = function(j, return_val)
       if return_val == 0 then
@@ -265,3 +265,4 @@ vim.api.nvim_create_user_command('Modified', function()
   vim.cmd("silent! noa wall")
   require 'configs.lualine'.modifiedList()
 end, { nargs = "?", bang = true, })
+
