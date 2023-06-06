@@ -1799,6 +1799,10 @@ lsp 实用工具
 }
 ```
 
+### ChatGPTCompleteCode
+
+回车接受
+
 ### 默认键映射
 
 * `<c-enter>` 提交输入到server
@@ -1820,4 +1824,4 @@ lsp 实用工具
 
 
 
-
+vim:ft=markdown

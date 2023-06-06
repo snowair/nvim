@@ -696,6 +696,7 @@ return require('packer').startup({
       'Shatur/neovim-session-manager',
       config = function()
         local Path = require('plenary.path')
+        local outline = require 'symbols-outline'
         require('session_manager').setup({
           sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'), -- The directory where the session files will be saved.
           path_replacer = '__',                                                -- The character to which the path separator will be replaced for session files.
@@ -714,7 +715,17 @@ return require('packer').startup({
           pattern = "SessionSavePre",
           group = config_group,
           callback = function()
-            -- 关闭插件的tab
+            -- 关闭 outline
+            local state = require('symbols-outline.preview')
+            state.preview_buf = nil
+            state.preview_win = nil
+            state.hover_buf = nil
+            state.hover_win = nil
+            if outline.view:is_open() then
+              outline.view:close()
+            end
+
+            -- 关闭diffview,neogit插件的tab
             local tabs = vim.api.nvim_list_tabpages()
             if #tabs > 1 then
               for _, tab in ipairs(tabs) do
@@ -783,6 +794,12 @@ return require('packer').startup({
           group = config_group,
           callback = function()
             vim.env.SESSION_DIR = nil
+            local chat = require("chatgpt.flows.chat")
+            chat.chat = nil
+            outline.view = require 'symbols-outline.view':new()
+            vim.loop.sleep(300)
+            vim.opt.number         = true
+            vim.opt.relativenumber = true
           end,
         })
 
