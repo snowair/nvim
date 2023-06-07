@@ -108,4 +108,4 @@ autocmd FileChangedShellPost *  echohl WarningMsg | echo "File changed on disk. 
 
 
 " codeium
-g:codeium_no_map_tab = 1
+let g:codeium_manual = v:true
