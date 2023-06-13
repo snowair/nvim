@@ -946,7 +946,7 @@ return require('packer').startup({
 
     -- 右下角显示 nvim-lsp progress.
     use {
-      'j-hui/fidget.nvim',
+      'j-hui/fidget.nvim', tag = 'legacy',
       config = function()
         require "fidget".setup {}
       end
