@@ -888,9 +888,9 @@ return require('packer').startup({
                 ["iS"] = "@class.inner",
               },
               selection_modes = {
-                ['@parameter.outer'] = 'v',     -- charwise   aaa
-                ['@function.outer'] = 'V',      -- linewise
-                ['@class.outer'] = '<c-v>',     -- blockwise
+                ['@parameter.outer'] = 'v', -- charwise   aaa
+                ['@function.outer'] = 'V',  -- linewise
+                ['@class.outer'] = '<c-v>', -- blockwise
               },
             },
           },
@@ -1034,13 +1034,13 @@ return require('packer').startup({
             view = {
               -- The `view` bindings are active in the diff buffers, only when the current
               -- tabpage is a Diffview.
-              ["<tab>"]      = actions.select_next_entry,   -- Open the diff for the next file
-              ["<s-tab>"]    = actions.select_prev_entry,   -- Open the diff for the previous file
-              ["gf"]         = actions.goto_file,           -- Open the file in a new split in the previous tabpage
-              ["<C-w><C-f>"] = actions.goto_file_split,     -- Open the file in a new split
-              ["<C-w>gf"]    = actions.goto_file_tab,       -- Open the file in a new tabpage
-              ["<leader>e"]  = actions.focus_files,         -- Bring focus to the files panel
-              ["<leader>b"]  = actions.toggle_files,        -- Toggle the files panel.
+              ["<tab>"]      = actions.select_next_entry, -- Open the diff for the next file
+              ["<s-tab>"]    = actions.select_prev_entry, -- Open the diff for the previous file
+              ["gf"]         = actions.goto_file,         -- Open the file in a new split in the previous tabpage
+              ["<C-w><C-f>"] = actions.goto_file_split,   -- Open the file in a new split
+              ["<C-w>gf"]    = actions.goto_file_tab,     -- Open the file in a new tabpage
+              ["<leader>e"]  = actions.focus_files,       -- Bring focus to the files panel
+              ["<leader>b"]  = actions.toggle_files,      -- Toggle the files panel.
             },
             file_panel = {
               ["j"]          = actions.next_entry, -- Bring the cursor to the next file entry
@@ -1347,6 +1347,15 @@ return require('packer').startup({
         "nvim-telescope/telescope.nvim"
       }
     })
+    --use "Bekaboo/dropbar.nvim"  -- 需要 nvim 0.10
+
+    use {
+      'TobinPalmer/rayso.nvim',
+      cmd = { 'Rayso' },
+      config = function()
+        require('rayso').setup()
+      end
+    }
   end,
   config = { max_jobs = 5 }
 })
