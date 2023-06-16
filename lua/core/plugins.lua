@@ -637,7 +637,7 @@ return require('packer').startup({
             },
           },
           extensions = {
-                ["ui-select"] = {
+            ["ui-select"] = {
               require("telescope.themes").get_dropdown {}
             },
             repo = {
@@ -793,6 +793,7 @@ return require('packer').startup({
           pattern = "SessionLoadPre",
           group = config_group,
           callback = function()
+            vim.cmd('LspStop')
             vim.env.SESSION_DIR = nil
             local chat = require("chatgpt.flows.chat")
             chat.chat = nil
@@ -811,7 +812,7 @@ return require('packer').startup({
             vim.o.titlestring = ""
             local f = vim.loop.cwd()
             require("configs.lualine").gitStatusTaskFn()
-            vim.cmd('LspRestart')
+            vim.cmd('LspStart')
 
             if f ~= nil then
               -- 由于此事件是在session的工作空间全部加载完成后执行, 此时cwd可能已经被project插件自动改成git项目的根目录了.
@@ -875,21 +876,21 @@ return require('packer').startup({
               enable = true,
               lookahead = true,
               keymaps = {
-                    ["aF"] = "@function.outer",
-                    ["iF"] = "@function.inner",
-                    ["aB"] = "@block.outer",
-                    ["iB"] = "@block.inner",
-                    ["aL"] = "@loop.outer",
-                    ["iL"] = "@loop.inner",
-                    ["aC"] = "@conditional.outer",
-                    ["iC"] = "@conditional.inner",
-                    ["aS"] = "@class.outer",
-                    ["iS"] = "@class.inner",
+                ["aF"] = "@function.outer",
+                ["iF"] = "@function.inner",
+                ["aB"] = "@block.outer",
+                ["iB"] = "@block.inner",
+                ["aL"] = "@loop.outer",
+                ["iL"] = "@loop.inner",
+                ["aC"] = "@conditional.outer",
+                ["iC"] = "@conditional.inner",
+                ["aS"] = "@class.outer",
+                ["iS"] = "@class.inner",
               },
               selection_modes = {
-                    ['@parameter.outer'] = 'v', -- charwise   aaa
-                    ['@function.outer'] = 'V', -- linewise
-                    ['@class.outer'] = '<c-v>', -- blockwise
+                ['@parameter.outer'] = 'v',     -- charwise   aaa
+                ['@function.outer'] = 'V',      -- linewise
+                ['@class.outer'] = '<c-v>',     -- blockwise
               },
             },
           },
@@ -1033,66 +1034,66 @@ return require('packer').startup({
             view = {
               -- The `view` bindings are active in the diff buffers, only when the current
               -- tabpage is a Diffview.
-                  ["<tab>"]  = actions.select_next_entry, -- Open the diff for the next file
-                  ["<s-tab>"] = actions.select_prev_entry, -- Open the diff for the previous file
-                  ["gf"]     = actions.goto_file,         -- Open the file in a new split in the previous tabpage
-                  ["<C-w><C-f>"] = actions.goto_file_split, -- Open the file in a new split
-                  ["<C-w>gf"] = actions.goto_file_tab,    -- Open the file in a new tabpage
-                  ["<leader>e"] = actions.focus_files,    -- Bring focus to the files panel
-                  ["<leader>b"] = actions.toggle_files,   -- Toggle the files panel.
+              ["<tab>"]      = actions.select_next_entry,   -- Open the diff for the next file
+              ["<s-tab>"]    = actions.select_prev_entry,   -- Open the diff for the previous file
+              ["gf"]         = actions.goto_file,           -- Open the file in a new split in the previous tabpage
+              ["<C-w><C-f>"] = actions.goto_file_split,     -- Open the file in a new split
+              ["<C-w>gf"]    = actions.goto_file_tab,       -- Open the file in a new tabpage
+              ["<leader>e"]  = actions.focus_files,         -- Bring focus to the files panel
+              ["<leader>b"]  = actions.toggle_files,        -- Toggle the files panel.
             },
             file_panel = {
-                  ["j"]      = actions.next_entry, -- Bring the cursor to the next file entry
-                  ["k"]      = actions.prev_entry, -- Bring the cursor to the previous file entry.
-                  ["<down>"] = actions.next_entry,
-                  ["<up>"]   = actions.prev_entry,
-                  ["<cr>"]   = actions.select_entry,       -- Open the diff for the selected entry.
-                  ["o"]      = actions.select_entry,
-                  ["-"]      = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
-                  ["S"]      = actions.stage_all,          -- Stage all entries.
-                  ["U"]      = actions.unstage_all,        -- Unstage all entries.
-                  ["X"]      = actions.restore_entry,      -- Restore entry to the state on the left side.
-                  ["R"]      = actions.refresh_files,      -- Update stats and entries in the file list.
-                  ["L"]      = actions.open_commit_log,    -- Open the commit log panel.
-                  ["<c-b>"]  = actions.scroll_view(-0.25), -- Scroll the view up
-                  ["<c-f>"]  = actions.scroll_view(0.25),  -- Scroll the view down
-                  ["<tab>"]  = actions.select_next_entry,
-                  ["<s-tab>"] = actions.select_prev_entry,
-                  ["gf"]     = actions.goto_file,
-                  ["<C-w><C-f>"] = actions.goto_file_split,
-                  ["<C-w>gf"] = actions.goto_file_tab,
-                  ["i"]      = actions.listing_style,       -- Toggle between 'list' and 'tree' views
-                  ["f"]      = actions.toggle_flatten_dirs, -- Flatten empty subdirectories in tree listing style.
-                  ["<leader>e"] = actions.focus_files,
-                  ["<leader>b"] = actions.toggle_files,
+              ["j"]          = actions.next_entry, -- Bring the cursor to the next file entry
+              ["k"]          = actions.prev_entry, -- Bring the cursor to the previous file entry.
+              ["<down>"]     = actions.next_entry,
+              ["<up>"]       = actions.prev_entry,
+              ["<cr>"]       = actions.select_entry,       -- Open the diff for the selected entry.
+              ["o"]          = actions.select_entry,
+              ["-"]          = actions.toggle_stage_entry, -- Stage / unstage the selected entry.
+              ["S"]          = actions.stage_all,          -- Stage all entries.
+              ["U"]          = actions.unstage_all,        -- Unstage all entries.
+              ["X"]          = actions.restore_entry,      -- Restore entry to the state on the left side.
+              ["R"]          = actions.refresh_files,      -- Update stats and entries in the file list.
+              ["L"]          = actions.open_commit_log,    -- Open the commit log panel.
+              ["<c-b>"]      = actions.scroll_view(-0.25), -- Scroll the view up
+              ["<c-f>"]      = actions.scroll_view(0.25),  -- Scroll the view down
+              ["<tab>"]      = actions.select_next_entry,
+              ["<s-tab>"]    = actions.select_prev_entry,
+              ["gf"]         = actions.goto_file,
+              ["<C-w><C-f>"] = actions.goto_file_split,
+              ["<C-w>gf"]    = actions.goto_file_tab,
+              ["i"]          = actions.listing_style,       -- Toggle between 'list' and 'tree' views
+              ["f"]          = actions.toggle_flatten_dirs, -- Flatten empty subdirectories in tree listing style.
+              ["<leader>e"]  = actions.focus_files,
+              ["<leader>b"]  = actions.toggle_files,
             },
             file_history_panel = {
-                  ["g!"]        = actions.options,          -- Open the option panel
-                  ["<C-A-d>"]   = actions.open_in_diffview, -- Open the entry under the cursor in a diffview
-                  ["y"]         = actions.copy_hash,        -- Copy the commit hash of the entry under the cursor
-                  ["L"]         = actions.open_commit_log,
-                  ["zR"]        = actions.open_all_folds,
-                  ["zM"]        = actions.close_all_folds,
-                  ["j"]         = actions.next_entry,
-                  ["<down>"]    = actions.next_entry,
-                  ["k"]         = actions.prev_entry,
-                  ["<up>"]      = actions.prev_entry,
-                  ["<cr>"]      = actions.select_entry,
-                  ["o"]         = actions.select_entry,
-                  ["<2-LeftMouse>"] = actions.select_entry,
-                  ["<c-b>"]     = actions.scroll_view(-0.25),
-                  ["<c-f>"]     = actions.scroll_view(0.25),
-                  ["<tab>"]     = actions.select_next_entry,
-                  ["<s-tab>"]   = actions.select_prev_entry,
-                  ["gf"]        = actions.goto_file,
-                  ["<C-w><C-f>"] = actions.goto_file_split,
-                  ["<C-w>gf"]   = actions.goto_file_tab,
-                  ["<leader>e"] = actions.focus_files,
-                  ["<leader>b"] = actions.toggle_files,
+              ["g!"]            = actions.options,          -- Open the option panel
+              ["<C-A-d>"]       = actions.open_in_diffview, -- Open the entry under the cursor in a diffview
+              ["y"]             = actions.copy_hash,        -- Copy the commit hash of the entry under the cursor
+              ["L"]             = actions.open_commit_log,
+              ["zR"]            = actions.open_all_folds,
+              ["zM"]            = actions.close_all_folds,
+              ["j"]             = actions.next_entry,
+              ["<down>"]        = actions.next_entry,
+              ["k"]             = actions.prev_entry,
+              ["<up>"]          = actions.prev_entry,
+              ["<cr>"]          = actions.select_entry,
+              ["o"]             = actions.select_entry,
+              ["<2-LeftMouse>"] = actions.select_entry,
+              ["<c-b>"]         = actions.scroll_view(-0.25),
+              ["<c-f>"]         = actions.scroll_view(0.25),
+              ["<tab>"]         = actions.select_next_entry,
+              ["<s-tab>"]       = actions.select_prev_entry,
+              ["gf"]            = actions.goto_file,
+              ["<C-w><C-f>"]    = actions.goto_file_split,
+              ["<C-w>gf"]       = actions.goto_file_tab,
+              ["<leader>e"]     = actions.focus_files,
+              ["<leader>b"]     = actions.toggle_files,
             },
             option_panel = {
-                  ["<tab>"] = actions.select_entry,
-                  ["q"] = actions.close,
+              ["<tab>"] = actions.select_entry,
+              ["q"] = actions.close,
             },
           },
         })
@@ -1147,8 +1148,8 @@ return require('packer').startup({
           mappings = {
             -- modify status buffer mappings
             status = {
-                  ["<enter>"] = "Toggle",
-                  ["<c-enter>"] = "GoToFile",
+              ["<enter>"] = "Toggle",
+              ["<c-enter>"] = "GoToFile",
             }
           }
         }
