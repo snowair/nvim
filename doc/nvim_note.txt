@@ -1,5 +1,27 @@
 *nvim-note*
 
+# 自定义命令
+
+| 命令                                          | 功能                                              |
+|-----------------------------------------------|---------------------------------------------------|
+| `B`                                           | telescope git_branches                            |
+| `Cdlist`                                      | 列出所有 cd 过的目录,选择以切换cwd                |
+| `Cdlist delete`                               | 列出所有 cd 过的目录,选择以删除item               |
+| `FontSize`                                    | 改变nvim-qt的GUI字体大小                          |
+| `B -b newbranch`                              | 创建新分支                                        |
+| `B branch`                                    | 切换分支                                          |
+| `B .`                                         | 即 `git checkout .`                               |
+| `B -- filename`                               | 撤销文件修改                                      |
+| `B origin/remoteBranch`                       | 将远程分支签出到本地,并自动跟踪                   |
+| `Pull`, `Pull rebase`, `Pull merge`           | 拉取远程分支                                      |
+| `Push`                                        | 提交到远程分支                                    |
+| `Push origin test`                            | 将当前分支推送到origin的test分支,并为二者建立关联 |
+| `Remote`                                      | 等效于 `git remote`                               |
+| `Merge abort`, `Merge quit`, `Merge continue` | 代码merge                                         |
+| `Stash`, `StashPop`, `StashApply`             |                                                   |
+| `Commit`                                      | 提交stage的文件,自动生成message                   |
+| `Modified`                                    | 列出所有被修改过的文件                            |
+
 # keymap
 
 | keymap                          | 功能                                                     |
