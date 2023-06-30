@@ -257,13 +257,10 @@ return require('packer').startup({
       end
     }
 
-    -- easymotion
     use {
-      'easymotion/vim-easymotion',
+      'ggandor/leap.nvim',
       config = function()
-        vim.cmd [[
-				nmap s <Plug>(easymotion-s2)
-			]]
+        require('leap').add_default_mappings()
       end
     }
 
