@@ -781,21 +781,6 @@ end,
 })
 ```
 
-Easymothion
-===========
-
-默认是`<leader><leader>`触发, 可重新映射:
-
-示例:
-```
-nmap s  <Plug>(easymotion-s2)
-"用easymotion的sn 替代vim默认的搜索功能: 使用 / 触发 sn 搜索,  输入搜索词, 如果当前屏幕没有找到, 可以使用Tab, S-Tab 翻页, 回车, 选择跳转目标. 使用 n,N 在多个目标之间移动
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
-```
-
 vim 对象
 ========
 
@@ -1843,6 +1828,21 @@ lsp 实用工具
 * `<c-i>` : 把右侧respone内容载入到左侧的input窗口
 * `<c-d>` : toggle diff 左右input和resonse的差异
 * `<c-y>` : Accept response内容
+
+ggandor/leap.nvim
+=======
+
+`s` 向下搜索
+`S` 向上搜素
+`gs` 搜索其他窗口
+
+补充特性:
+
+* `s{char}<space>` to jump to the end of a line.
+* `s<space><space>` 跳到空白字符开头的行
+* `s{char}<enter>` to jump to the first {char}{?} pair right away.
+* `s<enter>` to repeat the last search.
+* `s<enter><enter>...` or `s{char}<enter><enter>...` to traverse through the matches.
 
 
 
