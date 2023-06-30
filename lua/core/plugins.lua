@@ -576,6 +576,7 @@ return require('packer').startup({
       -- 用於通過指定的workspace切換projects, 适用于工作项目的组织.
       -- workspace下的直接子目录才可能是project,不会递归，利于精确控制项目列表，避免列出不必要的项目.
       "gnikdroy/projections.nvim",
+      branch = "pre_release",
       config = function()
         require("projections").setup({
           workspaces = {                   -- Default workspaces to search for
