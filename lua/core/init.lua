@@ -43,12 +43,12 @@ vim.opt.wildignore    = '*/tmp/*,*.so,*.swp,*.zip,*.7z,*.tar,*.tar.*,*.rar,.idea
 vim.opt.nrformats     = 'alpha,octal,hex'
 
 
-vim.g.neovide_confirm_quit = 1                                    -- 退出前确认处理未保存的文件
+vim.g.neovide_confirm_quit = 1             -- 退出前确认处理未保存的文件
 vim.g.sessionoptions =
-'blank,buffers,curdir,folds,help,tabpages'                        -- https://github.com/Shatur/neovim-session-manager/issues/47
+'blank,buffers,curdir,folds,help,tabpages' -- https://github.com/Shatur/neovim-session-manager/issues/47
 
-require("core.plugins")
-require("core.keymaps")
+require("simple.plugins")
+require("simple.keymaps")
 -- disable some useless standard plugins to save startup time
 -- these features have been better covered by plugins
 vim.g.EasyMotion_smartcase     = 1
@@ -66,7 +66,7 @@ vim.g.loaded_netrw             = 1
 vim.g.loaded_netrwPlugin       = 1
 vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_remote_plugins    = 1
-require("core.theme")
+require("simple.theme")
 
 -- vim-markdown配置
 vim.g.vim_markdown_toc_autofit = 1
@@ -88,14 +88,8 @@ vim.g.vim_markdown_conceal_code_blocks = 0
 -- plugins without extra configs are configured directly here
 require("impatient") -- lua模块加载加速优化
 
-require("configs.lspconfig").config()
-require("configs.bufferline").config()
 require("configs.autocomplete").config()
 require("configs.filetree").config()
-require("configs.treesitter").config()
 require("configs.outlinetree").config()
 require("configs.git").config()
-require("configs.grammar").config()
-require("configs.startscreen").config()
-require("configs.dap_conf").config()
 require("configs.lualine").config()
