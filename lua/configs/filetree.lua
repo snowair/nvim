@@ -71,7 +71,6 @@ function M.config()
       }
     },
 
-    -- git扩展
     on_attach            = function(bufnr)
       local opts = function(desc)
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }

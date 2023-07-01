@@ -34,7 +34,6 @@ function M.config()
         TypeParameter = "",
     }
     local cmp = require 'cmp'
-    local luasnip = require("luasnip")
     local compare = require('cmp.config.compare')
     cmp.setup({
         sorting = {
@@ -65,8 +64,6 @@ function M.config()
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
                 elseif has_words_before() then
                     cmp.complete()
                 else
@@ -77,8 +74,6 @@ function M.config()
             ["<S-Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
                 else
                     fallback()
                 end
@@ -176,7 +171,6 @@ function M.config()
         }
     })
 
-    cmp.register_source('git', require('configs.git_cmp.git').new())
     cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.insert({
             ['<Tab>'] = cmp.mapping(function(fallback)
@@ -204,48 +198,6 @@ function M.config()
                 { name = 'git' },
             })
     })
-
-    -- If you want insert `(` after select function or method item
-    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    cmp = require('cmp')
-    cmp.event:on(
-        'confirm_done',
-        cmp_autopairs.on_confirm_done()
-    )
-
-    -- 自定义自动完成
-    -- cmp也支持按文件类型单独配置,注意：是覆盖的，所以也需要完整配置所有的source
-    -- 注册自己的自动完成source
-    cmp.register_source('golang_time', require('configs.go_cmp.time').new())
-    cmp.register_source('golang_json', require('configs.go_cmp.json').new())
-    cmp.setup.filetype('go', {
-        sources = cmp.config.sources(
-            {
-                { name = 'golang_time' },
-                { name = 'golang_json' },
-            },
-            {
-                { name = 'nvim_lsp' }, -- lsp 提供的自动完成
-                -- { name = 'cmp_tabnine' },
-                --{ name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
-            })
-    })
-    cmp.setup.filetype('sql', {
-        sources = cmp.config.sources(
-            {
-                { name = 'nvim_lsp' }, -- lsp 提供的自动完成
-            })
-    })
-
-    cmp.setup.filetype('NeogitCommitMessage', {
-        sources = cmp.config.sources(
-            {
-                { name = 'buffer' }, -- cmp-buffer插件
-                { name = 'path' }, --cmp-path插件
-            })
-    })
-
-
 end
 
 return M
