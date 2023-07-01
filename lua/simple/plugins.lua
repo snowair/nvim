@@ -81,16 +81,6 @@ return require('packer').startup({
       config = function() require("nvim-autopairs").setup {} end
     }
 
-    -- 自动闭合html,tsx,vue,php的标签
-    use {
-      'windwp/nvim-ts-autotag',
-      config = function()
-        require 'nvim-treesitter.configs'.setup {
-          autotag = { enable = true, }
-        }
-      end
-    }
-
     -- indent guide
     use {
       "lukas-reineke/indent-blankline.nvim",
@@ -330,16 +320,8 @@ return require('packer').startup({
       'nvim-telescope/telescope.nvim', tag = '0.1.0',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
-        -- 将任何Telescope 搜索结果 通过 c-t 发送到 Trouble
-        local trouble = require("trouble.providers.telescope")
         local telescope = require("telescope")
         telescope.setup {
-          defaults = {
-            mappings = {
-              i = { ["<c-t>"] = trouble.open_with_trouble },
-              n = { ["<c-t>"] = trouble.open_with_trouble },
-            },
-          },
           extensions = {
             ["ui-select"] = {
               require("telescope.themes").get_dropdown {}
@@ -581,7 +563,6 @@ return require('packer').startup({
               n = 1,
             },
             actions_paths = {},
-            show_quickfixes_cmd = "Trouble quickfix",
             predefined_chat_gpt_prompts = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
           }
 
