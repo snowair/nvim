@@ -261,6 +261,7 @@ return require('packer').startup({
       'ggandor/leap.nvim',
       config = function()
         require('leap').add_default_mappings()
+        vim.api.nvim_del_keymap('v', 'x')
       end
     }
 
@@ -713,6 +714,10 @@ return require('packer').startup({
           pattern = "SessionSavePre",
           group = config_group,
           callback = function()
+            -- 关闭 gitsigns
+            vim.cmd('Gitsigns detach_all')
+            -- 关闭 treesitter
+            vim.cmd('TSDisable highlight')
             -- 关闭 outline
             local state = require('symbols-outline.preview')
             state.preview_buf = nil
@@ -810,6 +815,10 @@ return require('packer').startup({
             vim.o.titlestring = ""
             local f = vim.loop.cwd()
             require("configs.lualine").gitStatusTaskFn()
+            -- 关闭 gitsigns
+            vim.cmd('Gitsigns attach')
+            -- 关闭 treesitter
+            vim.cmd('TSEnable highlight')
             vim.cmd('LspStart')
 
             if f ~= nil then
