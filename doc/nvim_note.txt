@@ -1,5 +1,25 @@
 *nvim-note*
 
+# NVIM_APPNAME
+
+The other thing I try is to create two configs:
+
+~/.config/nvim
+
+~/.config/nvim_two
+
+and two folders for the packages:
+
+~/.local/share/nvim
+
+~/.local/share/nvim_two
+
+And I puth the variable in '.bashrc':
+
+```
+$ NVIM_APPNAME="nvim_two" nvim
+```
+
 # 自定义命令
 
 | 命令                                          | 功能                                              |
