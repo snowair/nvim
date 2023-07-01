@@ -2,22 +2,19 @@
 
 # NVIM_APPNAME
 
-The other thing I try is to create two configs:
-
-~/.config/nvim
-
-~/.config/nvim_two
-
-and two folders for the packages:
-
-~/.local/share/nvim
-
-~/.local/share/nvim_two
-
-And I puth the variable in '.bashrc':
 
 ```
-$ NVIM_APPNAME="nvim_two" nvim
+git clone -b  simple  https://github.com/snowair/nvim \
+  ~/.config/nvim_simple
+```
+
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+  ~/.local/share/nvim_simple/site/pack/packer/start/packer.nvim
+```
+
+```
+alias nvim_simple='NVIM_APPNAME="nvim_simple" nvim'
 ```
 
 # 自定义命令
