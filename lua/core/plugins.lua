@@ -257,13 +257,10 @@ return require('packer').startup({
       end
     }
 
-    -- easymotion
     use {
-      'easymotion/vim-easymotion',
+      'ggandor/leap.nvim',
       config = function()
-        vim.cmd [[
-				nmap s <Plug>(easymotion-s2)
-			]]
+        require('leap').add_default_mappings()
       end
     }
 
@@ -576,6 +573,7 @@ return require('packer').startup({
       -- 用於通過指定的workspace切換projects, 适用于工作项目的组织.
       -- workspace下的直接子目录才可能是project,不会递归，利于精确控制项目列表，避免列出不必要的项目.
       "gnikdroy/projections.nvim",
+      branch = "pre_release",
       config = function()
         require("projections").setup({
           workspaces = {                   -- Default workspaces to search for
@@ -696,6 +694,7 @@ return require('packer').startup({
       'Shatur/neovim-session-manager',
       config = function()
         local Path = require('plenary.path')
+        local outline = require 'symbols-outline'
         require('session_manager').setup({
           sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'), -- The directory where the session files will be saved.
           path_replacer = '__',                                                -- The character to which the path separator will be replaced for session files.
@@ -714,7 +713,17 @@ return require('packer').startup({
           pattern = "SessionSavePre",
           group = config_group,
           callback = function()
-            -- 关闭插件的tab
+            -- 关闭 outline
+            local state = require('symbols-outline.preview')
+            state.preview_buf = nil
+            state.preview_win = nil
+            state.hover_buf = nil
+            state.hover_win = nil
+            if outline.view:is_open() then
+              outline.view:close()
+            end
+
+            -- 关闭diffview,neogit插件的tab
             local tabs = vim.api.nvim_list_tabpages()
             if #tabs > 1 then
               for _, tab in ipairs(tabs) do
@@ -782,7 +791,14 @@ return require('packer').startup({
           pattern = "SessionLoadPre",
           group = config_group,
           callback = function()
+            vim.cmd('LspStop')
             vim.env.SESSION_DIR = nil
+            local chat = require("chatgpt.flows.chat")
+            chat.chat = nil
+            outline.view = require 'symbols-outline.view':new()
+            vim.loop.sleep(300)
+            vim.opt.number         = true
+            vim.opt.relativenumber = true
           end,
         })
 
@@ -794,7 +810,7 @@ return require('packer').startup({
             vim.o.titlestring = ""
             local f = vim.loop.cwd()
             require("configs.lualine").gitStatusTaskFn()
-            vim.cmd('LspRestart')
+            vim.cmd('LspStart')
 
             if f ~= nil then
               -- 由于此事件是在session的工作空间全部加载完成后执行, 此时cwd可能已经被project插件自动改成git项目的根目录了.
@@ -929,7 +945,7 @@ return require('packer').startup({
 
     -- 右下角显示 nvim-lsp progress.
     use {
-      'j-hui/fidget.nvim',
+      'j-hui/fidget.nvim', tag = 'legacy',
       config = function()
         require "fidget".setup {}
       end
@@ -1138,8 +1154,17 @@ return require('packer').startup({
       end
     }
 
+    --use { "github/copilot.vim", }
+
     use {
-      "github/copilot.vim",
+      'Exafunction/codeium.vim',
+      config = function()
+        -- Change '<C-g>' here to any keycode you like.
+        vim.keymap.set('i', '<a-j>', function() return vim.fn['codeium#Accept']() end, { expr = true })
+        vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+        vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+        vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+      end
     }
 
     use {
@@ -1320,6 +1345,15 @@ return require('packer').startup({
         "nvim-telescope/telescope.nvim"
       }
     })
+    --use "Bekaboo/dropbar.nvim"  -- 需要 nvim 0.10
+
+    use {
+      'TobinPalmer/rayso.nvim',
+      cmd = { 'Rayso' },
+      config = function()
+        require('rayso').setup()
+      end
+    }
   end,
   config = { max_jobs = 5 }
 })

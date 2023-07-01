@@ -58,7 +58,6 @@ local function load_session()
   if vim.env.SESSION_DIR ~= nil then
     vim.fn.chdir(vim.env.SESSION_DIR)
   end
-  vim.cmd('only')
   vim.cmd('SessionManager load_session')
 end
 vim.keymap.set({ 'n', 'i' }, '<c-F8>', load_session)

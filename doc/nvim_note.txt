@@ -1,5 +1,27 @@
 *nvim-note*
 
+# 自定义命令
+
+| 命令                                          | 功能                                              |
+|-----------------------------------------------|---------------------------------------------------|
+| `B`                                           | telescope git_branches                            |
+| `Cdlist`                                      | 列出所有 cd 过的目录,选择以切换cwd                |
+| `Cdlist delete`                               | 列出所有 cd 过的目录,选择以删除item               |
+| `FontSize`                                    | 改变nvim-qt的GUI字体大小                          |
+| `B -b newbranch`                              | 创建新分支                                        |
+| `B branch`                                    | 切换分支                                          |
+| `B .`                                         | 即 `git checkout .`                               |
+| `B -- filename`                               | 撤销文件修改                                      |
+| `B origin/remoteBranch`                       | 将远程分支签出到本地,并自动跟踪                   |
+| `Pull`, `Pull rebase`, `Pull merge`           | 拉取远程分支                                      |
+| `Push`                                        | 提交到远程分支                                    |
+| `Push origin test`                            | 将当前分支推送到origin的test分支,并为二者建立关联 |
+| `Remote`                                      | 等效于 `git remote`                               |
+| `Merge abort`, `Merge quit`, `Merge continue` | 代码merge                                         |
+| `Stash`, `StashPop`, `StashApply`             |                                                   |
+| `Commit`                                      | 提交stage的文件,自动生成message                   |
+| `Modified`                                    | 列出所有被修改过的文件                            |
+
 # keymap
 
 | keymap                          | 功能                                                     |
@@ -757,21 +779,6 @@ callback = function()
 require('nvim-tree').toggle(false, true)
 end,
 })
-```
-
-Easymothion
-===========
-
-默认是`<leader><leader>`触发, 可重新映射:
-
-示例:
-```
-nmap s  <Plug>(easymotion-s2)
-"用easymotion的sn 替代vim默认的搜索功能: 使用 / 触发 sn 搜索,  输入搜索词, 如果当前屏幕没有找到, 可以使用Tab, S-Tab 翻页, 回车, 选择跳转目标. 使用 n,N 在多个目标之间移动
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 ```
 
 vim 对象
@@ -1799,6 +1806,10 @@ lsp 实用工具
 }
 ```
 
+### ChatGPTCompleteCode
+
+回车接受
+
 ### 默认键映射
 
 * `<c-enter>` 提交输入到server
@@ -1818,6 +1829,21 @@ lsp 实用工具
 * `<c-d>` : toggle diff 左右input和resonse的差异
 * `<c-y>` : Accept response内容
 
+ggandor/leap.nvim
+=======
+
+`s` 向下搜索
+`S` 向上搜素
+`gs` 搜索其他窗口
+
+补充特性:
+
+* `s{char}<space>` to jump to the end of a line.
+* `s<space><space>` 跳到空白字符开头的行
+* `s{char}<enter>` to jump to the first {char}{?} pair right away.
+* `s<enter>` to repeat the last search.
+* `s<enter><enter>...` or `s{char}<enter><enter>...` to traverse through the matches.
 
 
 
+vim:ft=markdown
