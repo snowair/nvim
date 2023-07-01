@@ -365,31 +365,7 @@ return require('packer').startup({
         require("telescope").load_extension "repo"
         require("telescope").load_extension("ui-select")
         require('telescope').load_extension('projects')
-        require("telescope").load_extension("live_grep_args")
         require("telescope").load_extension("dir")
-      end
-    }
-
-
-
-    -- AutoSave
-    use {
-      'qkzk/AutoSave.nvim',
-      config = function()
-        require("autosave").setup {
-          enabled = true,
-          events = { "InsertLeave", "TextYankPost", "VimLeave" },
-          conditions = {
-            exists = true, -- 忽略不存在的文件
-            filename_is_not = {},
-            filetype_is_not = ignore_ft,
-            modifiable = true, -- 忽略readonly文件
-          },
-          write_all_buffers = false,
-          on_off_commands = true,
-          clean_command_line_interval = 0,
-          debounce_delay = 135
-        }
       end
     }
 
