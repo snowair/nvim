@@ -39,6 +39,8 @@ vim.keymap.set('n', '<F18>', vim.lsp.buf.rename) -- refactor: 重命名
 vim.keymap.set('n', '<a-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
 vim.keymap.set('n', '<d-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
 vim.keymap.set('n', '<m-enter>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
+vim.keymap.set('n', '<m-a>', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
+vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action) -- 弹出select列表，选择可以对光标处代码执行的所有操作: 例如忽略诊断错误; 交换函数参数; LSP 提供的refactor或quickfix
 vim.keymap.set('n', '<a-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
 vim.keymap.set('n', '<d-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
 vim.keymap.set('n', '<m-h>', vim.lsp.buf.hover) -- 悬浮窗显示光标悬停元素的文档(方法)或定义(变量), 连按两次，可以进入悬浮框窗口。
