@@ -5,16 +5,16 @@
 
 ```
 git clone -b  simple  https://github.com/snowair/nvim \
-  ~/.config/nvim_simple
+  ~/.config/simple_nvim
 ```
 
 ```
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-  ~/.local/share/nvim_simple/site/pack/packer/start/packer.nvim
+  ~/.local/share/simple_nvim/site/pack/packer/start/packer.nvim
 ```
 
 ```
-alias nvim_simple='NVIM_APPNAME="nvim_simple" nvim'
+alias nvim_simple='NVIM_APPNAME="simple_nvim" nvim'
 ```
 
 # 自定义命令
