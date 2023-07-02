@@ -351,6 +351,8 @@ return require('packer').startup({
       end
     }
 
+    use 'nvim-treesitter/nvim-treesitter'
+
     -- Vim Plugins
     -- 编辑增强
     use 'triglav/vim-visual-increment' -- 列选择的数字或字母递增插件
