@@ -15,6 +15,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 ```
 alias nvim_simple='NVIM_APPNAME="simple_nvim" nvim'
+alias vim='nvim --clean'
 ```
 
 # 自定义命令
