@@ -91,3 +91,4 @@ require("impatient") -- lua模块加载加速优化
 require("configs.autocomplete").config()
 require("configs.filetree").config()
 require("configs.lualine").config()
+require("configs.treesitter").config()
