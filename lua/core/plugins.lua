@@ -850,7 +850,7 @@ return require('packer').startup({
     -- Vim Plugins
     -- 编辑增强
     use 'triglav/vim-visual-increment' -- 列选择的数字或字母递增插件
-    use 'mg979/vim-visual-multi'       -- 多列编辑
+    -- use 'mg979/vim-visual-multi'       -- 多列编辑
     use 'tpope/vim-repeat'             -- ctrl+a ctrl+x 操作增强
     use 'terryma/vim-expand-region'    -- 通过+ - 号选择内容插件
     use 'scrooloose/nerdcommenter'     -- 快速注释插件
@@ -1129,7 +1129,7 @@ return require('packer').startup({
     use "tversteeg/registers.nvim"
     use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
-    use { 'TimUntersberger/neogit',
+    use { 'NeogitOrg/neogit',
       requires = 'nvim-lua/plenary.nvim',
       config = function()
         local neogit = require("neogit")
