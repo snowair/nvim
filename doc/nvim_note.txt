@@ -1,5 +1,23 @@
 *nvim-note*
 
+# NVIM_APPNAME
+
+
+```
+git clone -b  simple  https://github.com/snowair/nvim \
+  ~/.config/simple_nvim
+```
+
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+  ~/.local/share/simple_nvim/site/pack/packer/start/packer.nvim
+```
+
+```
+alias nvim_simple='NVIM_APPNAME="simple_nvim" nvim'
+alias vim='nvim --clean'
+```
+
 # 自定义命令
 
 | 命令                                          | 功能                                              |
