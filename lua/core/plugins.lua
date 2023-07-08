@@ -859,7 +859,7 @@ return require('packer').startup({
     -- Vim Plugins
     -- 编辑增强
     use 'triglav/vim-visual-increment' -- 列选择的数字或字母递增插件
-    -- use 'mg979/vim-visual-multi'       -- 多列编辑
+    use 'mg979/vim-visual-multi'       -- 多列编辑
     use 'tpope/vim-repeat'             -- ctrl+a ctrl+x 操作增强
     use 'terryma/vim-expand-region'    -- 通过+ - 号选择内容插件
     use 'scrooloose/nerdcommenter'     -- 快速注释插件
@@ -1363,6 +1363,8 @@ return require('packer').startup({
         require('rayso').setup()
       end
     }
+
+    use 'anuvyklack/hydra.nvim'
   end,
   config = { max_jobs = 5 }
 })
