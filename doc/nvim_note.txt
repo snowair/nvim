@@ -1855,17 +1855,18 @@ lsp 实用工具
 ggandor/leap.nvim
 =======
 
-`s` 向下搜索
-`S` 向上搜素
-`gs` 搜索其他窗口
+* `s{char}{char}` (可搜索一个或两个字符)向下搜索, 为搜索结果添加高亮的快捷跳转标记
+    * 输入标记字符可直接跳转到该为止.
+    * 按回车, 可以使光标向下一个在搜索结果跳转
+* `S` 向上搜素
+* `s<enter>` 向下重复上一次的搜索字符
+* `S<enter>` 向上重复上一次的搜索字符
+* `gs` 搜索其他窗口
+* `s<space><space>` 跳到空白字符开头的行
 
 补充特性:
 
 * `s{char}<space>` to jump to the end of a line.
-* `s<space><space>` 跳到空白字符开头的行
-* `s{char}<enter>` to jump to the first {char}{?} pair right away.
-* `s<enter>` to repeat the last search.
-* `s<enter><enter>...` or `s{char}<enter><enter>...` to traverse through the matches.
 
 
 
