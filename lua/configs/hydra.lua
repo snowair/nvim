@@ -96,6 +96,7 @@ function M.config()
   _w_ %{wrap} wrap
   _c_ %{cul} cursor line
   _n_ %{nu} number
+  _p_ %{paste} paste
   _r_ %{rnu} relative number
   ^
        ^^^^                _<Esc>_
@@ -166,6 +167,13 @@ function M.config()
           vim.keymap.del('n', 'j')
         end
       end, { desc = 'wrap' } },
+      { 'p', function()
+        if vim.o.paste == true then
+          vim.o.paste = false
+        else
+          vim.o.paste = true
+        end
+      end, { exit = true, desc = 'paste' } },
       { 'c', function()
         if vim.o.cursorline == true then
           vim.o.cursorline = false

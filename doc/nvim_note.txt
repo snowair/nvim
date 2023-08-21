@@ -1868,6 +1868,18 @@ ggandor/leap.nvim
 
 * `s{char}<space>` to jump to the end of a line.
 
+Hydra
+=======
 
+* `<c-w>` 触发窗口管理
+  * h,j,k,l 在窗口之间切换
+  * H,J,K,L,= 调整窗口大小
+
+* `z` 触发横向混动
+  * h,l 滚动幅度 5字符宽度
+  * H,L 滚动幅度,半屏宽度
+
+* `<Leader>f` 触发telescope
+* `<Leader>o` 触发 vim选项设置
 
 vim:ft=markdown
