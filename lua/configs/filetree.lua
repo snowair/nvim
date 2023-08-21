@@ -12,7 +12,6 @@ function M.config()
     -- 建议使用一全局变量保存项目根目录
     sync_root_with_cwd   = false,
     -- 删掉一些影响操作默认key绑定
-    remove_keymaps       = { "<C-e>", "<C-r>", "s", "S", "O", },
     diagnostics          = {
       enable = false,
       icons = {
@@ -50,10 +49,6 @@ function M.config()
       width            = 30,
       hide_root_folder = false,
       side             = 'left',
-      mappings         = {
-        custom_only = false,
-        list = {}
-      },
       number           = false,
       relativenumber   = true,
       signcolumn       = "yes",

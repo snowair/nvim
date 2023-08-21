@@ -104,9 +104,7 @@ return require('packer').startup({
 
     use({
       "glepnir/lspsaga.nvim",
-      opt = true,
-      branch = "main",
-      event = "LspAttach",
+      after = 'nvim-lspconfig',
       config = function()
         require("lspsaga").setup({
           lightbulb = {
