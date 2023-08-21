@@ -96,8 +96,8 @@ function M.config()
   _w_ %{wrap} wrap
   _c_ %{cul} cursor line
   _n_ %{nu} number
-  _p_ %{paste} paste
   _r_ %{rnu} relative number
+  _p_: paste
   ^
        ^^^^                _<Esc>_
 ]],
