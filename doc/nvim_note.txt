@@ -733,7 +733,7 @@ Picker
 * search_dirs table 搜索的目录列表,可以是相对cwd的目录,也可以是绝对目录.
 * `builtin.live_grep`	在当前工作目录下的文件内容里实时模糊搜索
 * 支持的选项
-* `builtin.oldfiles` 查找历史编辑文件
+* `builtin.oldfiles` 查找历史编辑文件(history files)
 * 支持的选项
 * `builtin.grep_string`	在当前工作目录下的文件内容里搜索光标处的单词.
 
