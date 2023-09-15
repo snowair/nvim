@@ -18,6 +18,9 @@ local stateCache = {
 }
 
 local function checkLocalCommit(info, cwd)
+    if info==nil then
+      return
+    end
     Job:new({
         command = 'git',
         args = { 'rev-parse', '--short', 'HEAD' },
