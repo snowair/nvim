@@ -244,6 +244,7 @@ terminal 模式不能访问寄存器，需要粘贴内容的时候，可以回�
 
 vim 提供了一些寄存器，可以通过yank操作讲选择的内容放入寄存器或从寄存器取出:
 
+在insert和cmdline等输入模式下, 按下`ctrl+r` 触发寄存器内容载入,此时光标出现一个`"` 字符,提示你接下来可以输入一个寄存器符号,以载入它的内容
 
 1. The unnamed register `""`
     * 自动存放了上一次删除命令(d,c,s,x)内容的存储
@@ -309,7 +310,7 @@ vim 提供了一些寄存器，可以通过yank操作讲选择的内容放入寄
 
 先按下 Ctrl-r ，然后选择从哪个寄存器上粘贴
 
-* `"` 从yank寄存器
+* `"` 从yank寄存器(等价于shift+insert)上粘贴
 * `+` 从+寄存器
 * `*` 从*寄存器
 
@@ -1172,25 +1173,25 @@ Gitsign和Telescope 可以满足基本的 文件diff, 分支管理
 2. 将变更全部发送到 loclist 或 quickfix(如果安装了trouble.nvim则发送到trouble), 方便在提交前check代码
 3. 集成到null-ls, 支持在代码变更区域触发 code action
 4. 方便的 blame : 可使用虚拟text显示光标所在行的 committer, commit msg, time
-* `:Gitsigns toggle_current_line_blame`
+    * `:Gitsigns toggle_current_line_blame`
 4. hunks
-* preview_hunk: 单独在floating window预览hunk diff.
-* 提供了 Hunk text object
-* next_hunk/prev_hunk: 导航
-* stage_hunk : stage光标处的hunk/或选择的范围
-* undo_stage_hunk : undo上一次stage_hunk的内容.
-* stage_buffer: stage 所有hunks 
-* reset_hunk: 撤销Hunk的变更
-* reset_buffer: reset 所有修改，内容恢复到修改前的状态
-* reset_buffer_index: 所有已经stage的Hunks都变更到unsage状态，内容并没有改变
+    * preview_hunk: 单独在floating window预览hunk diff.
+    * 提供了 Hunk text object
+    * next_hunk/prev_hunk: 导航
+    * stage_hunk : stage光标处的hunk/或选择的范围
+    * undo_stage_hunk : undo上一次stage_hunk的内容.
+    * stage_buffer: stage 所有hunks 
+    * reset_hunk: 撤销Hunk的变更
+    * reset_buffer: reset 所有修改，内容恢复到修改前的状态
+    * reset_buffer_index: 所有已经stage的Hunks都变更到unsage状态，内容并没有改变
 5. Diff against index or any commit
 6. Open diffview with any revision/commit
-* 在any base和index之间diff 当前buffer
-* `:Gitsigns diffthis({base})` 默认是与上一个commit diff
-* `:Gitsigns change_base({base},{global})`
-* `:Gitsigns reset_base({global})`
-* diff with the index: `:Gitsigns diffthis`
-* diff with the last commit: `:Gitsigns diffthis ~1`
+    * 在any base和index之间diff 当前buffer
+    * `:Gitsigns diffthis({base})` 默认是与上一个commit diff
+    * `:Gitsigns change_base({base},{global})`
+    * `:Gitsigns reset_base({global})`
+    * diff with the index: `:Gitsigns diffthis`
+    * diff with the last commit: `:Gitsigns diffthis ~1`
 
 ## Telescope git_command
 
@@ -1362,7 +1363,7 @@ git config --global i18n.logOutputEncoding utf-8
 
 # Dial
 
-ctrl-a,ctrl-x增强
+ctrl-a, ctrl-x 增强
 
 配置了go的时间format,  `int,int32,in64`,  `uint,uint32,uin64`, `[]byte(/string(`, `and/or`, `&&/||`, `GET/POST`, `Error/Warn/Info/Debug`, `true/false`,
 `success/error`, `desc/asc`, `min/max`, `disable/enable`,  `disabled/enabled`
