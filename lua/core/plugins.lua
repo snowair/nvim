@@ -103,7 +103,7 @@ return require('packer').startup({
     }
 
     use({
-      "glepnir/lspsaga.nvim",
+      'nvimdev/lspsaga.nvim',
       after = 'nvim-lspconfig',
       config = function()
         require("lspsaga").setup({
