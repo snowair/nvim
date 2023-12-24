@@ -1883,4 +1883,25 @@ Hydra
 * `<Leader>f` 触发telescope
 * `<Leader>o` 触发 vim选项设置
 
+commander.nvim
+======
+
+https://github.com/FeiyouG/commander.nvim
+
+
+smart-splits
+====
+
+https://github.com/mrjones2014/smart-splits.nvim
+
+fzfx
+====
+
+https://github.com/linrongbin16/fzfx.nvim
+
+otter
+====
+
+https://github.com/jmbuhr/otter.nvim
+
 vim:ft=markdown
