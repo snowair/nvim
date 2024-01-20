@@ -1363,6 +1363,45 @@ return require('packer').startup({
     }
 
     use 'anuvyklack/hydra.nvim'
+
+    use {
+      "FeiyouG/commander.nvim",
+      requires = { "nvim-telescope/telescope.nvim" },
+      config = function()
+        local commander = require("commander")
+
+        commander.add({
+          {
+            desc = "Find files",
+            cmd = "<CMD>Telescope find_files<CR>",
+          },
+          {
+            desc = "Find hidden files",
+            cmd = "<CMD>Telescope find_files hidden=true<CR>",
+          },
+          {
+            desc = "Show document symbols",
+            cmd = "<CMD>Telescope lsp_document_symbols<CR>",
+          }
+        })
+      end
+    }
+
+  -- mandatory
+  use({
+    "junegunn/fzf",
+    run = function()
+      vim.fn["fzf#install"]()
+    end,
+  })
+  use({
+    "linrongbin16/fzfx.nvim",
+    config = function()
+      require("fzfx").setup()
+    end,
+  })
+
+
   end,
   config = { max_jobs = 5 }
 })
