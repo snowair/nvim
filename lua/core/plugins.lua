@@ -1369,11 +1369,33 @@ return require('packer').startup({
       requires = { "nvim-telescope/telescope.nvim" },
       config = function()
         local commander = require("commander")
+        local utils = require('utils.funcs')
+        commander.setup({
+          integration = {
+            telescope = {
+              enable = true,
+              -- Optional, you can use any telescope supported theme
+              theme = require("telescope.themes").commander
+            }
+          }
+        })
 
         commander.add({
           {
-            desc = "Find files",
-            cmd = "<CMD>Telescope find_files<CR>",
+            desc = "Find files in session",
+            cmd = utils.find_files_in_session_dir,
+          },
+          {
+            desc = "Find files in cdlist",
+            cmd = utils.find_files_in_cdlist,
+          },
+          {
+            desc = "Grep in session",
+            cmd = utils.live_grep_in_cdlist,
+          },
+          {
+            desc = "Grep in cdlist",
+            cmd = utils.live_grep_in_cdlist,
           },
           {
             desc = "Find hidden files",
@@ -1386,22 +1408,6 @@ return require('packer').startup({
         })
       end
     }
-
-  -- mandatory
-  use({
-    "junegunn/fzf",
-    run = function()
-      vim.fn["fzf#install"]()
-    end,
-  })
-  use({
-    "linrongbin16/fzfx.nvim",
-    config = function()
-      require("fzfx").setup()
-    end,
-  })
-
-
   end,
   config = { max_jobs = 5 }
 })

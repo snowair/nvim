@@ -1880,8 +1880,22 @@ Hydra
   * h,l 滚动幅度 5字符宽度
   * H,L 滚动幅度,半屏宽度
 
-* `<Leader>f` 触发telescope
 * `<Leader>o` 触发 vim选项设置
+
+telescope-live-grep-args.nvim
+=======
+
+- https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+- glob/g参数示例：
+- 'keywords' -g '*.toml'   在.toml文件中搜
+- 'keywords' -g '!*.toml'   在非.toml文件中搜
+- 'int main' -g '*.{c,h}'  在.c,.h文件中搜
+- '\w(?-u:\w)\w'  使用正则进行搜索
+- 更多参数:
+    - -i/--ignore-case 忽略大小写
+    - -S/--smart-case 智能大小写
+    - -F/--fixed-strings 字符串模式，非正则模式
+    - -w/--word-regexp 相当于正则 \b(?:pattern)\b
 
 commander.nvim
 ======

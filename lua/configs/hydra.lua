@@ -49,43 +49,6 @@ function M.config()
   })
 
   Hydra({
-    name = 'Telescope',
-    hint = [[
-
-   🭇🬭🬭🬭🬭🬭🬭🬭🬭🬼    _o_: old files
-  🭉🭁🭠🭘    🭣🭕🭌🬾
-  🭅█ ▁     █🭐   _O_: options
-  ██🬿      🭊██   _?_: search history
- 🭋█🬝🮄🮄🮄🮄🮄🮄🮄🮄🬆█🭀  _c_: execute command
- 🭤🭒🬺🬹🬱🬭🬭🬭🬭🬵🬹🬹🭝🭙  _;_: commands history
-
- ^
-    _<Enter>_: Telescope  _<Esc>_
-]]
-    ,
-    config = {
-      color = 'teal',
-      invoke_on_body = true,
-      hint = {
-        position = 'middle',
-        border = 'rounded',
-      },
-    },
-    mode = 'n',
-    body = '<Leader>f',
-    heads = {
-      { 'o',       cmd 'Telescope oldfiles',        { desc = 'recently opened files' } },
-      { 'O',       cmd 'Telescope vim_options' },
-      { '?',       cmd 'Telescope search_history',  { desc = 'search history' } },
-      { ';',       cmd 'Telescope command_history', { desc = 'command-line history' } },
-      { 'c',       cmd 'Telescope commands',        { desc = 'execute command' } },
-      { '<Enter>', cmd 'Telescope',                 { exit = true, desc = 'list all pickers' } },
-      { '<Esc>',   nil,                             { exit = true, nowait = true } },
-    }
-  })
-
-
-  Hydra({
     name = 'Vim Options',
     hint = [[
   ^ ^        Options
