@@ -820,7 +820,6 @@ return require('packer').startup({
             vim.cmd('Gitsigns attach')
             -- 关闭 treesitter
             vim.cmd('TSEnable highlight')
-            vim.cmd('LspStart')
 
             if f ~= nil then
               -- 由于此事件是在session的工作空间全部加载完成后执行, 此时cwd可能已经被project插件自动改成git项目的根目录了.
@@ -852,7 +851,13 @@ return require('packer').startup({
                 end
               end
             end
-          end,
+
+            local timer = vim.loop.new_timer()
+            timer:start(3000, 0, vim.schedule_wrap(function()
+              vim.cmd('LspRestart')
+              timer:stop()
+            end))
+          end
         })
       end
     }
