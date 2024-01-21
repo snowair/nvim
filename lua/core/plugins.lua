@@ -623,7 +623,7 @@ return require('packer').startup({
     -- telescope
     use {
       -- 超级强大的模糊插件 , 几乎什么都可以搜索, 完美代替ctrpsapce等插件
-      'nvim-telescope/telescope.nvim', tag = '0.1.0',
+      'nvim-telescope/telescope.nvim', tag = '0.1.5',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
         -- 将任何Telescope 搜索结果 通过 c-t 发送到 Trouble
