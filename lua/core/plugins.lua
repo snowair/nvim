@@ -326,6 +326,9 @@ return require('packer').startup({
     -- indent guide
     use {
       "lukas-reineke/indent-blankline.nvim",
+      config = function()
+        require("ibl").setup()
+      end
     }
 
     -- cursorline
