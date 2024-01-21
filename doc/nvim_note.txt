@@ -166,6 +166,17 @@ VIM
 normal模式: 按下`gJ` 会将当前行和下一行合并为一行, 合并不会添加任何空格.
 visual模式: 按下`gJ` 多行合并为一行, 合并不会添加任何空格.
 
+## 缩进
+
+`:set shiftwidth=4` 可以手动设置格式化的缩进宽度
+
+在脚本中为不同类型的文件自动设置:
+
+```
+" shiftwidth设置
+autocmd FileType go setlocal shiftwidth=4
+autocmd FileType lua setlocal shiftwidth=2
+```
 
 ## 粘贴
 
