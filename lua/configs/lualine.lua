@@ -7,7 +7,7 @@ local make_entry = require "telescope.make_entry"
 local Job = require 'plenary.job'
 local notify = require 'notify'
 local stateCache = {
-  color = "white",
+  stateColor = "white",
   state = '  ',
   bgcolor = "",
   fgcolor = "orange",
@@ -35,10 +35,10 @@ local function checkLocalCommit(info, cwd)
           local pos = string.find(info, current_commit)
           if pos ~= nil and pos >= 1 then
             stateCache.state = ' '
-            stateCache.color = "red"
+            stateCache.stateColor = "red"
           else
             stateCache.state = "  "
-            stateCache.color = "red"
+            stateCache.stateColor = "red"
           end
         end
       end
@@ -57,10 +57,10 @@ local function getForwardNum(cwd)
         local forward = #j._stdout_results
         if forward > 0 then
           stateCache.state = "  (" .. tonumber(forward) .. ")"
-          stateCache.color = "orange"
+          stateCache.stateColor = "orange"
         else
           stateCache.state = "  "
-          stateCache.color = "green"
+          stateCache.stateColor = "#67aa02"
         end
       end
     end,
@@ -163,30 +163,29 @@ local function update_index_status()
     stateCache.bgcolor = ""
     return ""
   end
-  stateCache.bgcolor = "red"
   local result = ""
   if stateCache.unstaged > 0 then
-    result = string.format("us(%d)", stateCache.unstaged)
+    result = string.format("UnSta(%d)", stateCache.unstaged)
   end
 
   if stateCache.unmerged > 0 then
-    result = result .. string.format(" um(%d)", stateCache.unmerged)
+    result = result .. string.format(" UnMer(%d)", stateCache.unmerged)
   end
 
   if stateCache.untracked > 0 then
-    result = result .. string.format(" ut(%d)", stateCache.untracked)
+    result = result .. string.format(" UnTra(%d)", stateCache.untracked)
   end
 
   result = vim.trim(result)
 
   if stateCache.staged > 0 and result == "" then
-    stateCache.bgcolor = "red"
+    stateCache.bgcolor = "#cb015c"
     return string.format("staged(%d)", stateCache.staged)
   elseif stateCache.staged == 0 and result == "" then
     stateCache.bgcolor = "grey"
     return string.format("clean")
   else
-    stateCache.bgcolor = "green"
+    stateCache.bgcolor = "#625bcb"
     return result
   end
 end
@@ -265,7 +264,7 @@ M.config = function()
           update_branch_status, -- 刷新本地分支与远程分支的对比状态
           separator = { right = '' },
           color = function()
-            return { fg = stateCache.color, gui = 'bold' }
+            return { bg = stateCache.stateColor, gui = 'bold' }
           end,
         },
         {
