@@ -1412,6 +1412,18 @@ return require('packer').startup({
           {
             desc = "Show document symbols",
             cmd = "<CMD>Telescope lsp_document_symbols<CR>",
+          },
+          {
+            desc = "RestApi Run Requst",
+            cmd = '<Plug>RestNvim',
+          },
+          {
+            desc = "RestApi Preview Curl",
+            cmd = '<Plug>RestNvimPreview',
+          },
+          {
+            desc = "RestApi Replay Last",
+            cmd = '<Plug>RestNvimLast',
           }
         })
       end
@@ -1425,7 +1437,7 @@ return require('packer').startup({
           -- Open request results in a horizontal split
           result_split_horizontal = false,
           -- Keep the http file buffer above|left when split horizontal|vertical
-          result_split_in_place = false,
+          result_split_in_place = true,
           -- stay in current windows (.http file) or change to results window (default)
           stay_in_current_window_after_split = false,
           -- Skip SSL verification, useful for unknown certificates
