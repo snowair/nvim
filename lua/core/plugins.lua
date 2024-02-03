@@ -1502,6 +1502,12 @@ return require('packer').startup({
         })
       end
     }
+
+    use {
+      -- base64,url,html,hex,binary编解码
+      -- 需要 pip install neovim
+      "yechielw/vve"
+    }
   end,
 
   config = { max_jobs = 5 }

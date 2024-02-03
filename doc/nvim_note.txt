@@ -1913,7 +1913,7 @@ hurl.nvim
 
 hurl安装和文档: <http://hurl.dev>
 
-hurl文件语法: <https://hurl.dev/docs/grammar.html>
+hurl请求声明: <https://hurl.dev/docs/request.html>
 
 优点: 
 1. 简洁易用
@@ -1960,6 +1960,23 @@ default: false
 email: john.doe@rookie.org
 number: 33611223344
 ```
+
+yechielw/vve
+==========
+
+* `<leader>ve-` : 编码
+* `<leader>vd-` : 解码
+
+* B - Base64, 例如: 5pyx5Lqa5p2w
+* H - 十六进制字符, 例如: \xe6\x9c\xb1\xe4\xba\x9a\xe6\x9d\xb0
+* b - 二进制数字, 例如: 111001101001110010110001111001001011101010011010111001101001110110110000
+* h - 十六进制数字, 例如: e69cb1e4ba9ae69db0
+* u - url格式,仅仅非url字符被编码, 例如: a%3D%E6%9C%B1%E4%BA%9A%E6%9D%B0%26b%3D%E9%A9%AC%E6%B6%9B%E6%B6%9B
+* U - url格式,所有字符都被编码, 例如: %61%3d%e6%9c%b1%e4%ba%9a%e6%9d%b0%26%62%3d%e9%a9%ac%e6%b6%9b%e6%b6%9b
+* j - json字符串, 例如: {\"a\":1}
+* J - jsonUnicode格式, 例如: \u007b\u0022\u0061\u0022\u003a\u0031\u007d
+* e - html特殊字符编码, 例如: `&lt;div style=&quot;text-align:center&quot;&gt;hhh&lt;/div&gt;`
+* E - html全部实体编码, 例如: &#x3c;&#x64;&#x69;&#x76;&#x20;&#x73;&#x74;&#x79;&#x6c;&#x65;&#x3d;&#x22;&#x74;&#x65;&#x78;&#x74;&#x2d;&#x61;&#x6c;&#x69;&#x67;&#x6e;&#x3a;&#x63;&#x65;&#x6e;&#x74;&#x65;&#x72;&#x22;&#x3e;&#x68;&#x68;&#x68;&#x3c;&#x2f;&#x64;&#x69;&#x76;&#x3e;
 
 commander.nvim
 ======
