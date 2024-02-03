@@ -1478,6 +1478,30 @@ return require('packer').startup({
         })
       end
     }
+
+    use {
+      "jellydn/hurl.nvim",
+      requires = { "MunifTanjim/nui.nvim" },
+      config = function()
+        require("hurl").setup({
+          -- Show debugging info
+          debug = false,
+          -- Show notification on run
+          show_notification = true,
+          -- Show response in popup or split
+          mode = "split",
+          -- Default formatter
+          formatters = {
+            json = { 'jq' }, -- Make sure you have install jq in your system, e.g: brew install jq
+            html = {
+              'prettier',    -- Make sure you have install prettier in your system, e.g: npm install -g prettier
+              '--parser',
+              'html',
+            },
+          },
+        })
+      end
+    }
   end,
 
   config = { max_jobs = 5 }

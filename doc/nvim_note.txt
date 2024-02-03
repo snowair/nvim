@@ -1908,6 +1908,59 @@ telescope-live-grep-args.nvim
     - -F/--fixed-strings 字符串模式，非正则模式
     - -w/--word-regexp 相当于正则 \b(?:pattern)\b
 
+hurl.nvim
+======
+
+hurl安装和文档: <http://hurl.dev>
+
+hurl文件语法: <https://hurl.dev/docs/grammar.html>
+
+优点: 
+1. 简洁易用
+2. 支持按顺序执行多个请求
+3. 支持从上一个请求中捕捉内容保存到变量中, 从而应用到下一个请求中使用变量值. 
+    * 捕捉模式支持 : status, header, url, cookie, body, bytes, xpath, [jsonpath](https://goessner.net/articles/JsonPath/), regex, variable, duration, certificate
+4. 支持断言, 以终止执行.
+5. 支持变量和变量文件
+
+1. api文件后缀`.hurl`
+2. 安装ts: `TSInstall hurl`
+3. 执行光标处的请求: `:HurlRunnerAt`
+4. 执行光标处的请求(Verbose): `:HurlRunnerVerbose`, 可以输出执行的整个过程,以及等价的curl命令.
+5. 执行整个`.hurl`文件或者选择的范围: `:HurlRunner`
+
+hurl示例文件:
+
+```hurl
+# get
+GET https://httpbin.org/get
+User-Agent: QTL/9.5.6.1111
+[Cookies]
+a:1 
+b:2
+c:3
+[QueryStringParams]
+order: newest
+search: something to search
+count: 100
+name: 朱亚杰
+
+# json post
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+    "name": "朱亚杰"
+}
+
+# form post
+POST https://httpbin.org/post
+[FormParams]
+default: false
+email: john.doe@rookie.org
+number: 33611223344
+```
+
 commander.nvim
 ======
 
