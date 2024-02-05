@@ -156,6 +156,9 @@ VIM
 1. `:h builtin` 查看vim内置 fn
 2.  光标跳转: `<c-o>`上一jump位置, `<c-i>`下一jump位置
 
+* `:! command` 可以让你临时运行一串命令行指令, 输出在一个临时小窗口.
+* `:r! command` 可以把指令的输出结果贴到你光标的下一行.  查询个啥东西根本不用退出或挂起vim. 
+* `:%! command` 可以把buffer内容重定向到命令行工具的标准输入，并用输出替换buffer内容
 
 `set linespace` 行距设置, 解决部分gui行距不合适的问题
 
