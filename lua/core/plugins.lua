@@ -28,7 +28,6 @@ return require('packer').startup({
     use { 'ellisonleao/gruvbox.nvim', requires = { "rktjmp/lush.nvim" }, }
     use { 'rose-pine/neovim', as = 'rose-pine', tag = 'v1.*', }
     use 'EdenEast/nightfox.nvim'
-    use 'rmehri01/onenord.nvim'
     use 'sainnhe/sonokai'
     use 'rebelot/kanagawa.nvim'
     use { 'catppuccin/nvim', as = 'catppuccin' }
