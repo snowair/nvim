@@ -1507,6 +1507,11 @@ return require('packer').startup({
       -- 需要 pip install neovim
       "yechielw/vve"
     }
+
+    use  {
+      "Zeioth/garbage-day.nvim",
+      event = "VeryLazy",
+    }
   end,
 
   config = { max_jobs = 5 }
