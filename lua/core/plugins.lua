@@ -28,7 +28,6 @@ return require('packer').startup({
     use { 'ellisonleao/gruvbox.nvim', requires = { "rktjmp/lush.nvim" }, }
     use { 'rose-pine/neovim', as = 'rose-pine', tag = 'v1.*', }
     use 'EdenEast/nightfox.nvim'
-    use 'rmehri01/onenord.nvim'
     use 'sainnhe/sonokai'
     use 'rebelot/kanagawa.nvim'
     use { 'catppuccin/nvim', as = 'catppuccin' }
@@ -1412,10 +1411,108 @@ return require('packer').startup({
           {
             desc = "Show document symbols",
             cmd = "<CMD>Telescope lsp_document_symbols<CR>",
+          },
+          {
+            desc = "RestApi Run Requst",
+            cmd = '<Plug>RestNvim',
+          },
+          {
+            desc = "RestApi Preview Curl",
+            cmd = '<Plug>RestNvimPreview',
+          },
+          {
+            desc = "RestApi Replay Last",
+            cmd = '<Plug>RestNvimLast',
           }
         })
       end
     }
+
+    use {
+      "rest-nvim/rest.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = function()
+        require("rest-nvim").setup({
+          -- Open request results in a horizontal split
+          result_split_horizontal = false,
+          -- Keep the http file buffer above|left when split horizontal|vertical
+          result_split_in_place = true,
+          -- stay in current windows (.http file) or change to results window (default)
+          stay_in_current_window_after_split = false,
+          -- Skip SSL verification, useful for unknown certificates
+          skip_ssl_verification = true,
+          -- Encode URL before making request
+          encode_url = true,
+          -- Highlight request on run
+          highlight = {
+            enabled = true,
+            timeout = 5000,
+          },
+          result = {
+            -- toggle showing URL, HTTP info, headers at top the of result window
+            show_url = true,
+            -- show the generated curl command in case you want to launch
+            -- the same request via the terminal (can be verbose)
+            show_curl_command = false,
+            show_http_info = true,
+            show_headers = true,
+            -- table of curl `--write-out` variables or false if disabled
+            -- for more granular control see Statistics Spec
+            show_statistics = false,
+            -- executables or functions for formatting response body [optional]
+            -- set them to false if you want to disable them
+            formatters = {
+              json = "jq",
+              html = function(body)
+                return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
+              end
+            },
+          },
+          -- Jump to request line on run
+          jump_to_request = false,
+          env_file = '.env',
+          custom_dynamic_variables = {},
+          yank_dry_run = true,
+          search_back = true,
+        })
+      end
+    }
+
+    use {
+      "jellydn/hurl.nvim",
+      requires = { "MunifTanjim/nui.nvim" },
+      config = function()
+        require("hurl").setup({
+          -- Show debugging info
+          debug = false,
+          -- Show notification on run
+          show_notification = true,
+          -- Show response in popup or split
+          mode = "split",
+          -- Default formatter
+          formatters = {
+            json = { 'jq' }, -- Make sure you have install jq in your system, e.g: brew install jq
+            html = {
+              'prettier',    -- Make sure you have install prettier in your system, e.g: npm install -g prettier
+              '--parser',
+              'html',
+            },
+          },
+        })
+      end
+    }
+
+    use {
+      -- base64,url,html,hex,binary编解码
+      -- 需要 pip install neovim
+      "yechielw/vve"
+    }
+
+    use  {
+      "Zeioth/garbage-day.nvim",
+      event = "VeryLazy",
+    }
   end,
+
   config = { max_jobs = 5 }
 })

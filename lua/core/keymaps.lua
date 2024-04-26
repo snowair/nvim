@@ -86,16 +86,19 @@ end)
 -- 剪贴板操作
 vim.keymap.set('v', '<C-Insert>', '"+y')
 vim.keymap.set('v', '<C-Y>', '"+y') -- visual模式复制
+
 vim.keymap.set('v', '<C-Del>', '"+x')
 vim.keymap.set('v', '<S-Insert>', '"+p')
 vim.keymap.set('v', '<S-Help>', '"+p')
-vim.keymap.set({ 'n', 'i' }, '<S-Insert>', '<esc>"+p')
-vim.keymap.set({ 'n', 'i' }, '<S-Help>', '<esc>"+p')
 -- command+c/v/x
 vim.keymap.set('v', '<D-x>', '"+x')
 vim.keymap.set('v', '<D-c>', '"+y')
+vim.keymap.set({ 'n', 'i' }, '<S-Insert>', '<esc>"+p')
+vim.keymap.set({ 'n', 'i' }, '<S-Help>', '<esc>"+p')
 vim.keymap.set({ 'i' }, '<D-v>', '<esc>"+p')
+vim.keymap.set({ 'i' }, '<M-v>', '<esc>"+p')
 vim.keymap.set({ 'v', 'n' }, '<D-v>', '"+p')
+vim.keymap.set({ 'v', 'n' }, '<M-v>', '"+p')
 
 
 -- 窗口切换

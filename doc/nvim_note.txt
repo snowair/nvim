@@ -156,6 +156,9 @@ VIM
 1. `:h builtin` 查看vim内置 fn
 2.  光标跳转: `<c-o>`上一jump位置, `<c-i>`下一jump位置
 
+* `:! command` 可以让你临时运行一串命令行指令, 输出在一个临时小窗口.
+* `:r! command` 可以把指令的输出结果贴到你光标的下一行.  查询个啥东西根本不用退出或挂起vim. 
+* `:%! command` 可以把buffer内容重定向到命令行工具的标准输入，并用输出替换buffer内容
 
 `set linespace` 行距设置, 解决部分gui行距不合适的问题
 
@@ -1907,6 +1910,76 @@ telescope-live-grep-args.nvim
     - -S/--smart-case 智能大小写
     - -F/--fixed-strings 字符串模式，非正则模式
     - -w/--word-regexp 相当于正则 \b(?:pattern)\b
+
+hurl.nvim
+======
+
+hurl安装和文档: <http://hurl.dev>
+
+hurl请求声明: <https://hurl.dev/docs/request.html>
+
+优点: 
+1. 简洁易用
+2. 支持按顺序执行多个请求
+3. 支持从上一个请求中捕捉内容保存到变量中, 从而应用到下一个请求中使用变量值. 
+    * 捕捉模式支持 : status, header, url, cookie, body, bytes, xpath, [jsonpath](https://goessner.net/articles/JsonPath/), regex, variable, duration, certificate
+4. 支持断言, 以终止执行.
+5. 支持变量和变量文件
+
+1. api文件后缀`.hurl`
+2. 安装ts: `TSInstall hurl`
+3. 执行光标处的请求: `:HurlRunnerAt`
+4. 执行光标处的请求(Verbose): `:HurlRunnerVerbose`, 可以输出执行的整个过程,以及等价的curl命令.
+5. 执行整个`.hurl`文件或者选择的范围: `:HurlRunner`
+
+hurl示例文件:
+
+```hurl
+# get
+GET https://httpbin.org/get
+User-Agent: QTL/9.5.6.1111
+[Cookies]
+a:1 
+b:2
+c:3
+[QueryStringParams]
+order: newest
+search: something to search
+count: 100
+name: 朱亚杰
+
+# json post
+POST https://httpbin.org/post
+Content-Type: application/json
+
+{
+    "name": "朱亚杰"
+}
+
+# form post
+POST https://httpbin.org/post
+[FormParams]
+default: false
+email: john.doe@rookie.org
+number: 33611223344
+```
+
+yechielw/vve
+==========
+
+* `<leader>ve-` : 编码
+* `<leader>vd-` : 解码
+
+* B - Base64, 例如: 5pyx5Lqa5p2w
+* H - 十六进制字符, 例如: \xe6\x9c\xb1\xe4\xba\x9a\xe6\x9d\xb0
+* b - 二进制数字, 例如: 111001101001110010110001111001001011101010011010111001101001110110110000
+* h - 十六进制数字, 例如: e69cb1e4ba9ae69db0
+* u - url格式,仅仅非url字符被编码, 例如: a%3D%E6%9C%B1%E4%BA%9A%E6%9D%B0%26b%3D%E9%A9%AC%E6%B6%9B%E6%B6%9B
+* U - url格式,所有字符都被编码, 例如: %61%3d%e6%9c%b1%e4%ba%9a%e6%9d%b0%26%62%3d%e9%a9%ac%e6%b6%9b%e6%b6%9b
+* j - json字符串, 例如: {\"a\":1}
+* J - jsonUnicode格式, 例如: \u007b\u0022\u0061\u0022\u003a\u0031\u007d
+* e - html特殊字符编码, 例如: `&lt;div style=&quot;text-align:center&quot;&gt;hhh&lt;/div&gt;`
+* E - html全部实体编码, 例如: &#x3c;&#x64;&#x69;&#x76;&#x20;&#x73;&#x74;&#x79;&#x6c;&#x65;&#x3d;&#x22;&#x74;&#x65;&#x78;&#x74;&#x2d;&#x61;&#x6c;&#x69;&#x67;&#x6e;&#x3a;&#x63;&#x65;&#x6e;&#x74;&#x65;&#x72;&#x22;&#x3e;&#x68;&#x68;&#x68;&#x3c;&#x2f;&#x64;&#x69;&#x76;&#x3e;
 
 commander.nvim
 ======

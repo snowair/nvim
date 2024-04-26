@@ -155,7 +155,7 @@ end, { nargs = "?", bang = true, })
 -- :Pull
 -- :Pull rebase
 -- :Pull merge
-vim.api.nvim_create_user_command('Pull', function(params)
+local pull = function(params)
   if params ~= nil then
     if params.args == "" then
       vim.cmd('!git pull --ff')
@@ -167,11 +167,13 @@ vim.api.nvim_create_user_command('Pull', function(params)
       vim.cmd(string.format('!git pull %s', params.args))
     end
   end
-end, { nargs = "?", bang = true, })
+end
+vim.api.nvim_create_user_command('Pull', pull, { nargs = "?", bang = true, })
+vim.api.nvim_create_user_command('PUll', pull, { nargs = "?", bang = true, })
 
 -- :Push
 -- :Push origin branchname
-vim.api.nvim_create_user_command('Push', function(params)
+local push = function(params)
   if params ~= nil then
     if params.args == "" then
       vim.cmd(string.format('!git push'))
@@ -179,7 +181,9 @@ vim.api.nvim_create_user_command('Push', function(params)
       vim.cmd(string.format('!git push --set-upstream %s', params.args))
     end
   end
-end, { nargs = "?", bang = true, })
+end
+vim.api.nvim_create_user_command('Push', push, { nargs = "?", bang = true, })
+vim.api.nvim_create_user_command('PUsh', push, { nargs = "?", bang = true, })
 
 
 -- :Remote
@@ -238,7 +242,7 @@ vim.api.nvim_create_user_command('StashApply', function()
 end, { nargs = "?", bang = true, })
 
 -- 快速提交
-vim.api.nvim_create_user_command('Commit', function(params)
+local commit = function(params)
   local files = {}
   if params ~= nil then
     table.insert(files, params.args)
@@ -258,11 +262,12 @@ vim.api.nvim_create_user_command('Commit', function(params)
 
   local cmd = '!git commit -m "' .. table.concat(files, "\\\n") .. '"'
   vim.api.nvim_command(cmd)
-end, { nargs = "?", bang = true, })
+end
+vim.api.nvim_create_user_command('Commit', commit, { nargs = "?", bang = true, })
+vim.api.nvim_create_user_command('COmmit', commit, { nargs = "?", bang = true, })
 
 -- 列出所有被修改过的文件
 vim.api.nvim_create_user_command('Modified', function()
   vim.cmd("silent! noa wall")
   require 'configs.lualine'.modifiedList()
 end, { nargs = "?", bang = true, })
-
