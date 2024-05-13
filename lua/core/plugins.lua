@@ -1502,6 +1502,8 @@ return require('packer').startup({
       "Zeioth/garbage-day.nvim",
       event = "VeryLazy",
     }
+
+    use "Pocco81/HighStr.nvim"
   end,
 
   config = { max_jobs = 5 }
