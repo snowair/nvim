@@ -23,7 +23,7 @@ function M.config()
 
   -- nvim-lspconfig config
   -- List of all pre-configured LSP servers:
-  -- github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
   --
   -- Golang
   require 'lspconfig'.gopls.setup {
@@ -32,7 +32,7 @@ function M.config()
       filetypes = { 'go', 'gomod', 'gohtmltmpl', 'gotexttmpl' },
       message_level = vim.lsp.protocol.MessageType.Error,
       cmd = {
-        'gopls', -- share the gopls instance if there is one already
+        'gopls',                              -- share the gopls instance if there is one already
         '-remote=auto', --[[ debug options ]] --
         -- "-logfile=auto",
         -- "-debug=:0",
@@ -45,9 +45,9 @@ function M.config()
           -- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
           -- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
           -- not supported
-          analyses = { unusedparams = true, unreachable = true, unusedwrite=true,  },
+          analyses = { unusedparams = true, unreachable = true, unusedwrite = true, },
           codelenses = {
-            generate = true, -- show the `go generate` lens.
+            generate = true,   -- show the `go generate` lens.
             gc_details = true, --  // Show a code lens toggling the display of gc's choices.
             test = true,
             tidy = true,
@@ -171,6 +171,7 @@ function M.config()
 
 
   require 'lspconfig'.java_language_server.setup {}
+  require 'lspconfig'.pyright.setup {}
 end
 
 return M
