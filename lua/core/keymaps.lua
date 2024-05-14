@@ -77,10 +77,7 @@ vim.keymap.set({ 'n', 'i' }, '<F23>', utils.live_grep_in_session_dir)
 
 vim.keymap.set({ 'n', 'i' }, '<c-F12>', function() require("commander").show() end)           -- 搜buffer
 vim.keymap.set({ 'n', 'i' }, '<F36>', function() require("commander").show() end) -- 搜buffer
-vim.keymap.set({ 'n' }, '<c-space>', function()
-  vim.cmd("silent! noa wall")
-  require 'configs.bufferlist'.run({ only_cwd = true })
-end)
+vim.keymap.set({ 'n' }, '<c-space>', utils.find_files_in_session_dir)
 
 
 -- 剪贴板操作
