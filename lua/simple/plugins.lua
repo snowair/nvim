@@ -317,7 +317,7 @@ return require('packer').startup({
     -- telescope
     use {
       -- 超级强大的模糊插件 , 几乎什么都可以搜索, 完美代替ctrpsapce等插件
-      'nvim-telescope/telescope.nvim', tag = '0.1.0',
+      'nvim-telescope/telescope.nvim', tag = '0.1.8',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
         local telescope = require("telescope")
@@ -380,7 +380,7 @@ return require('packer').startup({
     use {
       -- 可以将搜索结果发送到quickfix窗口
       -- :Spectre
-      'windwp/nvim-spectre',
+      'nvim-pack/nvim-spectre',
       requires = 'nvim-lua/plenary.nvim',
       config = function()
         require('spectre').setup {}

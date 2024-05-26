@@ -1,4 +1,4 @@
-lua require('core.init')
+lua require('simple.init')
 lua require('configs.vim')
 
 
