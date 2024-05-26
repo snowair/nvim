@@ -577,11 +577,12 @@ return require('packer').startup({
       branch = "pre_release",
       config = function()
         require("projections").setup({
-          workspaces = {                   -- Default workspaces to search for
-            { "/mnt/wd/Git", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~",           { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git",       { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git/mlol",  { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+          workspaces = {                        -- Default workspaces to search for
+            { "/mnt/wd/Git",     { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~",               { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git",           { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/mlol",      { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/rust-reps", { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
             -- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
             -- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
           },
@@ -647,6 +648,7 @@ return require('packer').startup({
                 search_dirs = {
                   "~/git",
                   "~/git/mlol",
+                  "~/git/rust-reps",
                   "/mnt/wd/Git",
                 },
               },
@@ -1500,7 +1502,6 @@ return require('packer').startup({
 
     use {
       "Zeioth/garbage-day.nvim",
-      event = "VeryLazy",
     }
 
     use "Pocco81/HighStr.nvim"
