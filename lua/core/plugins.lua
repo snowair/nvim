@@ -26,12 +26,7 @@ return require('packer').startup({
 
     -- 支持lualine,nvim-tree,treesitter的 主题
     use { 'ellisonleao/gruvbox.nvim', requires = { "rktjmp/lush.nvim" }, }
-    use { 'rose-pine/neovim', as = 'rose-pine', tag = 'v1.*', }
     use 'EdenEast/nightfox.nvim'
-    use 'rmehri01/onenord.nvim'
-    use 'sainnhe/sonokai'
-    use 'rebelot/kanagawa.nvim'
-    use { 'catppuccin/nvim', as = 'catppuccin' }
 
     --  Buffer 增强
     use { 'akinsho/bufferline.nvim',
@@ -81,16 +76,9 @@ return require('packer').startup({
     use 'nvim-treesitter/nvim-treesitter'
     use 'neovim/nvim-lspconfig'            -- 官方lsp
     use 'L3MON4D3/LuaSnip'                 -- 代码片段, nvim-cmp用到
-    use 'molleweide/LuaSnip-snippets.nvim' -- 一些代码片段收集，java/lua/python/rust/c的都有
     use 'onsails/lspkind-nvim'             -- 给自动完成列表添加icon支持
     -- 使用 lsp 的代码文件structrue插件, 支持预览代码和文档, 只能显示当前文件的,不支持按package查看,不支持隐藏不可见成员 :SymbolsOutline
     -- go.nvim 的 GoPkgOutline 支持package级别的outline,但不太稳定
-    use {
-      'snowair/symbols-outline.nvim',
-      config = function()
-        require("symbols-outline").setup()
-      end
-    }
 
     use 'folke/lsp-colors.nvim' -- 为主题不支持的lsp颜色提供默认支持
 
@@ -101,51 +89,6 @@ return require('packer').startup({
         require('hlargs').setup()
       end
     }
-
-    use({
-      "glepnir/lspsaga.nvim",
-      opt = true,
-      branch = "main",
-      event = "LspAttach",
-      config = function()
-        require("lspsaga").setup({
-          lightbulb = {
-            enable = false,
-          },
-          callhierarchy = {
-            show_detail = false,
-            keys = {
-              edit = "o",
-              jump = "p",
-              vsplit = "v",
-              split = "s",
-              tabe = "t",
-              quit = "q",
-              expand_collapse = "u",
-            },
-          },
-          finder = {
-            keys = {
-              expand_or_jump = 'o',
-              jump_to = 'p',
-              vsplit = 'v',
-              split = 's',
-              tabe = 't',
-              tabnew = 'r',
-              quit = { 'q', '<ESC>' },
-              close_in_preview = '<ESC>',
-            },
-          },
-          definition = {
-            edit = "<C-c>o",
-            vsplit = "<C-c>v",
-            split = "<C-c>s",
-            tabe = "<C-c>t",
-            quit = "q",
-          }
-        })
-      end,
-    })
 
     -- 类似goland的, 在函数参数sign位置可以提示该参数的类型
     use {
@@ -174,32 +117,17 @@ return require('packer').startup({
       end
     }
 
-    -- debug断点调试支持: go,c/cpp,python,rust,java
-    use 'mfussenegger/nvim-dap'             -- 基础
-    use 'rcarriga/nvim-dap-ui'              -- dap UI界面
-    use 'nvim-telescope/telescope-dap.nvim' -- dap 命令 集成到 telescope ui
-    -- 虚拟文本显示调试过的变量的值
-    use {
-      'theHamsta/nvim-dap-virtual-text',
-      config = function()
-        require("nvim-dap-virtual-text").setup()
-      end
-    }
-
-
     -- 自动完成
     use {
       'hrsh7th/nvim-cmp',
       requires = 'hrsh7th/cmp-nvim-lsp',
     }
+
     -- nvim-cmp source 插件
     use 'saadparwaiz1/cmp_luasnip'
     use 'hrsh7th/cmp-buffer'   --使用buffe中的内容作为自动完成词源
     use 'hrsh7th/cmp-cmdline'  -- vim cmdline 支持自动完成
     use 'hrsh7th/cmp-path'     -- 文件路径自动完成
-    use 'hrsh7th/cmp-emoji'    -- emoji自动完成
-    use 'hrsh7th/cmp-nvim-lua' -- neovim api 自动完成
-    --use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
 
     -- gitsigns
     use {
@@ -225,14 +153,6 @@ return require('packer').startup({
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
         require("trouble").setup {}
-      end
-    }
-
-    -- quickfix 增
-    use {
-      'stevearc/qf_helper.nvim',
-      config = function()
-        require('qf_helper').setup()
       end
     }
 
@@ -286,26 +206,6 @@ return require('packer').startup({
       'kylechui/nvim-surround',
       config = function()
         require("nvim-surround").setup {}
-      end
-    }
-
-    -- 添加支持鼠标操作折叠/展开折叠的 - + 图标
-    use {
-      'kevinhwang91/nvim-ufo',
-      requires = 'kevinhwang91/promise-async',
-      config = function()
-        require('ufo').setup({
-          provider_selector = function()
-            return { 'treesitter', 'indent' }
-          end
-        })
-        vim.o.foldcolumn = '1'
-        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-        vim.o.foldlevelstart = -1
-        vim.o.foldenable = true
-        -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-        vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
       end
     }
 
@@ -605,8 +505,6 @@ return require('packer').startup({
       end
     })
 
-    -- emoji图标选择: https://www.unicode.org/Public/emoji/13.1/emoji-test.txt
-    use 'nvim-telescope/telescope-symbols.nvim'
     use({
       "princejoogie/dir-telescope.nvim",
       -- telescope.nvim is a required dependency
@@ -688,174 +586,6 @@ return require('packer').startup({
       end
     }
 
-    -- 将session按工作目录保存
-    use {
-      -- 由于是按cwd保存session,所有切换工作目录会导致新会话产生.
-      -- 利用 VimLeavePre 事件, 在关闭vim之前,恢复工作目录到session 最初的目录.
-      'Shatur/neovim-session-manager',
-      config = function()
-        local Path = require('plenary.path')
-        local outline = require 'symbols-outline'
-        require('session_manager').setup({
-          sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'), -- The directory where the session files will be saved.
-          path_replacer = '__',                                                -- The character to which the path separator will be replaced for session files.
-          colon_replacer = '++',                                               -- The character to which the colon symbol will be replaced for session files.
-          -- Possible values: Disabled, CurrentDir(根据当前cwd加载对应的session), LastSession(总是加载最近的session)
-          autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
-          autosave_last_session = true,      -- Automatically save last session on exit and on session switch.
-          autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
-          autosave_ignore_filetypes = ignore_ft,
-          autosave_only_in_session = false,  -- Always autosaves session. If true, only autosaves after a session is active.
-          max_path_length = 80,              -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
-        })
-
-        local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {})
-        vim.api.nvim_create_autocmd({ 'User' }, {
-          pattern = "SessionSavePre",
-          group = config_group,
-          callback = function()
-            -- 关闭 gitsigns
-            vim.cmd('Gitsigns detach_all')
-            -- 关闭 treesitter
-            vim.cmd('TSDisable highlight')
-            -- 关闭 outline
-            local state = require('symbols-outline.preview')
-            state.preview_buf = nil
-            state.preview_win = nil
-            state.hover_buf = nil
-            state.hover_win = nil
-            if outline.view:is_open() then
-              outline.view:close()
-            end
-
-            -- 关闭diffview,neogit插件的tab
-            local tabs = vim.api.nvim_list_tabpages()
-            if #tabs > 1 then
-              for _, tab in ipairs(tabs) do
-                if #tabs == 1 then
-                  break
-                end
-                local wins = vim.api.nvim_tabpage_list_wins(tab)
-                local need_close = false
-                local tab_bufs = {}
-                for _, wid in pairs(wins) do
-                  local bid = vim.api.nvim_win_get_buf(wid)
-                  table.insert(tab_bufs, bid)
-                  local name = string.lower(vim.fn.expand(vim.api.nvim_buf_get_option(bid, 'filetype')))
-                  for _, ignore in ipairs({ 'diffview', 'neogit' }) do
-                    if string.find(name, ignore) >= 1 then
-                      need_close = true
-                      break
-                    end
-                  end
-                end
-                if need_close then
-                  for _, id in pairs(tab_bufs) do
-                    vim.api.nvim_buf_delete(id, { force = 1 })
-                  end
-                end
-              end
-            end
-
-            -- 保存session之前，关闭当前项目外的文件窗口
-            local bufs = vim.api.nvim_list_bufs()
-            if vim.env.SESSION_DIR ~= nil then
-              local current = vim.fn.expand(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
-              if string.find(current, vim.env.SESSION_DIR, 1, true) ~= 1 then
-                current = nil
-              end
-
-              if current == nil then
-                for _, id in pairs(bufs) do
-                  local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-                  if vim.fn.filereadable(name) == 1 and
-                      string.find(name, vim.env.SESSION_DIR, 1, true) == 1 then
-                    vim.api.nvim_set_current_buf(id)
-                    current = name
-                    break
-                  end
-                end
-              end
-
-              for _, id in pairs(bufs) do
-                if current == nil then
-                  current = id
-                else
-                  local name = vim.fn.expand(vim.api.nvim_buf_get_name(id))
-                  if vim.fn.filereadable(name) == 1 and
-                      string.find(name, vim.env.SESSION_DIR, 1, true) ~= 1 then
-                    vim.api.nvim_buf_delete(id, { force = 1 })
-                  end
-                end
-              end
-            end
-          end
-        })
-
-        vim.api.nvim_create_autocmd({ 'User' }, {
-          pattern = "SessionLoadPre",
-          group = config_group,
-          callback = function()
-            vim.cmd('LspStop')
-            vim.env.SESSION_DIR = nil
-            local chat = require("chatgpt.flows.chat")
-            chat.chat = nil
-            outline.view = require 'symbols-outline.view':new()
-            vim.loop.sleep(300)
-            vim.opt.number         = true
-            vim.opt.relativenumber = true
-          end,
-        })
-
-        vim.api.nvim_create_autocmd({ 'User' }, {
-          pattern = "SessionLoadPost",
-          group = config_group,
-          callback = function()
-            vim.o.title = true
-            vim.o.titlestring = ""
-            local f = vim.loop.cwd()
-            require("configs.lualine").gitStatusTaskFn()
-            -- 关闭 gitsigns
-            vim.cmd('Gitsigns attach')
-            -- 关闭 treesitter
-            vim.cmd('TSEnable highlight')
-            vim.cmd('LspStart')
-
-            if f ~= nil then
-              -- 由于此事件是在session的工作空间全部加载完成后执行, 此时cwd可能已经被project插件自动改成git项目的根目录了.
-              -- 所以需要禁用它们的自动修改工作目录功能
-              vim.env.SESSION_DIR = f
-
-              -- 载入session 重置 dirlist
-              vim.g.dirChangeHistory = { f }
-
-              local root_files = {
-                f .. '/.git',
-                f .. '/.svn',
-                f .. '/.hg',
-                f .. '/.idea',
-                f .. '/go.mod',
-                f .. '/package.json',
-              }
-
-              local dirs = vim.fn.split(f, "/")
-              if dirs ~= nil then
-                local project_name = '[ ' .. dirs[#dirs] .. ' ]'
-                for _, v in pairs(root_files) do
-                  if vim.fn.getftype(v) == 'dir' then
-                    vim.o.titlestring = project_name
-                  end
-                  if vim.fn.getftype(v) == 'file' then
-                    vim.o.titlestring = project_name
-                  end
-                end
-              end
-            end
-          end,
-        })
-      end
-    }
-
     -- Vim Plugins
     -- 编辑增强
     use 'triglav/vim-visual-increment' -- 列选择的数字或字母递增插件
@@ -908,19 +638,6 @@ return require('packer').startup({
     use { 'godlygeek/tabular' }
 
     use { 'preservim/vim-markdown' }
-
-    -- 交换两个text objext
-    use {
-      -- 在第一个objext上 执行cx{text object}, 然后在到另一个objext上执行cx{text objcet} 即可进行交换. 如果第二个motion和第一个motion相同,可以使用 .
-      -- cxx{text objext} Like cx, but use the current line
-      -- X{text object} Like cx, but for Visual mode.
-      -- cxc 取消
-      'tommcdo/vim-exchange'
-    }
-
-    -- 可自定义的启动屏幕
-    -- 添加 project , session 加载
-    use 'leslie255/aleph-nvim'
 
     -- find and replease 文件内搜索替换
     use {
@@ -1354,15 +1071,7 @@ return require('packer').startup({
         "nvim-telescope/telescope.nvim"
       }
     })
-    --use "Bekaboo/dropbar.nvim"  -- 需要 nvim 0.10
 
-    use {
-      'TobinPalmer/rayso.nvim',
-      cmd = { 'Rayso' },
-      config = function()
-        require('rayso').setup()
-      end
-    }
   end,
   config = { max_jobs = 5 }
 })
