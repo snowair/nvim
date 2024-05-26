@@ -2002,4 +2002,9 @@ otter
 
 https://github.com/jmbuhr/otter.nvim
 
+vim-dadbod
+=====
+
+https://www.youtube.com/watch?v=NhTPVXP8n7w
+
 vim:ft=markdown
