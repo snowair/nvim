@@ -426,6 +426,10 @@ return require('packer').startup({
       end
     }
 
+    use "tpope/vim-dadbod"
+    use "kristijanhusak/vim-dadbod-completion"
+    use "kristijanhusak/vim-dadbod-ui"
+
   end,
   config = { max_jobs = 5 }
 })
