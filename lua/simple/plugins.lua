@@ -430,6 +430,15 @@ return require('packer').startup({
     use "kristijanhusak/vim-dadbod-completion"
     use "kristijanhusak/vim-dadbod-ui"
 
+    -- language
+    use {
+      -- williamboman/nvim-lsp-installer 的重构版本，自动安装lsp server
+      "williamboman/mason.nvim",
+      config = function()
+        require("mason").setup()
+      end
+    }
+
   end,
   config = { max_jobs = 5 }
 })
