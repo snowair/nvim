@@ -1388,7 +1388,9 @@ ctrl-a, ctrl-x 增强
 * `VisitLinkUnderCursor`  Open link under the cursor
 * `VisitLinkNearCursor`  Open link near the cursor
 
-# 多重编辑
+# vim-visual-multi 
+
+多重编辑
 
 有两种选择内容的方式: cursor模式和extend模式
 
