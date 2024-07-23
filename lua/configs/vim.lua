@@ -260,7 +260,7 @@ local commit = function(params)
     end,
   }):sync()
 
-  local cmd = '!git commit -m "' .. table.concat(files, "\\\n") .. '"'
+  local cmd = '!git commit -m "--other=Modified:' .. table.concat(files, "\\\n") .. '"'
   vim.api.nvim_command(cmd)
 end
 vim.api.nvim_create_user_command('Commit', commit, { nargs = "?", bang = true, })
