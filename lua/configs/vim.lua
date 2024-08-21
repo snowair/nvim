@@ -151,6 +151,19 @@ vim.api.nvim_create_user_command('B', function(params)
   end
 end, { nargs = "?", bang = true, })
 
+-- :FEtchOrigin
+-- :FetchOrigin
+local pull = function(params)
+  if params ~= nil then
+    if params.args == "" then
+    else
+      vim.cmd(string.format('!git fetch -b %s origin/%s', params.args))
+    end
+  end
+end
+vim.api.nvim_create_user_command('FetchOrigin', pull, { nargs = "?", bang = true, })
+vim.api.nvim_create_user_command('FEtchOrigin', pull, { nargs = "?", bang = true, })
+
 -- :Pull
 -- :Pull
 -- :Pull rebase
