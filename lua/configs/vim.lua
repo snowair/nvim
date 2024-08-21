@@ -157,7 +157,7 @@ local fetchOrigin = function(params)
   if params ~= nil then
     if params.args == "" then
     else
-      vim.cmd(string.format('!git checkout -b %s origin/%s', params.args))
+      vim.cmd(string.format('!git checkout -b %s origin/%s', params.args, params.args))
     end
   end
 end
