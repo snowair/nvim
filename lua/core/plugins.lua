@@ -577,12 +577,13 @@ return require('packer').startup({
       branch = "pre_release",
       config = function()
         require("projections").setup({
-          workspaces = {                        -- Default workspaces to search for
-            { "/mnt/wd/Git",     { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~",               { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git",           { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git/mlol",      { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
-            { "~/git/rust-reps", { ".git" } },  --        Documents/dev is a workspace. patterns = { ".git" }
+          workspaces = {                                             -- Default workspaces to search for
+            { "~/git/mlol/backend_proj/apps/Out_Proj", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "/mnt/wd/Git",                           { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~",                                     { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git",                                 { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/mlol",                            { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/rust-reps",                       { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             -- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
             -- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
           },
@@ -695,7 +696,7 @@ return require('packer').startup({
       -- 由于是按cwd保存session,所有切换工作目录会导致新会话产生.
       -- 利用 VimLeavePre 事件, 在关闭vim之前,恢复工作目录到session 最初的目录.
       'Shatur/neovim-session-manager',
-      tag =  'a0b9d251',
+      tag = 'a0b9d251',
       config = function()
         local Path = require('plenary.path')
         local outline = require 'symbols-outline'
@@ -1472,7 +1473,6 @@ return require('packer').startup({
         vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
       end
     }
-
   end,
 
   config = { max_jobs = 5 }
