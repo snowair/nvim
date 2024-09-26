@@ -256,7 +256,9 @@ end, { nargs = "?", bang = true, })
 
 -- 快速提交
 local commit = function(params)
-  local files = {}
+  local files = {
+    "\\\n/copilot-summary\\\n"
+  }
   if params ~= nil then
     table.insert(files, params.args)
   end
