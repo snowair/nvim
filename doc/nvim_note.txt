@@ -1,5 +1,11 @@
 *nvim-note*
 
+# 安装nvim
+
+github有编译好的release版本，可以直接安装.
+
+如果遇到glibc版本过低, 则直接源码编译nvim即可.
+
 # NVIM_APPNAME
 
 

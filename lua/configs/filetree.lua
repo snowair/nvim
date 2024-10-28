@@ -70,7 +70,7 @@ function M.config()
       local opts = function(desc)
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
-      local inject_node = require("nvim-tree.utils").inject_node
+      --local inject_node = require("nvim-tree.utils").inject_node
       -- BEGIN_DEFAULT_ON_ATTACH
       vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node, opts('CD'))
       vim.keymap.set('n', '<C-k>', api.node.show_info_popup, opts('Info'))
@@ -127,18 +127,18 @@ function M.config()
 
 
       -- history
-      vim.keymap.set(
-        "n",
-        "<c-g>",
-        inject_node(function(node)
-          if node and node.absolute_path then
-            vim.cmd(string.format('DiffviewFileHistory %s', node.absolute_path))
-          else
-            vim.notify(vim.inspect(node))
-          end
-        end),
-        { buffer = bufnr, noremap = true }
-      )
+      --vim.keymap.set(
+        --"n",
+        --"<c-g>",
+        --inject_node(function(node)
+          --if node and node.absolute_path then
+            --vim.cmd(string.format('DiffviewFileHistory %s', node.absolute_path))
+          --else
+            --vim.notify(vim.inspect(node))
+          --end
+        --end),
+        --{ buffer = bufnr, noremap = true }
+      --)
     end
   }
   vim.cmd([[

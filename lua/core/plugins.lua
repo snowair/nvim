@@ -34,7 +34,7 @@ return require('packer').startup({
 
     --  Buffer 增强
     use { 'akinsho/bufferline.nvim',
-      tag = "v2.*",
+      tag = "*",
       requires = 'kyazdani42/nvim-web-devicons',
       config = function()
         -- noremap 用于切换tab ; insert map用于Luasnip
@@ -578,12 +578,12 @@ return require('packer').startup({
       config = function()
         require("projections").setup({
           workspaces = {                                             -- Default workspaces to search for
-            { "~/git/mlol/backend_proj/apps/Out_Proj", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             { "/mnt/wd/Git",                           { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             { "~",                                     { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             { "~/git",                                 { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             { "~/git/mlol",                            { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             { "~/git/rust-reps",                       { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
+            { "~/git/mlol/backend_proj/apps/Out_Proj", { ".git" } }, --        Documents/dev is a workspace. patterns = { ".git" }
             -- { "~/repos", {} },                        An empty pattern list indicates that all subdirectories are considered projects
             -- "~/dev",                                  dev is a workspace. default patterns is used (specified below)
           },
@@ -1148,7 +1148,7 @@ return require('packer').startup({
     use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
     use { 'NeogitOrg/neogit',
-      tag = 'v0.0.1',
+      tag = 'master',
       requires = 'nvim-lua/plenary.nvim',
       config = function()
         local neogit = require("neogit")
