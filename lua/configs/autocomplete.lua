@@ -34,7 +34,6 @@ function M.config()
         TypeParameter = "",
     }
     local cmp = require 'cmp'
-    local luasnip = require("luasnip")
     local compare = require('cmp.config.compare')
     cmp.setup({
         sorting = {
@@ -65,8 +64,6 @@ function M.config()
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
                 elseif has_words_before() then
                     cmp.complete()
                 else
@@ -77,8 +74,6 @@ function M.config()
             ["<S-Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
                     cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
                 else
                     fallback()
                 end
@@ -89,7 +84,7 @@ function M.config()
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
                 -- luasnip
-                require('luasnip').lsp_expand(args.body)
+                --require('luasnip').lsp_expand(args.body)
             end,
         },
 
@@ -105,7 +100,6 @@ function M.config()
                 vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                 vim_item.menu = ({
                     nvim_lsp = "[LSP]",
-                    luasnip = "[Snip]",
                     buffer = "[Buffer]",
                     path = "[Path]",
                     cmdline = "[Cmdline]",
@@ -125,7 +119,6 @@ function M.config()
             {
                 -- { name = 'cmp_tabnine' },
                 { name = 'nvim_lsp' }, -- lsp 提供的自动完成
-                { name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
                 { name = 'nvim_lua' }, --  cmp-nvim-lua 插件提供的 neovim api自动完成
             },
             {
@@ -227,7 +220,6 @@ function M.config()
             {
                 { name = 'nvim_lsp' }, -- lsp 提供的自动完成
                 -- { name = 'cmp_tabnine' },
-                --{ name = 'luasnip' }, -- luasnip 插件提供的 snippets自动完成
             })
     })
     cmp.setup.filetype('sql', {
@@ -236,15 +228,6 @@ function M.config()
                 { name = 'nvim_lsp' }, -- lsp 提供的自动完成
             })
     })
-
-    cmp.setup.filetype('NeogitCommitMessage', {
-        sources = cmp.config.sources(
-            {
-                { name = 'buffer' }, -- cmp-buffer插件
-                { name = 'path' }, --cmp-path插件
-            })
-    })
-
 
 end
 

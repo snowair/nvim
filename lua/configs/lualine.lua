@@ -295,7 +295,7 @@ M.config = function()
       lualine_z = {},
     },
     tabline = {},
-    extensions = { 'quickfix', 'chadtree', 'symbols-outline', 'toggleterm', 'nvim-dap-ui', 'mundo', NvimTree }
+    extensions = { 'quickfix', 'chadtree', 'toggleterm', 'nvim-dap-ui', 'mundo', NvimTree }
   }
 end
 

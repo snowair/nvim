@@ -1,4 +1,6 @@
 -- basics
+-- 
+vim.loader.enable()
 vim.cmd('cd $HOME') -- 初始目录设置为主目录
 vim.cmd('syntax on')
 vim.cmd('filetype on')
@@ -95,7 +97,6 @@ vim.g.vim_markdown_conceal_code_blocks = 0
 
 -- Load plugin configs
 -- plugins without extra configs are configured directly here
-require("impatient") -- lua模块加载加速优化
 
 require("configs.lspconfig").config()
 require("configs.bufferline").config()

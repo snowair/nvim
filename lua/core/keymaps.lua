@@ -22,14 +22,6 @@ vim.keymap.set('t', '<f15>', '<c-\\><c-n>:FloatermToggle<return>')
 vim.keymap.set('t', '<f27>', '<c-\\><c-n>:FloatermNext<return>')
 vim.keymap.set('t', '<esc>', '<c-\\><c-n>')
 
--- NeoGit
-local function neogit()
-  vim.cmd("silent! noa wall")
-  vim.cmd("Neogit")
-end
-vim.keymap.set('n', '<s-f4>', neogit)
-vim.keymap.set('n', '<f16>', neogit)
-
 vim.keymap.set('n', '<s-f5>', function() require 'telescope.builtin'.lsp_dynamic_workspace_symbols() end)
 vim.keymap.set('n', '<F17>', function() require 'telescope.builtin'.lsp_dynamic_workspace_symbols() end)
 vim.keymap.set('n', '<c-f5>', function() require 'telescope.builtin'.lsp_document_symbols() end) -- <c-l>弹出类型过滤以后，<c-p> , <c-n> 进行选择

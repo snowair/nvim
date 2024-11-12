@@ -20,7 +20,6 @@ return require('packer').startup({
     --  启动时间优化
     use 'dstein64/vim-startuptime'
 
-    use 'lewis6991/impatient.nvim'
     use 'nathom/filetype.nvim'
     use 'kyazdani42/nvim-web-devicons'
 
@@ -79,19 +78,6 @@ return require('packer').startup({
     --  不要关闭 treesitter , 重新全部安装一遍要很久
     use 'nvim-treesitter/nvim-treesitter'
     use 'neovim/nvim-lspconfig'            -- 官方lsp
-    use 'L3MON4D3/LuaSnip'                 -- 代码片段, nvim-cmp用到
-    use 'molleweide/LuaSnip-snippets.nvim' -- 一些代码片段收集，java/lua/python/rust/c的都有
-    use 'onsails/lspkind-nvim'             -- 给自动完成列表添加icon支持
-    -- 使用 lsp 的代码文件structrue插件, 支持预览代码和文档, 只能显示当前文件的,不支持按package查看,不支持隐藏不可见成员 :SymbolsOutline
-    -- go.nvim 的 GoPkgOutline 支持package级别的outline,但不太稳定
-    use {
-      'snowair/symbols-outline.nvim',
-      config = function()
-        require("symbols-outline").setup()
-      end
-    }
-
-    use 'folke/lsp-colors.nvim' -- 为主题不支持的lsp颜色提供默认支持
 
     -- 函数参数文字颜色独立
     use {
@@ -100,49 +86,6 @@ return require('packer').startup({
         require('hlargs').setup()
       end
     }
-
-    use({
-      'nvimdev/lspsaga.nvim',
-      after = 'nvim-lspconfig',
-      config = function()
-        require("lspsaga").setup({
-          lightbulb = {
-            enable = false,
-          },
-          callhierarchy = {
-            show_detail = false,
-            keys = {
-              edit = "o",
-              jump = "p",
-              vsplit = "v",
-              split = "s",
-              tabe = "t",
-              quit = "q",
-              expand_collapse = "u",
-            },
-          },
-          finder = {
-            keys = {
-              expand_or_jump = 'o',
-              jump_to = 'p',
-              vsplit = 'v',
-              split = 's',
-              tabe = 't',
-              tabnew = 'r',
-              quit = { 'q', '<ESC>' },
-              close_in_preview = '<ESC>',
-            },
-          },
-          definition = {
-            edit = "<C-c>o",
-            vsplit = "<C-c>v",
-            split = "<C-c>s",
-            tabe = "<C-c>t",
-            quit = "q",
-          }
-        })
-      end,
-    })
 
     -- 类似goland的, 在函数参数sign位置可以提示该参数的类型
     use {
@@ -165,7 +108,6 @@ return require('packer').startup({
       config = function()
         require('go').setup({
           icons = { breakpoint = "💔", currentpos = "👉" },
-          luasnip = true,  -- set true to enable included luasnip
           verbose = false, -- 记录日志,默认记录在  ~/tmp/gonvim.log
         })
       end
@@ -190,11 +132,9 @@ return require('packer').startup({
       requires = 'hrsh7th/cmp-nvim-lsp',
     }
     -- nvim-cmp source 插件
-    use 'saadparwaiz1/cmp_luasnip'
     use 'hrsh7th/cmp-buffer'   --使用buffe中的内容作为自动完成词源
     use 'hrsh7th/cmp-cmdline'  -- vim cmdline 支持自动完成
     use 'hrsh7th/cmp-path'     -- 文件路径自动完成
-    use 'hrsh7th/cmp-emoji'    -- emoji自动完成
     use 'hrsh7th/cmp-nvim-lua' -- neovim api 自动完成
     --use { 'tzachar/cmp-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-cmp' }
 
@@ -676,7 +616,7 @@ return require('packer').startup({
       config = function()
         require("autosave").setup {
           enabled = true,
-          events = { "InsertLeave", "TextYankPost", "VimLeave" },
+          events = { "InsertLeave", "VimLeave" },
           conditions = {
             exists = true, -- 忽略不存在的文件
             filename_is_not = {},
@@ -696,10 +636,9 @@ return require('packer').startup({
       -- 由于是按cwd保存session,所有切换工作目录会导致新会话产生.
       -- 利用 VimLeavePre 事件, 在关闭vim之前,恢复工作目录到session 最初的目录.
       'Shatur/neovim-session-manager',
-      tag = 'a0b9d251',
+      --tag = 'a0b9d251',
       config = function()
         local Path = require('plenary.path')
-        local outline = require 'symbols-outline'
         require('session_manager').setup({
           sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions-manager'), -- The directory where the session files will be saved.
           path_replacer = '__',                                                -- The character to which the path separator will be replaced for session files.
@@ -722,15 +661,6 @@ return require('packer').startup({
             vim.cmd('Gitsigns detach_all')
             -- 关闭 treesitter
             vim.cmd('TSDisable highlight')
-            -- 关闭 outline
-            local state = require('symbols-outline.preview')
-            state.preview_buf = nil
-            state.preview_win = nil
-            state.hover_buf = nil
-            state.hover_win = nil
-            if outline.view:is_open() then
-              outline.view:close()
-            end
 
             -- 关闭diffview,neogit插件的tab
             local tabs = vim.api.nvim_list_tabpages()
@@ -804,7 +734,6 @@ return require('packer').startup({
             vim.env.SESSION_DIR = nil
             local chat = require("chatgpt.flows.chat")
             chat.chat = nil
-            outline.view = require 'symbols-outline.view':new()
             vim.loop.sleep(300)
             vim.opt.number         = true
             vim.opt.relativenumber = true
@@ -918,15 +847,6 @@ return require('packer').startup({
 
     use { 'preservim/vim-markdown' }
 
-    -- 交换两个text objext
-    use {
-      -- 在第一个objext上 执行cx{text object}, 然后在到另一个objext上执行cx{text objcet} 即可进行交换. 如果第二个motion和第一个motion相同,可以使用 .
-      -- cxx{text objext} Like cx, but use the current line
-      -- X{text object} Like cx, but for Visual mode.
-      -- cxc 取消
-      'tommcdo/vim-exchange'
-    }
-
     -- 可自定义的启动屏幕
     -- 添加 project , session 加载
     use 'leslie255/aleph-nvim'
@@ -946,18 +866,6 @@ return require('packer').startup({
 				vnoremap <leader>s <esc>:lua require('spectre').open_visual()<CR>
 				nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 			]]
-      end
-    }
-
-    -- 可以打开buffer里，光标处，光标附近的url
-    use {
-      -- 在doc浮窗里的链接：K 打开光标处的，L打开光标附近的
-      'xiyaowong/link-visitor.nvim',
-      config = function()
-        require("link-visitor").setup({
-          open_cmd = nil, -- cmd to open url
-          silent = true,  -- disable all prints, `false` by default
-        })
       end
     }
 
@@ -1001,17 +909,6 @@ return require('packer').startup({
       -- notify("My super important message")
       -- notify("This is an error message", "error")
       'rcarriga/nvim-notify',
-    }
-
-    -- 单词大小写风格切换
-    use {
-      'johmsalas/text-case.nvim',
-      config = function()
-        require('textcase').setup {}
-        require('telescope').load_extension('textcase')
-        vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope" })
-        vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-      end
     }
 
     -- 专门的 git diffview插件 , Git ≥ 2.31.0
@@ -1147,38 +1044,7 @@ return require('packer').startup({
     use "tversteeg/registers.nvim"
     use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
-    use { 'NeogitOrg/neogit',
-      tag = 'master',
-      requires = 'nvim-lua/plenary.nvim',
-      config = function()
-        local neogit = require("neogit")
-        neogit.setup {
-          signs = {
-            -- { CLOSED, OPENED }
-            section = { "", "", },
-            item = { "", "ﴴ" },
-            hunk = { "", "" },
-          },
-          integrations = {
-            diffview = true
-          },
-          mappings = {
-            -- modify status buffer mappings
-            status = {
-              ["<enter>"] = "Toggle",
-              ["<c-enter>"] = "GoToFile",
-            }
-          }
-        }
-      end
-    }
-
     --use { "github/copilot.vim", }
-
-
-    use {
-      "voldikss/vim-translator"
-    }
 
     use { "chrisgrieser/nvim-spider" } -- 让 w e b 移动更适合一些
     use { "wellle/targets.vim" }       -- text object
@@ -1355,14 +1221,6 @@ return require('packer').startup({
       }
     })
     --use "Bekaboo/dropbar.nvim"  -- 需要 nvim 0.10
-
-    use {
-      'TobinPalmer/rayso.nvim',
-      cmd = { 'Rayso' },
-      config = function()
-        require('rayso').setup()
-      end
-    }
 
     use 'anuvyklack/hydra.nvim'
 
