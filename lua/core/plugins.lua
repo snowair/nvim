@@ -849,7 +849,7 @@ return require('packer').startup({
 
     -- 可自定义的启动屏幕
     -- 添加 project , session 加载
-    use 'leslie255/aleph-nvim'
+    use 'snowair/aleph-nvim'
 
     -- find and replease 文件内搜索替换
     use {

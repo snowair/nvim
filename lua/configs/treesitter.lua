@@ -3,7 +3,7 @@ function M.config()
   -- nvim-treesitter config
   require 'nvim-treesitter.configs'.setup {
     ensure_installed = {
-      "bash", "c", "cmake", 'cpp', 'css', 'dart', 'go', 'gomod', 'help', 'http', 'java', 'json',
+      "bash", "c", "cmake", 'cpp', 'css', 'dart', 'go', 'gomod', 'http', 'java', 'json',
       'kotlin', 'lua',
       'make', 'perl', 'php', 'proto', 'python', 'ruby', 'rust', 'typescript', 'vim', 'yaml',
     },                                                   -- for installing all maintained parsers
