@@ -227,24 +227,24 @@ return require('packer').startup({
     }
 
     -- 添加支持鼠标操作折叠/展开折叠的 - + 图标
-    use {
-      'kevinhwang91/nvim-ufo',
-      requires = 'kevinhwang91/promise-async',
-      config = function()
-        require('ufo').setup({
-          provider_selector = function()
-            return { 'treesitter', 'indent' }
-          end
-        })
-        vim.o.foldcolumn = '1'
-        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-        vim.o.foldlevelstart = -1
-        vim.o.foldenable = true
-        -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-        vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-      end
-    }
+    --use {
+      --'kevinhwang91/nvim-ufo',
+      --requires = 'kevinhwang91/promise-async',
+      --config = function()
+        --require('ufo').setup({
+          --provider_selector = function()
+            --return { 'treesitter', 'indent' }
+          --end
+        --})
+        --vim.o.foldcolumn = '1'
+        --vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        --vim.o.foldlevelstart = -1
+        --vim.o.foldenable = true
+        ---- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+        --vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+        --vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+      --end
+    --}
 
     -- 很智能的字段括号插件,支持为自动完成的函数自动添加括号
     use {
@@ -253,14 +253,14 @@ return require('packer').startup({
     }
 
     -- 自动闭合html,tsx,vue,php的标签
-    use {
-      'windwp/nvim-ts-autotag',
-      config = function()
-        require 'nvim-treesitter.configs'.setup {
-          autotag = { enable = true, }
-        }
-      end
-    }
+    --use {
+      --'windwp/nvim-ts-autotag',
+      --config = function()
+        --require 'nvim-treesitter.configs'.setup {
+          --autotag = { enable = true, }
+        --}
+      --end
+    --}
 
     -- indent guide
     use {
@@ -293,123 +293,123 @@ return require('packer').startup({
     use 'voldikss/vim-floaterm'
 
     -- rainbow
-    use {
-      'p00f/nvim-ts-rainbow',
-      config = function()
-        require("nvim-treesitter.configs").setup {
-          highlight = {
-          },
-          -- ...
-          rainbow = {
-            enable = true,
-            extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = nil, -- Do not enable for files with more than n lines, int
-          }
-        }
-      end
-    }
+    --use {
+      --'p00f/nvim-ts-rainbow',
+      --config = function()
+        --require("nvim-treesitter.configs").setup {
+          --highlight = {
+          --},
+          ---- ...
+          --rainbow = {
+            --enable = true,
+            --extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+            --max_file_lines = nil, -- Do not enable for files with more than n lines, int
+          --}
+        --}
+      --end
+    --}
 
     -- ctrl-a,ctrl-x增强
-    use {
-      'monaqa/dial.nvim',
-      config = function()
-        local fulltime = '2006-01-02 15:04:05'
-        local fulltime2 = '20060102150405'
-        local fulldate = '2006-01-02'
-        local fulldate2 = '20060102'
-        local time = '15:04:05'
-        local augend = require("dial.augend")
-        require("dial.config").augends:register_group {
-          default = {
-            augend.constant.new {
-              elements = { fulltime, fulltime2 },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { fulldate, fulldate2, time },
-              word = false,
-              cyclic = true,
-            },
-            -- uppercase hex number (0x1A1A, 0xEEFE, etc.)
-            augend.constant.new {
-              elements = { "and", "or" },
-              word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
-              cyclic = true, -- "or" is incremented into "and".
-            },
-            augend.constant.new {
-              elements = { "&&", "||" },
-              word = false,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'int', 'int32', 'int64' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'uint', 'uint32', 'uint64' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'success', 'error' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'desc', 'asc' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'min', 'max' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'enable', 'disable' },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'enabled', 'disabled' },
-              word = true,
-              cyclic = true,
-            },
-            -- golang type
-            augend.constant.new {
-              elements = { '[]byte(', 'string(', },
-              word = false,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'GET', 'POST', },
-              word = true,
-              cyclic = true,
-            },
-            augend.constant.new {
-              elements = { 'Error', 'Warn', 'Info', 'Debug', },
-              word = true,
-              cyclic = true,
-            },
+    --use {
+      --'monaqa/dial.nvim',
+      --config = function()
+        --local fulltime = '2006-01-02 15:04:05'
+        --local fulltime2 = '20060102150405'
+        --local fulldate = '2006-01-02'
+        --local fulldate2 = '20060102'
+        --local time = '15:04:05'
+        --local augend = require("dial.augend")
+        --require("dial.config").augends:register_group {
+          --default = {
+            --augend.constant.new {
+              --elements = { fulltime, fulltime2 },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { fulldate, fulldate2, time },
+              --word = false,
+              --cyclic = true,
+            --},
+            ---- uppercase hex number (0x1A1A, 0xEEFE, etc.)
+            --augend.constant.new {
+              --elements = { "and", "or" },
+              --word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+              --cyclic = true, -- "or" is incremented into "and".
+            --},
+            --augend.constant.new {
+              --elements = { "&&", "||" },
+              --word = false,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'int', 'int32', 'int64' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'uint', 'uint32', 'uint64' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'success', 'error' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'desc', 'asc' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'min', 'max' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'enable', 'disable' },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'enabled', 'disabled' },
+              --word = true,
+              --cyclic = true,
+            --},
+            ---- golang type
+            --augend.constant.new {
+              --elements = { '[]byte(', 'string(', },
+              --word = false,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'GET', 'POST', },
+              --word = true,
+              --cyclic = true,
+            --},
+            --augend.constant.new {
+              --elements = { 'Error', 'Warn', 'Info', 'Debug', },
+              --word = true,
+              --cyclic = true,
+            --},
 
-            augend.integer.alias.decimal,
-            augend.integer.alias.hex,
-            augend.date.alias["%Y/%m/%d"],
-            augend.constant.alias.bool,
-            augend.constant.alias.alpha,
-            augend.constant.alias.Alpha,
-          },
-        }
-        vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-        vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-        vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-        vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-        vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-        vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
-      end
-    }
+            --augend.integer.alias.decimal,
+            --augend.integer.alias.hex,
+            --augend.date.alias["%Y/%m/%d"],
+            --augend.constant.alias.bool,
+            --augend.constant.alias.alpha,
+            --augend.constant.alias.Alpha,
+          --},
+        --}
+        --vim.api.nvim_set_keymap("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
+        --vim.api.nvim_set_keymap("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
+        --vim.api.nvim_set_keymap("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
+        --vim.api.nvim_set_keymap("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
+        --vim.api.nvim_set_keymap("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
+        --vim.api.nvim_set_keymap("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
+      --end
+    --}
 
     -- 自动格式化插件
     use {
@@ -1041,13 +1041,13 @@ return require('packer').startup({
     --}
 
 
-    use "tversteeg/registers.nvim"
+    --use "tversteeg/registers.nvim"
     use { 'michaelb/sniprun', run = 'bash ./install.sh' } -- 代码片段执行，写vim lua脚本方便调试
 
     --use { "github/copilot.vim", }
 
-    use { "chrisgrieser/nvim-spider" } -- 让 w e b 移动更适合一些
-    use { "wellle/targets.vim" }       -- text object
+    --use { "chrisgrieser/nvim-spider" } -- 让 w e b 移动更适合一些
+    --use { "wellle/targets.vim" }       -- text object
 
     -- 允许在终端中直接编辑执行的命令,而不用繁琐的使用方向键移动光标
     -- <c-\><c-n> 退出terminal模式, 进入normal模式

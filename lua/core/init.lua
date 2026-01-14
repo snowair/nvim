@@ -1,6 +1,7 @@
 -- basics
 -- 
 vim.loader.enable()
+vim.lsp.set_log_level("off") -- lsp日志等级
 vim.cmd('cd $HOME') -- 初始目录设置为主目录
 vim.cmd('syntax on')
 vim.cmd('filetype on')

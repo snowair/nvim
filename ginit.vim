@@ -24,10 +24,10 @@ if exists('*GuiClipboard')
 end
 
 " Right Click Context Menu (Copy-Cut-Paste): terminal模式中粘贴内容有用
-nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
-inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
-xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
-snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
+"nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
+"inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
+"xnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>gv
+"snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
 
 " terminal <c-r>访问registers
 tnoremap <expr> <C-\><C-\> '<C-\><C-N>"'.nr2char(getchar()).'pi'
